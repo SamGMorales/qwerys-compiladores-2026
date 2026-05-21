@@ -41,3 +41,7 @@ application-dev.properties
 .env
 *.env
 secrets.properties
+
+# JVM crash dumps (local only)
+hs_err_pid*.log
+replay_pid*.log
