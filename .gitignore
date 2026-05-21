@@ -1,0 +1,21 @@
+# Secretos Docker / local
+.env
+*.env
+!.env.example
+
+# Datos locales
+.DS_Store
+Thumbs.db
+
+# Excluir archivos de docs EXCEPTO docs/java-compiler/
+# (*.md solo aplica a archivos directamente en docs/, no a subdirectorios)
+docs/*.md
+docs/*.docx
+docs/*.db
+docs/*.bd
+docs/*.py
+docs/*.zip
+docs/zixIqJYU
+docs/pablo_prueba*
+docs/qwerys_prueba*
+docs/crear_bd*
