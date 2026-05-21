@@ -1,0 +1,1006 @@
+/* ═══════════════════════════════════════════════════════════════
+   styles.scss — Estilos globales QWERYS
+   ═══════════════════════════════════════════════════════════════ */
+
+@use 'styles/breakpoints' as *;
+
+/* ── Reset universal ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body,
+.mat-typography {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Raíz del componente app-root ─────────────────────────────── */
+app-root {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── mat-sidenav-container: forzar display:block para que Angular
+      Material gestione su propio layout sin interferencia de flex ─ */
+mat-sidenav-container {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Variables del tema CLARO (default) ───────────────────────── */
+:root {
+  /* Solo bloques modo estudiante (explicaciones, keywords, barra de progreso) */
+  --font-student: "Plus Jakarta Sans", Roboto, "Helvetica Neue", sans-serif;
+  --font-student-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f8fafc;
+  --bg-elevated:   #ffffff;
+  --text-primary:  #1e293b;
+  --text-secondary: #64748b;
+  --text-muted:    #94a3b8;
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  /* Modo estudiante — superficies educativas */
+  --student-surface:        #eff6ff;
+  --student-surface-border: #bfdbfe;
+  --student-accent:         #2563eb;
+  --student-text:           #1e3a5a;
+  --student-text-muted:     #475569;
+  --student-code-bg:        #0f172a;
+  --student-code-text:      #e2e8f0;
+}
+
+/* ── Variables del tema OSCURO ────────────────────────────────── */
+body.dark-theme {
+  --bg-primary:    #0c1222;
+  --bg-secondary:  #151f33;
+  --bg-elevated:   #1c2840;
+  --text-primary:  #f1f5f9;
+  --text-secondary: #b8c5d9;
+  --text-muted:    #8b9cb5;
+  --border-subtle: #2d3f5c;
+  --border-strong: #3d5278;
+
+  --student-surface:        #1a2d4d;
+  --student-surface-border: #3b6bb8;
+  --student-accent:         #60a5fa;
+  --student-text:           #e8f0fc;
+  --student-text-muted:     #b8c9e6;
+  --student-code-bg:        #0a101c;
+  --student-code-text:      #dbeafe;
+}
+
+/* ── mat-select: headers de optgroup (SQL / NoSQL) ────────────── */
+/* El panel de overlay vive fuera del scope del componente,
+   por eso estos estilos van aquí como globales.               */
+.mat-mdc-optgroup-label {
+  font-size:      0.68rem !important;
+  font-weight:    800    !important;
+  letter-spacing: 0.09em !important;
+  text-transform: uppercase !important;
+  color:          #2563eb !important;
+  border-bottom:  1px solid #e2e8f0;
+  margin-bottom:  2px;
+}
+
+body.dark-theme .mat-mdc-optgroup-label {
+  color:        #7c9ef8 !important;
+  border-color: #334155;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Accesibilidad — modos de perfil (clases en <body> vía AccessibilityService)
+   Todo lo siguiente es aditivo: no altera reglas anteriores.
+   Nota honesta: TTS, STT, guía paso a paso, AST en vivo y “activar lector
+   de pantalla” requieren TS/servicios del SO; aquí mayormente estilos visuales.
+   Modo sordo: silenciar/pausar media + data-deaf-mode — DeafModeService cuando el toggle está ON.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Transición suave al activar/desactivar modos (modo TDAH la anula con !important) */
+body {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    font-size 0.2s ease;
+}
+
+/* Escala rem para Material cuando baja visión o ciego piden texto más grande */
+html:has(body.mode-low-vision) {
+  font-size: 137.5%;
+}
+
+html:has(body.mode-blind):not(:has(body.mode-low-vision)) {
+  font-size: 112.5%;
+}
+
+/* ═══════════════════════════════════════
+   MODO CIEGO
+═══════════════════════════════════════ */
+body.mode-blind {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+body.mode-blind *:focus-visible {
+  outline: 3px solid #2196f3 !important;
+  outline-offset: 3px !important;
+  border-radius: 2px;
+}
+
+body.mode-blind [aria-hidden='true'],
+body.mode-blind .decorative-icon {
+  visibility: hidden;
+}
+
+body.mode-blind img:not([alt]),
+body.mode-blind img[alt=''] {
+  visibility: hidden;
+}
+
+/* ═══════════════════════════════════════
+   MODO BAJA VISIÓN
+═══════════════════════════════════════ */
+body.mode-low-vision {
+  font-size: 22px !important;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.mode-low-vision button,
+body.mode-low-vision .mat-mdc-button,
+body.mode-low-vision .mat-mdc-raised-button,
+body.mode-low-vision .mat-mdc-outlined-button,
+body.mode-low-vision .mat-mdc-unelevated-button,
+body.mode-low-vision .mat-mdc-icon-button {
+  min-height: 56px !important;
+  min-width: 56px;
+  font-size: 18px !important;
+  border: 3px solid #fff !important;
+}
+
+body.mode-low-vision input,
+body.mode-low-vision textarea,
+body.mode-low-vision select,
+body.mode-low-vision .mat-mdc-form-field,
+body.mode-low-vision .mat-mdc-text-field-wrapper {
+  min-height: 56px !important;
+  border: 3px solid #fff !important;
+}
+
+body.mode-low-vision mat-icon {
+  font-size: 36px !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+body.mode-low-vision a {
+  text-decoration: underline !important;
+  color: #87cefa !important;
+}
+
+/* ═══════════════════════════════════════
+   MODO DISLEXIA
+═══════════════════════════════════════ */
+body.mode-dyslexia {
+  font-family: 'OpenDyslexic', 'Open-Dyslexic', 'Open Dyslexic', Arial, sans-serif !important;
+  /* Espaciado moderado: demasiado amplio vuelve OpenDyslexic ilegible */
+  letter-spacing: 0.04em;
+  word-spacing: 0.1em;
+  line-height: 1.75;
+  font-size: 1.0625rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fondos cálidos solo en área de contenido (tema claro) — sidenav/toolbar sin cambiar */
+body.mode-dyslexia:not(.dark-theme) {
+  --dyslexia-bg: #faf6ed;
+  --dyslexia-surface: #fff8e7;
+  --dyslexia-text: #1f1c14;
+  --dyslexia-muted: #4a4536;
+  --dyslexia-input-bg: #f5f0e3;
+  --dyslexia-input-border: #a89870;
+
+  /* Tokens globales para componentes que usan var(--text-*) */
+  --text-primary: #1f1c14;
+  --text-secondary: #4a4536;
+  --text-muted: #5c5644;
+  --bg-primary: #faf6ed;
+  --bg-secondary: #fff8e7;
+  --bg-elevated: #fffdf8;
+  --border-subtle: #ddd4bc;
+  --border-strong: #a89870;
+
+  background-color: var(--dyslexia-bg) !important;
+  color: var(--dyslexia-text) !important;
+}
+
+/* Sidenav oscuro intacto (evita texto blanco sobre crema) */
+body.mode-dyslexia:not(.dark-theme) .app-sidenav,
+body.mode-dyslexia:not(.dark-theme) .mat-sidenav.app-sidenav {
+  background-color: #0f172a !important;
+  color: #f1f5f9 !important;
+  --mdc-list-list-item-label-text-color: #94a3b8;
+  --mdc-list-list-item-leading-icon-color: #94a3b8;
+  --mdc-list-list-item-hover-label-text-color: #f1f5f9;
+  --mdc-list-list-item-hover-leading-icon-color: #f1f5f9;
+  --mdc-list-list-item-focus-label-text-color: #f1f5f9;
+  --mdc-list-list-item-focus-leading-icon-color: #f1f5f9;
+}
+
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .logo-text,
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .nav-item,
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .nav-label,
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .logout-btn {
+  color: #94a3b8 !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .nav-item.nav-active,
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .nav-item.nav-active .nav-label,
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .nav-item.nav-active .nav-icon {
+  color: #2563eb !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .nav-item:hover,
+body.mode-dyslexia:not(.dark-theme) .app-sidenav .nav-item:hover .nav-label {
+  color: #f1f5f9 !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) .mat-sidenav-content,
+body.mode-dyslexia:not(.dark-theme) .app-content,
+body.mode-dyslexia:not(.dark-theme) .main-content {
+  background-color: var(--dyslexia-bg) !important;
+  color: var(--dyslexia-text) !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) mat-card,
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-card,
+body.mode-dyslexia:not(.dark-theme) .panel,
+body.mode-dyslexia:not(.dark-theme) .panel-left,
+body.mode-dyslexia:not(.dark-theme) .panel-right,
+body.mode-dyslexia:not(.dark-theme) .result-container,
+body.mode-dyslexia:not(.dark-theme) .multi-result-container,
+body.mode-dyslexia:not(.dark-theme) .schema-card,
+body.mode-dyslexia:not(.dark-theme) .schema-page {
+  background-color: var(--dyslexia-surface) !important;
+  color: var(--dyslexia-text) !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) textarea,
+body.mode-dyslexia:not(.dark-theme) input:not([type='checkbox']):not([type='radio']),
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-input-element {
+  background-color: var(--dyslexia-input-bg) !important;
+  color: var(--dyslexia-text) !important;
+  border-color: var(--dyslexia-input-border) !important;
+}
+
+/* Etiquetas, hints y texto secundario legibles sobre fondo cálido */
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-form-field,
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-floating-label,
+body.mode-dyslexia:not(.dark-theme) .mdc-floating-label,
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-form-field-hint,
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-form-field-label,
+body.mode-dyslexia:not(.dark-theme) .field-label,
+body.mode-dyslexia:not(.dark-theme) .analyzer-subtitle,
+body.mode-dyslexia:not(.dark-theme) .schema-subtitle,
+body.mode-dyslexia:not(.dark-theme) .status-row,
+body.mode-dyslexia:not(.dark-theme) .empty-hint,
+body.mode-dyslexia:not(.dark-theme) .section-hint,
+body.mode-dyslexia:not(.dark-theme) .schema-validation-hint,
+body.mode-dyslexia:not(.dark-theme) h1,
+body.mode-dyslexia:not(.dark-theme) h2,
+body.mode-dyslexia:not(.dark-theme) h3,
+body.mode-dyslexia:not(.dark-theme) h4,
+body.mode-dyslexia:not(.dark-theme) label {
+  color: var(--dyslexia-text) !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-form-field-hint,
+body.mode-dyslexia:not(.dark-theme) .mat-hint,
+body.mode-dyslexia:not(.dark-theme) .err-detail,
+body.mode-dyslexia:not(.dark-theme) .analysis-time,
+body.mode-dyslexia:not(.dark-theme) .settings-muted {
+  color: var(--dyslexia-muted) !important;
+}
+
+/* Pestañas / chips activos: texto oscuro sobre fondos claros */
+body.mode-dyslexia:not(.dark-theme) .category-tab.active,
+body.mode-dyslexia:not(.dark-theme) .category-tab:not(.active) {
+  color: var(--dyslexia-text) !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) .category-tab.active {
+  background-color: #2563eb !important;
+  color: #fff !important;
+}
+
+body.mode-dyslexia:not(.dark-theme) .mat-expansion-panel-header-title,
+body.mode-dyslexia:not(.dark-theme) .mat-panel-title,
+body.mode-dyslexia:not(.dark-theme) .mat-mdc-slide-toggle .mdc-label {
+  color: var(--dyslexia-text) !important;
+}
+
+/* Alineación izquierda — sin justify (mejor lectura en dislexia) */
+body.mode-dyslexia,
+body.mode-dyslexia p,
+body.mode-dyslexia span,
+body.mode-dyslexia li,
+body.mode-dyslexia td,
+body.mode-dyslexia .mat-mdc-list-item,
+body.mode-dyslexia .explanation-text,
+body.mode-dyslexia .error-description,
+body.mode-dyslexia .err-detail,
+body.mode-dyslexia .chip-main {
+  text-align: left !important;
+}
+
+/* Sin itálicas — excepto iconos Material */
+body.mode-dyslexia,
+body.mode-dyslexia * {
+  font-style: normal !important;
+}
+
+body.mode-dyslexia .material-icons,
+body.mode-dyslexia mat-icon {
+  font-style: normal !important;
+}
+
+body.mode-dyslexia p,
+body.mode-dyslexia .analysis-text,
+body.mode-dyslexia .error-message {
+  max-width: 70ch;
+}
+
+/* Dislexia + tema oscuro: solo tipografía; colores del dark-theme (sin crema ni texto negro) */
+body.dark-theme.mode-dyslexia {
+  background-color: var(--bg-primary, #0c1222) !important;
+  color: var(--text-primary, #f1f5f9) !important;
+}
+
+body.dark-theme.mode-dyslexia .mat-sidenav-content,
+body.dark-theme.mode-dyslexia .app-content,
+body.dark-theme.mode-dyslexia .main-content,
+body.dark-theme.mode-dyslexia .schema-page,
+body.dark-theme.mode-dyslexia .schema-card,
+body.dark-theme.mode-dyslexia .panel-left,
+body.dark-theme.mode-dyslexia .panel-right,
+body.dark-theme.mode-dyslexia .result-container,
+body.dark-theme.mode-dyslexia .multi-result-container {
+  color: var(--text-primary, #f1f5f9) !important;
+}
+
+body.dark-theme.mode-dyslexia .mat-mdc-list-item,
+body.dark-theme.mode-dyslexia .mat-mdc-list-item .mdc-list-item__primary-text,
+body.dark-theme.mode-dyslexia [mat-list-item] {
+  color: var(--text-primary, #f1f5f9) !important;
+}
+
+body.dark-theme.mode-dyslexia .mat-mdc-form-field,
+body.dark-theme.mode-dyslexia .mat-mdc-floating-label,
+body.dark-theme.mode-dyslexia .mdc-floating-label,
+body.dark-theme.mode-dyslexia .field-label,
+body.dark-theme.mode-dyslexia h1,
+body.dark-theme.mode-dyslexia h2,
+body.dark-theme.mode-dyslexia h3,
+body.dark-theme.mode-dyslexia label,
+body.dark-theme.mode-dyslexia .panel-heading,
+body.dark-theme.mode-dyslexia .schema-title {
+  color: var(--text-primary, #f1f5f9) !important;
+}
+
+body.dark-theme.mode-dyslexia .mat-mdc-form-field-hint,
+body.dark-theme.mode-dyslexia .mat-hint,
+body.dark-theme.mode-dyslexia .schema-subtitle,
+body.dark-theme.mode-dyslexia .empty-hint,
+body.dark-theme.mode-dyslexia .status-row {
+  color: var(--text-secondary, #b8c5d9) !important;
+}
+
+body.dark-theme.mode-dyslexia input,
+body.dark-theme.mode-dyslexia textarea,
+body.dark-theme.mode-dyslexia .mat-mdc-input-element {
+  color: var(--text-primary, #f1f5f9) !important;
+}
+
+body.dark-theme.mode-dyslexia .mat-mdc-table,
+body.dark-theme.mode-dyslexia .mat-mdc-header-cell,
+body.dark-theme.mode-dyslexia .mat-mdc-cell {
+  color: var(--text-primary, #f1f5f9) !important;
+}
+
+/* ═══════════════════════════════════════
+   MODO SORDO / HÁPTICO-VISUAL
+   (CSS no puede silenciar <audio> ni inventar <track>; refuerza avisos visuales)
+═══════════════════════════════════════ */
+body.mode-deaf video::cue {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+}
+
+body.mode-deaf audio,
+body.mode-deaf video {
+  border: 3px solid #ff9800;
+  border-radius: 4px;
+}
+
+body.mode-deaf .mat-mdc-snack-bar-container .mat-mdc-snackbar-surface,
+body.mode-deaf .mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  border: 3px solid currentcolor !important;
+  box-shadow: 0 0 0 2px #000;
+}
+
+body.mode-deaf [role='alert'],
+body.mode-deaf .mat-mdc-form-field-error,
+body.mode-deaf .mat-mdc-simple-snack-bar .mat-mdc-snack-bar-label {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Etiquetas visuales para contenido que en otros modos sería solo audio (Day 34 TTS hook) */
+body.mode-deaf [data-audio-label]::after {
+  content: attr(data-audio-label);
+  display: block;
+  font-size: 12px;
+  color: var(--mat-sys-on-surface-variant, #64748b);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+body.mode-deaf .tts-button {
+  display: none !important;
+}
+
+body.mode-deaf .tts-caption {
+  display: block !important;
+}
+
+/* ═══════════════════════════════════════
+   MODO TDAH
+═══════════════════════════════════════ */
+body.mode-adhd * {
+  transition: none !important;
+  animation: none !important;
+}
+
+body.mode-adhd .mat-sidenav-container .mat-sidenav,
+body.mode-adhd .mat-drawer {
+  display: none !important;
+}
+
+body.mode-adhd .secondary-panel,
+body.mode-adhd .breadcrumb,
+body.mode-adhd .sidebar-hint,
+body.mode-adhd .decorative-section {
+  display: none !important;
+}
+
+body.mode-adhd button,
+body.mode-adhd .mat-mdc-raised-button,
+body.mode-adhd .mat-mdc-button,
+body.mode-adhd .mat-mdc-outlined-button {
+  min-height: 52px !important;
+  margin: 8px !important;
+  font-size: 16px !important;
+}
+
+/* ═══════════════════════════════════════
+   MODO ESTUDIANTE
+   (clases .student-tooltip, .code-block-explained, .btn-explain: Days 36–37)
+═══════════════════════════════════════ */
+body.mode-student .student-tooltip {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.mode-student .code-block-explained {
+  background-color: #fffde7 !important;
+  border-left: 4px solid #ffc107 !important;
+  padding: 8px 12px !important;
+}
+
+body.mode-student .btn-explain {
+  display: inline-flex !important;
+}
+
+/* ═══════════════════════════════════════
+   MODO EXPERTO
+   (clases .ast-panel, .technical-metrics, .expert-shortcut-hint: Days 36–37)
+═══════════════════════════════════════ */
+body.mode-expert .ast-panel {
+  display: block !important;
+}
+
+body.mode-expert .technical-metrics {
+  display: block !important;
+}
+
+body.mode-expert .expert-shortcut-hint {
+  display: inline !important;
+}
+
+/* ═══════════════════════════════════════
+   MODO ALTO CONTRASTE
+═══════════════════════════════════════ */
+body.mode-high-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.mode-high-contrast *,
+body.mode-high-contrast *::before,
+body.mode-high-contrast *::after {
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+body.mode-high-contrast .mat-mdc-card,
+body.mode-high-contrast mat-card,
+body.mode-high-contrast .panel,
+body.mode-high-contrast .mat-mdc-dialog-container {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+body.mode-high-contrast button,
+body.mode-high-contrast .mat-mdc-raised-button,
+body.mode-high-contrast .mat-mdc-button,
+body.mode-high-contrast .mat-mdc-outlined-button,
+body.mode-high-contrast .mat-mdc-unelevated-button {
+  background-color: #ff0 !important;
+  color: #000 !important;
+  border: 2px solid #fff !important;
+  font-weight: bold !important;
+}
+
+body.mode-high-contrast a {
+  color: #ff0 !important;
+  text-decoration: underline !important;
+}
+
+body.mode-high-contrast input,
+body.mode-high-contrast textarea,
+body.mode-high-contrast select {
+  background-color: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+body.mode-high-contrast mat-icon {
+  color: #fff !important;
+}
+
+body.mode-high-contrast .mat-mdc-slide-toggle {
+  filter: contrast(2) brightness(1.5);
+}
+
+/* ═══════════════════════════════════════
+   Coexistencia de modos (múltiples clases en body)
+═══════════════════════════════════════ */
+
+/* Alto contraste + dislexia: paleta WCAG + tipografía OpenDyslexic */
+body.mode-high-contrast.mode-dyslexia {
+  font-family: 'OpenDyslexic', 'Open-Dyslexic', 'Open Dyslexic', Arial, sans-serif !important;
+  letter-spacing: 0.1em;
+  word-spacing: 0.2em;
+  line-height: 2;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.mode-high-contrast.mode-dyslexia .mat-mdc-card,
+body.mode-high-contrast.mode-dyslexia .panel {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.mode-high-contrast.mode-dyslexia p,
+body.mode-high-contrast.mode-dyslexia .analysis-text,
+body.mode-high-contrast.mode-dyslexia .error-message {
+  max-width: 70ch;
+}
+
+/* Ciego + alto contraste: foco azul sobre tema negro/blanco */
+body.mode-blind.mode-high-contrast *:focus-visible {
+  outline: 3px solid #2196f3 !important;
+  outline-offset: 3px !important;
+}
+
+/* Baja visión + alto contraste: botones siguen grandes; borde blanco unificado */
+body.mode-low-vision.mode-high-contrast button,
+body.mode-low-vision.mode-high-contrast .mat-mdc-raised-button,
+body.mode-low-vision.mode-high-contrast .mat-mdc-button {
+  min-height: 56px !important;
+  border: 3px solid #fff !important;
+}
+
+/* Sordo + alto contraste: bordes de media y snackbar más claros */
+body.mode-deaf.mode-high-contrast audio,
+body.mode-deaf.mode-high-contrast video {
+  border-color: #ff0;
+}
+
+/* TDAH + ciego: sin animación pero manteniendo anillo de foco */
+body.mode-adhd.mode-blind *:focus-visible {
+  outline: 3px solid #2196f3 !important;
+  outline-offset: 3px !important;
+}
+
+/* ── Overrides Angular Material MDC por modo (adicional a bloques anteriores) ── */
+
+/* ── BAJA VISIÓN: overrides Angular Material ── */
+body.mode-low-vision .mat-mdc-form-field {
+  --mdc-outlined-text-field-container-height: 56px;
+}
+
+body.mode-low-vision .mat-mdc-slide-toggle {
+  transform: scale(1.4);
+  margin-right: 8px;
+}
+
+body.mode-low-vision .mat-mdc-chip {
+  min-height: 40px !important;
+  font-size: 16px !important;
+}
+
+body.mode-low-vision .mat-mdc-menu-item {
+  min-height: 56px !important;
+  font-size: 18px !important;
+}
+
+body.mode-low-vision .mdc-notched-outline__notch,
+body.mode-low-vision .mdc-notched-outline__leading,
+body.mode-low-vision .mdc-notched-outline__trailing {
+  border-width: 3px !important;
+  border-color: #fff !important;
+}
+
+/* ── ALTO CONTRASTE: overrides Angular Material ── */
+body.mode-high-contrast {
+  --mat-sys-primary: #ff0;
+  --mat-sys-on-primary: #000;
+  --mat-sys-surface: #000;
+  --mat-sys-on-surface: #fff;
+  --mat-sys-outline: #fff;
+  --mat-sys-surface-container: #000;
+  --mat-sys-on-surface-variant: #fff;
+}
+
+body.mode-high-contrast .mat-mdc-card,
+body.mode-high-contrast .mat-expansion-panel {
+  --mat-expansion-container-background-color: #000;
+  --mat-expansion-header-text-color: #fff;
+  border: 2px solid #fff !important;
+}
+
+body.mode-high-contrast .mat-mdc-slide-toggle {
+  --mdc-switch-selected-track-color: #ff0;
+  --mdc-switch-selected-handle-color: #000;
+}
+
+body.mode-high-contrast .mat-toolbar {
+  background-color: #000 !important;
+  border-bottom: 2px solid #fff !important;
+}
+
+body.mode-high-contrast .mat-mdc-nav-list .mat-mdc-list-item {
+  color: #fff !important;
+}
+
+/* Router usa clase nav-active (adicional a .active por si algún template la usa) */
+body.mode-high-contrast .mat-mdc-nav-list .mat-mdc-list-item.active,
+body.mode-high-contrast .mat-mdc-nav-list .mat-mdc-list-item.nav-active {
+  background-color: #ff0 !important;
+  color: #000 !important;
+}
+
+/* ── MULTI-MODO: cuando varios están activos, alto contraste siempre gana ── */
+body.mode-high-contrast.mode-dyslexia {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.mode-high-contrast.mode-low-vision {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+/* ── Modo dislexia: toggle de bloques colapsables (directiva qwerysCollapsible) ── */
+.collapse-toggle-btn {
+  display: none;
+}
+
+body.mode-dyslexia .collapse-toggle-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  background-color: #ebe4d0 !important;
+  color: #3d3926 !important;
+  border: 2px solid #a89870 !important;
+  border-radius: 8px !important;
+  font-family: 'OpenDyslexic', 'Open-Dyslexic', 'Open Dyslexic', Arial, sans-serif !important;
+  font-size: 1rem !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  text-align: left;
+}
+
+body.mode-dyslexia .collapse-toggle-btn:hover,
+body.mode-dyslexia .collapse-toggle-btn:focus {
+  background-color: #ddd4bc !important;
+  border-color: #8a7a50 !important;
+  outline: 3px solid #5c5644;
+  outline-offset: 2px;
+}
+
+body.mode-dyslexia .collapse-toggle-btn::before {
+  content: '▼';
+  font-family: Arial, sans-serif !important;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+body.mode-dyslexia .collapse-toggle-btn[aria-expanded='false']::before {
+  content: '▶';
+}
+
+body.dark-theme.mode-dyslexia .collapse-toggle-btn {
+  background-color: #3d3926 !important;
+  color: #f5e9c0 !important;
+  border-color: #8a7a50 !important;
+}
+
+body.dark-theme.mode-dyslexia .collapse-toggle-btn:hover,
+body.dark-theme.mode-dyslexia .collapse-toggle-btn:focus {
+  background-color: #524e35 !important;
+  border-color: #c4a84a !important;
+  outline-color: #f5e9c0;
+}
+
+/* ── Modo TDAH: indicador de pasos en Query Analyzer ── */
+.step-indicator {
+  display: none;
+}
+
+.step-nav-actions {
+  display: none;
+}
+
+body.mode-adhd .step-indicator {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  background: var(--mat-sys-surface-container, var(--bg-secondary, #f1f5f9));
+  border-radius: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+body.mode-adhd .step-indicator span {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0.55;
+  border: 1px solid currentcolor;
+}
+
+body.mode-adhd .step-indicator span.active {
+  opacity: 1;
+  font-weight: bold;
+  background: var(--mat-sys-primary, #2563eb);
+  color: var(--mat-sys-on-primary, #fff);
+}
+
+body.mode-adhd .step-nav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+body.mode-adhd .step-nav-btn {
+  min-height: 44px;
+}
+
+/*
+ * Preferencia del SO “reducir movimiento”: complementa modo TDAH (toggle).
+ * Patrón 0.01ms (vs transition:none): efecto prácticamente igual para el usuario,
+ * suele conservar mejor edge cases donde algo escucha transitionend.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Diálogo de atajos de teclado (F1) ─────────────────────────── */
+.keyboard-help-dialog .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: var(--bg-elevated, #fff);
+  --mdc-dialog-subhead-color: var(--text-primary, #1e293b);
+  --mdc-dialog-supporting-text-color: var(--text-primary, #1e293b);
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.14);
+}
+
+body.dark-theme .keyboard-help-dialog .mat-mdc-dialog-container {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Diálogo comparador de queries (Ver diff) ───────────────────── */
+.qwerys-diff-dialog .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: var(--bg-elevated, #fff);
+  --mdc-dialog-subhead-color: var(--text-primary, #1e293b);
+  --mdc-dialog-supporting-text-color: var(--text-primary, #1e293b);
+  color: var(--text-primary, #1e293b);
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.14);
+}
+
+.qwerys-diff-dialog .mat-mdc-dialog-title,
+.qwerys-diff-dialog .mat-mdc-dialog-content,
+.qwerys-diff-dialog .mat-mdc-dialog-actions {
+  color: var(--text-primary, #1e293b);
+}
+
+.qwerys-diff-dialog .mat-mdc-dialog-container .mat-mdc-dialog-title {
+  color: var(--text-primary, #1e293b);
+}
+
+.qwerys-diff-dialog .mat-mdc-dialog-container .mat-mdc-button:not(.mat-primary) {
+  color: var(--text-primary, #1e293b);
+}
+
+body.dark-theme .qwerys-diff-dialog .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: var(--bg-elevated);
+  --mdc-dialog-subhead-color: var(--text-primary);
+  --mdc-dialog-supporting-text-color: var(--text-primary);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}
+
+body.dark-theme .qwerys-diff-dialog .mat-mdc-dialog-title,
+body.dark-theme .qwerys-diff-dialog .mat-mdc-dialog-content,
+body.dark-theme .qwerys-diff-dialog .mat-mdc-dialog-actions,
+body.dark-theme .qwerys-diff-dialog .mat-mdc-dialog-container .mat-mdc-button:not(.mat-primary) {
+  color: var(--text-primary);
+}
+
+body.mode-high-contrast .qwerys-diff-dialog .mat-mdc-dialog-container {
+  border-width: 2px;
+  border-color: var(--text-primary, #000);
+}
+
+/* ── Skip link (WCAG 2.4.1 Bypass Blocks) ─────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+body.dark-theme .skip-link:focus {
+  background: #fff;
+  color: #000;
+}
+
+/* ── Visually hidden (screen reader only) ─────────────────────── */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Query history saved — snackbar (analyzer, signed-in users) */
+.history-saved-snackbar {
+  --mdc-snackbar-container-color: var(--bg-elevated);
+  --mdc-snackbar-supporting-text-color: var(--text-primary);
+  --mat-snack-bar-button-color: var(--student-accent, #2563eb);
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: var(--mat-sys-error-container, #fdecea);
+  --mdc-snackbar-supporting-text-color: var(--mat-sys-on-error-container, #5f2120);
+}
+
+/* ── Responsive breakpoints (global utilities) ─────────────────── */
+@include mobile {
+  .main-content {
+    padding: 12px;
+  }
+}
+
+@include tablet {
+  .main-content {
+    padding: 16px;
+  }
+}
+
+@include laptop {
+  .main-content {
+    padding: 20px;
+  }
+}
+
+@include desktop {
+  .main-content {
+    padding: 24px;
+  }
+}
+
+/* Diálogos a pantalla completa en móvil (p. ej. Ver diff) */
+.fullscreen-dialog .mat-mdc-dialog-container {
+  border-radius: 0 !important;
+  padding: 0 !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+}
+
+.fullscreen-dialog .mat-mdc-dialog-surface {
+  border-radius: 0 !important;
+}
+
+/* Accesibilidad: no aplastar modos en pantallas pequeñas */
+@include tablet {
+  body.mode-dyslexia:not(.dark-theme) .main-content,
+  body.mode-tdah .main-content,
+  body.mode-blind .main-content,
+  body.mode-deaf .main-content {
+    letter-spacing: inherit;
+    line-height: inherit;
+  }
+
+  body.mode-dyslexia:not(.dark-theme) .query-textarea,
+  body.mode-dyslexia:not(.dark-theme) textarea,
+  body.mode-dyslexia:not(.dark-theme) input {
+    font-size: max(1rem, 16px);
+  }
+}

@@ -1,0 +1,1735 @@
+<div class="analyzer-layout" [class.mobile-layout]="isMobile">
+
+  @if (analyzerStepVm$ | async; as vm) {
+
+  <!-- ════════════════ LEFT PANEL ════════════════ -->
+  <section class="panel-left">
+
+    <div class="analyzer-header">
+      <h1 class="analyzer-title">{{ 'analyzer.title' | translate }}</h1>
+      <p class="analyzer-subtitle">{{ 'analyzer.subtitle' | translate }}</p>
+    </div>
+
+    @if (vm.adhdMode) {
+      <nav class="step-indicator" [attr.aria-label]="'analyzer.stepNavAria' | translate">
+        <span [class.active]="vm.currentStep === 'write'">{{ 'analyzer.stepWrite' | translate }}</span>
+        <span [class.active]="vm.currentStep === 'configure'">{{ 'analyzer.stepConfigure' | translate }}</span>
+        <span [class.active]="vm.currentStep === 'analyze'">{{ 'analyzer.stepAnalyze' | translate }}</span>
+        <span [class.active]="vm.currentStep === 'results'">{{ 'analyzer.stepResults' | translate }}</span>
+      </nav>
+      <div class="step-nav-actions">
+        <button
+          type="button"
+          class="btn-secondary step-nav-btn"
+          (click)="adhdStepPrevious()"
+          [disabled]="vm.currentStep === 'write'"
+          [attr.aria-label]="'analyzer.stepBack' | translate">
+          {{ 'analyzer.stepBack' | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn-secondary step-nav-btn"
+          (click)="adhdStepNext()"
+          [disabled]="vm.currentStep === 'results'"
+          [attr.aria-label]="'analyzer.stepNext' | translate">
+          {{ 'analyzer.stepNext' | translate }}
+        </button>
+      </div>
+    }
+
+    @if (!vm.adhdMode || vm.currentStep === 'configure') {
+    <!-- DB type: two-level selector -->
+    <div class="db-selector-section">
+      <label class="field-label">{{ 'analyzer.dbTypeLabel' | translate }}</label>
+
+      <!-- Level 1: SQL / NoSQL tabs -->
+      <div class="category-tabs">
+        <button
+          class="category-tab"
+          [class.active]="selectedCategory === 'sql'"
+          (click)="onCategoryChange('sql')"
+          type="button"
+          [attr.aria-pressed]="selectedCategory === 'sql'"
+          [attr.aria-label]="'analyzer.groupSql' | translate">
+          {{ 'analyzer.groupSql' | translate }}
+        </button>
+        <button
+          class="category-tab"
+          [class.active]="selectedCategory === 'nosql'"
+          (click)="onCategoryChange('nosql')"
+          type="button"
+          [attr.aria-pressed]="selectedCategory === 'nosql'"
+          [attr.aria-label]="'analyzer.groupNosql' | translate">
+          {{ 'analyzer.groupNosql' | translate }}
+        </button>
+      </div>
+
+      <!-- Level 2: specific engine -->
+      <select
+        class="engine-select"
+        [(ngModel)]="selectedDb"
+        (ngModelChange)="onEngineChange()"
+        [attr.aria-label]="'analyzer.dbTypeLabel' | translate">
+        <optgroup [attr.label]="'engines.predefined' | translate">
+          @for (engine of builtinEnginesForCategory; track engine.value) {
+            <option [value]="engine.value">{{ engine.label }}</option>
+          }
+        </optgroup>
+        @if (customEnginesForCategory.length > 0) {
+          <optgroup [attr.label]="'engines.custom' | translate">
+            @for (engine of customEnginesForCategory; track engine.value) {
+              <option [value]="engine.value">{{ engine.label }}</option>
+            }
+          </optgroup>
+        }
+      </select>
+    </div>
+
+    <mat-expansion-panel class="schema-validation-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ 'analyzer.schemaValidation' | translate }}</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p class="schema-validation-hint">{{ 'analyzer.schemaValidationHint' | translate }}</p>
+
+        <mat-slide-toggle
+          [checked]="useSchemaValidation"
+          (change)="onSchemaValidationToggle($event.checked)">
+          {{ 'analyzer.schemaValidation' | translate }}
+        </mat-slide-toggle>
+
+        @if (showExplorerImportPrompt && explorerImportSummary; as imp) {
+          <div class="explorer-import-banner" role="group" [attr.aria-label]="'analyzer.explorerImportPrompt' | translate">
+            <p class="explorer-import-text">
+              {{
+                'analyzer.explorerImportPrompt'
+                  | translate
+                    : {
+                        engine: imp.dbType,
+                        host: imp.host,
+                        port: imp.port,
+                        database: imp.database,
+                        user: imp.username
+                      }
+              }}
+            </p>
+            <div class="explorer-import-actions">
+              <button
+                mat-flat-button
+                color="primary"
+                type="button"
+                class="explorer-import-yes"
+                (click)="acceptExplorerConnectionForValidation()">
+                {{ 'analyzer.explorerImportYes' | translate }}
+              </button>
+              <button
+                mat-button
+                type="button"
+                class="explorer-import-no"
+                (click)="declineExplorerConnectionForValidation()">
+                {{ 'analyzer.explorerImportNo' | translate }}
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (schemaValidationError) {
+          <p class="schema-validation-error-banner" role="alert">
+            <mat-icon aria-hidden="true">error_outline</mat-icon>
+            {{ schemaValidationError }}
+          </p>
+        }
+
+        @if (useSchemaValidation && schemaConnection && !showExplorerImportPrompt) {
+          <div class="schema-connection-fields">
+            @if (schemaShowHostPort) {
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'schema.host' | translate }}</mat-label>
+                <input matInput name="schemaHost" [(ngModel)]="schemaConnection.host" autocomplete="off" />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'schema.port' | translate }}</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  name="schemaPort"
+                  [(ngModel)]="schemaConnection.port"
+                  autocomplete="off" />
+                @if (schemaIsDynamodb) {
+                  <mat-hint>{{ 'schema.dynamodbPortHint' | translate }}</mat-hint>
+                }
+              </mat-form-field>
+            }
+
+            @if (schemaIsDynamodb) {
+              <p class="schema-engine-hint span-2">
+                {{ 'schema.dynamodbConnectionHint' | translate }}
+              </p>
+            }
+
+            <mat-form-field appearance="outline" class="span-2">
+              <mat-label>{{ schemaDatabaseFieldKey | translate }}</mat-label>
+              <input
+                matInput
+                name="schemaDatabase"
+                [(ngModel)]="schemaConnection.database"
+                autocomplete="off" />
+              @if (schemaIsDynamodb) {
+                <mat-hint>{{ 'schema.dynamodbRegionHint' | translate }}</mat-hint>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ schemaUsernameLabel | translate }}</mat-label>
+              <input
+                matInput
+                name="schemaUsername"
+                [(ngModel)]="schemaConnection.username"
+                autocomplete="username" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ schemaPasswordLabel | translate }}</mat-label>
+              <input
+                matInput
+                type="password"
+                name="schemaPassword"
+                [(ngModel)]="schemaConnection.password"
+                autocomplete="current-password" />
+            </mat-form-field>
+
+            @if (schemaAuthOptional) {
+              <p class="schema-auth-optional-hint span-2">
+                {{ 'schema.authOptionalHint' | translate }}
+              </p>
+            }
+          </div>
+        }
+    </mat-expansion-panel>
+    }
+
+    @if (!vm.adhdMode || vm.currentStep === 'write') {
+    <!-- Query textarea + voice dictation (+ AST en modo experto) -->
+    <div class="query-section" [class.query-section--expert]="vm.expertMode">
+      <div class="editor-expert-row">
+      <div class="editor-expert-row__editor">
+      <div class="query-section-header">
+        <label class="field-label query-section-label" for="queryInput">
+          {{ 'analyzer.queryLabel' | translate }}
+        </label>
+        @if (vm.blindMode) {
+        <div class="mic-toolbar">
+          @if (speechRecognitionService.isSupported()) {
+            @if (!(speechRecognitionService.isListening$ | async)) {
+              <button
+                type="button"
+                class="mic-button"
+                (click)="startDictation()"
+                [attr.aria-label]="'stt.startDictation' | translate"
+                [title]="'stt.startDictation' | translate">
+                <span class="mic-button-icon" aria-hidden="true">🎤</span>
+                <span class="mic-button-label">{{ 'stt.startDictation' | translate }}</span>
+              </button>
+            } @else {
+              <button
+                type="button"
+                class="mic-button mic-button--listening"
+                (click)="speechRecognitionService.stopListening()"
+                [attr.aria-label]="'stt.stopDictation' | translate"
+                [title]="'stt.stopDictation' | translate">
+                <span class="mic-button-icon" aria-hidden="true">🔴</span>
+                <span class="mic-button-label">{{ 'stt.listening' | translate }}</span>
+              </button>
+              @if (speechRecognitionService.interimText$ | async; as interim) {
+                @if (interim) {
+                  <span class="mic-interim-preview" aria-live="assertive">{{ interim }}</span>
+                }
+              }
+            }
+          } @else {
+            <button
+              type="button"
+              class="mic-button mic-button--unsupported"
+              disabled
+              [title]="'stt.notSupported' | translate"
+              [attr.aria-label]="'stt.notSupported' | translate">
+              <span class="mic-button-icon" aria-hidden="true">🎤</span>
+              <span class="mic-button-label">{{ 'stt.notSupported' | translate }}</span>
+            </button>
+          }
+        </div>
+        }
+      </div>
+      @if (vm.blindMode && dictationMessage) {
+        <p class="dictation-status" role="alert">{{ dictationMessage }}</p>
+      }
+      <textarea
+        #queryInput
+        id="queryInput"
+        class="query-textarea"
+        [placeholder]="'analyzer.queryPlaceholder' | translate"
+        [(ngModel)]="query"
+        rows="7"
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        [attr.aria-label]="'editor.ariaLabel' | translate"
+        [attr.aria-describedby]="'editor-hint'">
+      </textarea>
+      <span id="editor-hint" class="visually-hidden">{{ 'editor.hint' | translate }}</span>
+
+      @if (vm.studentMode && detectedKeywords.length > 0) {
+        <div class="student-keywords-panel" role="region" [attr.aria-label]="'student.keywordsDetected' | translate">
+          <h4 class="student-keywords-panel__title">{{ 'student.keywordsDetected' | translate }}</h4>
+          @for (kw of detectedKeywords; track kw.keyword) {
+            <app-sql-tutorial-tooltip [keyword]="kw.keyword">
+              <div class="student-keyword-item">
+                <strong>{{ kw.keyword }}</strong>: {{ kw.description }}
+              </div>
+            </app-sql-tutorial-tooltip>
+          }
+        </div>
+      }
+      </div>
+
+      @if (vm.expertMode) {
+        <aside class="ast-panel" role="region" [attr.aria-label]="'expert.astTitle' | translate">
+          <h4 class="ast-panel__title">{{ 'expert.astTitle' | translate }}</h4>
+
+          @if (!expertPipelineSupported) {
+            <p class="ast-panel__notice">{{ 'expert.astNotAvailable' | translate }}</p>
+          } @else {
+            @if (hasExpertMultiStatements && multiResult) {
+              <p class="ast-panel__hint">{{ 'expert.astMultiHint' | translate }}</p>
+              <div class="ast-stmt-picker" role="tablist" [attr.aria-label]="'expert.selectStatement' | translate">
+                @for (stmt of multiResult.statements; track $index) {
+                  <button
+                    type="button"
+                    class="ast-stmt-picker__btn"
+                    role="tab"
+                    [class.ast-stmt-picker__btn--active]="(activeExpertStatementIndex ?? 0) === $index"
+                    [attr.aria-selected]="(activeExpertStatementIndex ?? 0) === $index"
+                    (click)="selectExpertStatement($index)">
+                    {{ 'expert.statementLabel' | translate: { index: $index + 1 } }}
+                  </button>
+                }
+              </div>
+            }
+
+            @if (activeAst) {
+              @if (aiSupportedAstActive()) {
+                <p class="ast-ai-supported-label">{{ 'expert.aiSupportedAst' | translate }}</p>
+              }
+              <app-ast-tree [ast]="activeAst" />
+            } @else if (result || multiResult) {
+              <p class="ast-tree-empty">{{ expertAstEmptyKey | translate }}</p>
+            } @else {
+              <p class="ast-tree-empty">{{ 'expert.astEmpty' | translate }}</p>
+            }
+          }
+        </aside>
+      }
+      </div>
+    </div>
+    }
+
+    @if (!vm.adhdMode || vm.currentStep === 'analyze') {
+    <!-- Action buttons -->
+    <div class="action-row" [class.icon-only]="isMobile">
+      <button
+        class="btn-primary"
+        type="button"
+        [disabled]="!query.trim() || isLoading"
+        (click)="analyzeQuery()"
+        [attr.aria-label]="'analyzer.analyzeBtn' | translate"
+        [matTooltip]="isMobile ? ('analyzer.analyzeBtn' | translate) : ''">
+        <mat-icon aria-hidden="true">play_arrow</mat-icon>
+        <span class="btn-text">
+          @if (isLoading) {
+            {{ 'analyzer.analyzing' | translate }}
+          } @else {
+            {{ 'analyzer.analyzeBtn' | translate }}
+          }
+        </span>
+      </button>
+
+      <button
+        class="btn-secondary"
+        type="button"
+        [disabled]="isLoading"
+        (click)="clearQuery()"
+        [attr.aria-label]="'analyzer.clearBtn' | translate"
+        [matTooltip]="isMobile ? ('analyzer.clearBtn' | translate) : ''">
+        <mat-icon aria-hidden="true">clear</mat-icon>
+        <span class="btn-text">{{ 'analyzer.clearBtn' | translate }}</span>
+      </button>
+    </div>
+
+    <!-- Loading -->
+    @if (isLoading) {
+      <div class="loading-row">
+        <mat-spinner diameter="20"></mat-spinner>
+        <span class="loading-text">{{ 'analyzer.analyzing' | translate }}</span>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (error) {
+      <div class="status-banner status-error" role="alert" aria-live="assertive" aria-atomic="true">
+        <span class="status-icon" aria-hidden="true">✕</span>
+        <span>{{ error }}</span>
+      </div>
+    }
+
+    }
+
+  </section>
+
+  <!-- ════════════════ RIGHT PANEL ════════════════ -->
+  <section class="panel-right">
+
+    <ng-template #exportActionsBar let-analysis="analysis" let-stmtIndex="stmtIndex" let-vmExport="vmExport">
+      <div class="export-actions" [attr.aria-label]="'export.section' | translate">
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="exportAsJson(analysis, stmtIndex)"
+          [class.export-prominent]="vmExport.deafMode || vmExport.blindMode"
+          [attr.aria-label]="'export.jsonAriaLabel' | translate">
+          <mat-icon aria-hidden="true">download</mat-icon>
+          {{ 'export.json' | translate }}
+        </button>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="copyReport(analysis, stmtIndex)"
+          [attr.aria-label]="'export.copyAriaLabel' | translate">
+          <mat-icon aria-hidden="true">content_copy</mat-icon>
+          {{ 'export.copy' | translate }}
+        </button>
+        @if (copySuccess) {
+          <span class="copy-feedback" aria-live="polite">
+            {{ 'export.copied' | translate }}
+          </span>
+        }
+      </div>
+    </ng-template>
+
+    <ng-template #diffButton let-opt="opt" let-analysis="analysis" let-stmtIndex="stmtIndex">
+      <button
+        mat-icon-button
+        type="button"
+        class="diff-btn"
+        (click)="openDiff(opt, analysis, stmtIndex)"
+        [matTooltip]="'diff.openTooltip' | translate"
+        [attr.aria-label]="'diff.openAriaLabel' | translate">
+        <mat-icon aria-hidden="true">difference</mat-icon>
+      </button>
+    </ng-template>
+
+    <ng-template
+      #aiComplementPanel
+      let-comp="comp"
+      let-loading="loading"
+      let-stmtIndex="stmtIndex"
+      let-analysis="analysis"
+      let-scriptLevel="scriptLevel">
+      <section class="ai-complement-section" aria-live="polite" qwerysCollapsible>
+        <div class="ai-complement-header">
+          <h3 class="section-title">
+            @if (scriptLevel) {
+              {{ 'analyzer.aiComplementScriptTitle' | translate }}
+            } @else {
+              {{ 'analyzer.aiComplementTitle' | translate }}
+            }
+          </h3>
+          <p class="ai-complement-subtitle">{{ 'analyzer.aiComplementSubtitle' | translate }}</p>
+        </div>
+        @if (comp?.validityCorrection?.apply && comp?.validityCorrection?.reason && analysis) {
+          <p class="ai-validity-banner" role="status">
+            <mat-icon aria-hidden="true">info</mat-icon>
+            {{ comp.validityCorrection.reason }}
+          </p>
+        }
+        @if (loading) {
+          <div class="ai-complement-loading">
+            <mat-spinner diameter="22"></mat-spinner>
+            <span>{{ 'analyzer.aiComplementLoading' | translate }}</span>
+          </div>
+        } @else if (comp) {
+          @if (comp.pedagogy) {
+            <div class="ai-complement-box">
+              <p class="ai-complement-text">{{ comp.pedagogy }}</p>
+            </div>
+          }
+          @if (comp.nativeReviews?.length) {
+            <div class="ai-native-reviews">
+              <h4 class="ai-subsection-title">{{ 'analyzer.aiNativeReviewTitle' | translate }}</h4>
+              @for (rev of comp.nativeReviews; track $index) {
+                <div class="ai-review-card">
+                  <p class="ai-review-comment">{{ rev.comment }}</p>
+                  <div class="ai-review-meta">
+                    <span
+                      class="ai-review-verdict verdict-{{ rev.verdict | lowercase }}"
+                      [attr.title]="rev.verdict === 'DISAGREE' ? ('analyzer.aiDisagreeHint' | translate) : null"
+                      [attr.aria-label]="rev.verdict === 'DISAGREE' ? ('analyzer.aiDisagreeHint' | translate) : null">
+                      {{ rev.verdict }}
+                    </span>
+                    <span class="ai-review-id">{{ rev.referenceId }}</span>
+                  </div>
+                  @if (rev.verdict === 'DISAGREE') {
+                    <p class="ai-review-disagree-hint">{{ 'analyzer.aiDisagreeHint' | translate }}</p>
+                  }
+                </div>
+              }
+            </div>
+          }
+          @if (comp.additionalErrors?.length) {
+            <div class="ai-additional-errors">
+              <h4 class="ai-subsection-title">{{ 'analyzer.aiAdditionalErrorsTitle' | translate }}</h4>
+              @for (aerr of comp.additionalErrors; track $index) {
+                <div class="ai-finding-card ai-finding-card--error">
+                  <p class="ai-finding-message">{{ aerr.message }}</p>
+                  @if (aerr.suggestion) {
+                    <p class="ai-finding-detail">{{ aerr.suggestion }}</p>
+                  }
+                  <span class="ai-finding-code">{{ aerr.code }}</span>
+                </div>
+              }
+            </div>
+          }
+          @if (comp.additionalWarnings?.length) {
+            <div class="ai-additional-warnings">
+              <h4 class="ai-subsection-title">{{ 'analyzer.aiAdditionalWarningsTitle' | translate }}</h4>
+              @for (aw of comp.additionalWarnings; track $index) {
+                <div class="ai-finding-card ai-finding-card--warning">
+                  <p class="ai-finding-message">{{ aw.message || ('analyzer.aiWarningFallback' | translate) }}</p>
+                  <span class="ai-finding-code">{{ aw.code }}</span>
+                </div>
+              }
+            </div>
+          }
+          @if (comp.provider) {
+            <p class="ai-complement-meta">
+              {{ 'analyzer.aiComplementProvider' | translate : { provider: comp.provider } }}
+            </p>
+          }
+          @if (comp.additionalOptimizations?.length) {
+            <div class="ai-additional-optimizations">
+              <h4 class="ai-subsection-title">{{ 'analyzer.aiOptimizationsTitle' | translate }}</h4>
+              <p class="ai-complement-subtitle">{{ 'analyzer.aiOptimizationsSubtitle' | translate }}</p>
+              @for (aiOpt of comp.additionalOptimizations; track $index) {
+                <div class="opt-card opt-card--ai">
+                  <div class="opt-header">
+                    <span class="impact-badge impact-{{ (aiOpt.impact || 'MEDIUM').toLowerCase() }}">
+                      {{ aiOpt.impact === 'HIGH' ? '🔴' : aiOpt.impact === 'LOW' ? '🟢' : '🟡' }}
+                      {{ impactKey(aiOpt.impact || 'MEDIUM') | translate }}
+                    </span>
+                    @if (aiOpt.ruleId) {
+                      <span class="ai-opt-rule">{{ aiOpt.ruleId }}</span>
+                    }
+                    <ng-container
+                      [ngTemplateOutlet]="diffButton"
+                      [ngTemplateOutletContext]="{
+                        opt: aiOpt,
+                        analysis: analysis,
+                        stmtIndex: stmtIndex ?? 0
+                      }" />
+                  </div>
+                  <p class="opt-desc">{{ aiOpt.description }}</p>
+                  @if (aiOptOriginal(aiOpt)) {
+                    <span class="snippet-label">{{ 'analyzer.original' | translate }}</span>
+                    <pre class="code-block snippet-original">{{ aiOptOriginal(aiOpt) }}</pre>
+                  }
+                  @if (aiOptOptimized(aiOpt)) {
+                    <span class="snippet-label">{{ 'analyzer.optimizedLabel' | translate }}</span>
+                    <pre class="code-block snippet-optimized">{{ aiOptOptimized(aiOpt) }}</pre>
+                  }
+                </div>
+              }
+            </div>
+          }
+        }
+        <button
+          mat-stroked-button
+          type="button"
+          class="ai-complement-refresh"
+          [disabled]="loading"
+          (click)="refreshAiComplement(stmtIndex)"
+          [attr.aria-label]="'analyzer.aiComplementRefresh' | translate">
+          <mat-icon aria-hidden="true">refresh</mat-icon>
+          {{ 'analyzer.aiComplementRefresh' | translate }}
+        </button>
+      </section>
+    </ng-template>
+
+    @if (!vm.adhdMode || vm.currentStep === 'results') {
+
+    @if (result) {
+      <div
+        id="analyzer-results-panel"
+        class="result-container"
+        role="region"
+        [attr.aria-label]="'analyzer.panelResult' | translate"
+        [attr.aria-live]="vm.blindMode ? 'polite' : null"
+        [attr.aria-atomic]="vm.blindMode ? 'false' : null">
+
+        <!-- Validity badge + time -->
+        <div class="result-header">
+          @switch (displayValidity(result)) {
+            @case ('invalid') {
+              <span class="validity-badge badge-invalid">
+                <mat-icon class="badge-icon">cancel</mat-icon>
+                {{ 'analyzer.invalid' | translate }}
+              </span>
+            }
+            @case ('validAiReviewed') {
+              <span class="validity-badge badge-valid badge-ai-reviewed">
+                <mat-icon class="badge-icon">verified</mat-icon>
+                {{ 'analyzer.validAiReviewed' | translate }}
+              </span>
+            }
+            @case ('validWithAiFindings') {
+              <span class="validity-badge badge-warnings">
+                <mat-icon class="badge-icon">auto_awesome</mat-icon>
+                {{ 'analyzer.validWithAiFindings' | translate }}
+              </span>
+            }
+            @case ('validWithWarnings') {
+              <span class="validity-badge badge-warnings">
+                <mat-icon class="badge-icon">warning</mat-icon>
+                {{ 'analyzer.validWithWarnings' | translate }}
+              </span>
+            }
+            @case ('validWithWarningsAndAi') {
+              <span class="validity-badge badge-warnings">
+                <mat-icon class="badge-icon">warning</mat-icon>
+                {{ 'analyzer.validWithWarningsAndAi' | translate }}
+              </span>
+            }
+            @default {
+              <span class="validity-badge badge-valid">
+                <mat-icon class="badge-icon">check_circle</mat-icon>
+                {{ 'analyzer.valid' | translate }}
+              </span>
+            }
+          }
+          <span class="analysis-time">{{ result.analysisTimeMs }} ms</span>
+        </div>
+
+        @if (aiComplement?.validityCorrection?.apply && aiComplement?.validityCorrection?.reason) {
+          <p class="ai-validity-banner" role="status">
+            <mat-icon aria-hidden="true">info</mat-icon>
+            {{ aiComplement!.validityCorrection!.reason }}
+          </p>
+        }
+
+        @if (isCustomAnalysis(result)) {
+          <p class="custom-engine-banner" role="status" aria-live="polite">
+            {{ analysisSourceLabel(result) }}
+          </p>
+          @if (result.metadata?.referenceComparison) {
+            <details class="reference-comparison" qwerysCollapsible>
+              <summary>{{ 'analyzer.metadata.referenceTitle' | translate : { base: result.metadata?.referenceBaseEngine } }}</summary>
+              <p>{{ result.metadata?.referenceComparison }}</p>
+            </details>
+          }
+        }
+
+        @if (vm.studentMode) {
+          <app-student-progress-bar
+            [errors]="studentProgressErrors(result, 0)"
+            [issues]="studentProgressIssues(result.issues, 0)"
+            [aiWarnings]="aiStudentWarningCount(0)"
+            [aiErrors]="aiStudentErrorCount(0)" />
+        }
+
+        @if (vm.expertMode) {
+          @if (expertPipelineSupported) {
+            <section class="technical-metrics" [attr.aria-label]="'expert.metricsTitle' | translate">
+              <h3 class="technical-metrics__title">{{ 'expert.metricsTitle' | translate }}</h3>
+              @if (hasExpertMultiStatements) {
+                <p class="technical-metrics__scope">
+                  {{ 'expert.metricsScopeStatement' | translate: { index: (activeExpertStatementIndex ?? 0) + 1 } }}
+                </p>
+              }
+              <dl class="technical-metrics__grid">
+              <div class="technical-metrics__item">
+                <dt>{{ 'expert.tokenCount' | translate }}</dt>
+                <dd>{{ formatMetric(activeMetrics?.tokenCount ?? activeExpertAnalysis?.tokens?.length) }}</dd>
+              </div>
+              <div class="technical-metrics__item">
+                <dt>{{ 'expert.astDepth' | translate }}</dt>
+                <dd>{{ formatMetric(activeMetrics?.astDepth) }}</dd>
+              </div>
+              <div class="technical-metrics__item">
+                <dt>{{ 'expert.lexingTime' | translate }}</dt>
+                <dd>{{ formatMetric(activeMetrics?.lexingTimeMs) }} ms</dd>
+              </div>
+              <div class="technical-metrics__item">
+                <dt>{{ 'expert.parsingTime' | translate }}</dt>
+                <dd>{{ formatMetric(activeMetrics?.parsingTimeMs) }} ms</dd>
+              </div>
+              <div class="technical-metrics__item">
+                <dt>{{ 'expert.semanticTime' | translate }}</dt>
+                <dd>{{ formatMetric(activeMetrics?.semanticTimeMs) }} ms</dd>
+              </div>
+              <div class="technical-metrics__item">
+                <dt>{{ 'expert.rulesEvaluated' | translate }}</dt>
+                <dd>{{ formatMetric(activeMetrics?.rulesEvaluated) }}</dd>
+              </div>
+            </dl>
+            </section>
+          } @else {
+            <p class="expert-metrics-notice">{{ 'expert.metricsNotAvailable' | translate }}</p>
+          }
+        }
+
+        @if (vm.blindMode) {
+        <div class="result-panel-tts">
+          <h2 class="panel-result-title">{{ 'analyzer.panelResult' | translate }}</h2>
+          <div class="tts-toolbar">
+            @if (speechService.isSupported()) {
+              @if ((speechService.speaking$ | async) === true) {
+                <button
+                  type="button"
+                  class="tts-button tts-button--stop"
+                  (click)="stopSpeaking()"
+                  [attr.aria-label]="'tts.stop' | translate"
+                  [title]="'tts.stop' | translate">⏹️</button>
+              } @else {
+                <button
+                  type="button"
+                  class="tts-button"
+                  (click)="speakText(fullSingleAnalysisSpeechText())"
+                  [attr.aria-label]="'tts.readAloud' | translate"
+                  [title]="'tts.readAloud' | translate">🔊</button>
+              }
+              @if ((speechService.speaking$ | async) === true) {
+                <span class="tts-reading-hint" aria-hidden="true">{{ 'tts.readingNow' | translate }}</span>
+              }
+            }
+            <div class="tts-caption">{{ fullSingleAnalysisSpeechText() }}</div>
+          </div>
+        </div>
+        }
+
+        <ng-container
+          [ngTemplateOutlet]="exportActionsBar"
+          [ngTemplateOutletContext]="{
+            analysis: result,
+            stmtIndex: 0,
+            vmExport: vm
+          }" />
+
+        <!-- Issues: errors · warnings · info -->
+        @if (result.issues?.length) {
+          <div
+            class="result-section"
+            qwerysCollapsible
+            [attr.role]="issuesHasErrorSeverity(result.issues) ? 'alert' : null"
+            [attr.aria-live]="issuesHasErrorSeverity(result.issues) ? 'assertive' : null"
+            [attr.aria-atomic]="issuesHasErrorSeverity(result.issues) ? 'true' : null">
+            <div class="section-title-row">
+              <h3 class="section-title">{{ 'analyzer.issuesTitle' | translate }}</h3>
+              <div class="tts-toolbar tts-toolbar--inline">
+                @if (vm.blindMode && speechService.isSupported()) {
+                  @if ((speechService.speaking$ | async) === true) {
+                    <button
+                      type="button"
+                      class="tts-button tts-button--stop"
+                      (click)="stopSpeaking()"
+                      [attr.aria-label]="'tts.stop' | translate"
+                      [title]="'tts.stop' | translate">⏹️</button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="tts-button"
+                      (click)="speakText(speechTextIssues())"
+                      [attr.aria-label]="'tts.readAloud' | translate"
+                      [title]="'tts.readAloud' | translate">🔊</button>
+                  }
+                }
+                <div class="tts-caption">{{ speechTextIssues() }}</div>
+              </div>
+            </div>
+            <div class="chips-wrap chips-wrap--stacked">
+              @for (issue of result.issues; track $index) {
+                <div class="chip-stack">
+                @if (issue.code; as ic) {
+                  <span class="issue-chip chip-{{ issue.type }} chip-block">
+                    <span class="chip-main">
+                      @if ((issueChipTitleKey(ic) | translate) !== issueChipTitleKey(ic)) {
+                        {{ issueChipTitleKey(ic) | translate }}
+                      } @else if ((issueChipFlatKey(ic) | translate) !== issueChipFlatKey(ic)) {
+                        {{ issueChipFlatKey(ic) | translate }}
+                      } @else {
+                        {{ issue.message }}
+                      }
+                    </span>
+                    @if (
+                      ((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) ||
+                      ((issueChipSuggestionKey(ic) | translate) !== issueChipSuggestionKey(ic)) ||
+                      (
+                        !((issueChipFlatKey(ic) | translate) !== issueChipFlatKey(ic)) &&
+                        !((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) &&
+                        ((issueChipTitleKey(ic) | translate) !== issueChipTitleKey(ic)) &&
+                        issue.message && issue.message !== ic
+                      )
+                    ) {
+                      @if ((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) {
+                        <span class="err-detail">{{ issueChipDescriptionKey(ic) | translate }}</span>
+                      }
+                      @if (
+                        !((issueChipFlatKey(ic) | translate) !== issueChipFlatKey(ic)) &&
+                        !((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) &&
+                        ((issueChipTitleKey(ic) | translate) !== issueChipTitleKey(ic)) &&
+                        issue.message && issue.message !== ic
+                      ) {
+                        <span class="err-detail">{{ issue.message }}</span>
+                      }
+                      @if ((issueChipSuggestionKey(ic) | translate) !== issueChipSuggestionKey(ic)) {
+                        <span class="err-suggestion">{{ issueChipSuggestionKey(ic) | translate }}</span>
+                      }
+                    }
+                  </span>
+                  @if (vm.studentMode) {
+                    <app-student-explanation-block [code]="ic" />
+                  }
+                } @else {
+                  <span class="issue-chip chip-{{ issue.type }} chip-block">
+                    <span class="chip-main">{{ issue.message }}</span>
+                  </span>
+                }
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Backend errors -->
+        @if (result.errors?.length) {
+          <div
+            class="result-section"
+            qwerysCollapsible
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true">
+            <div class="section-title-row">
+              <h3 class="section-title">{{ 'analyzer.errorsTitle' | translate }}</h3>
+              <div class="tts-toolbar tts-toolbar--inline">
+                @if (vm.blindMode && speechService.isSupported()) {
+                  @if ((speechService.speaking$ | async) === true) {
+                    <button
+                      type="button"
+                      class="tts-button tts-button--stop"
+                      (click)="stopSpeaking()"
+                      [attr.aria-label]="'tts.stop' | translate"
+                      [title]="'tts.stop' | translate">⏹️</button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="tts-button"
+                      (click)="speakText(speechTextErrors())"
+                      [attr.aria-label]="'tts.readAloud' | translate"
+                      [title]="'tts.readAloud' | translate">🔊</button>
+                  }
+                }
+                <div class="tts-caption">{{ speechTextErrors() }}</div>
+              </div>
+            </div>
+            <div class="chips-wrap chips-wrap--stacked">
+              @for (err of result.errors; track $index) {
+                <div class="chip-stack">
+                @if (err.code; as ec) {
+                  <span class="issue-chip chip-error chip-block">
+                    <span class="chip-main">
+                      @if ((issueChipTitleKey(ec) | translate) !== issueChipTitleKey(ec)) {
+                        {{ issueChipTitleKey(ec) | translate }}
+                      } @else if ((issueChipFlatKey(ec) | translate) !== issueChipFlatKey(ec)) {
+                        {{ issueChipFlatKey(ec) | translate }}
+                      } @else {
+                        {{ err.message }}
+                      }
+                      @if (err.line != null) {
+                        <span class="err-pos">
+                          (L{{ err.line }}@if (err.column != null) { · C{{ err.column }} })
+                        </span>
+                      }
+                    </span>
+                    @if (
+                      ((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) ||
+                      ((issueChipSuggestionKey(ec) | translate) !== issueChipSuggestionKey(ec)) ||
+                      (
+                        !((issueChipFlatKey(ec) | translate) !== issueChipFlatKey(ec)) &&
+                        !((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) &&
+                        ((issueChipTitleKey(ec) | translate) !== issueChipTitleKey(ec)) &&
+                        err.message && err.message !== ec
+                      )
+                    ) {
+                      @if ((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) {
+                        <span class="err-detail">{{ issueChipDescriptionKey(ec) | translate }}</span>
+                      }
+                      @if (
+                        !((issueChipFlatKey(ec) | translate) !== issueChipFlatKey(ec)) &&
+                        !((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) &&
+                        ((issueChipTitleKey(ec) | translate) !== issueChipTitleKey(ec)) &&
+                        err.message && err.message !== ec &&
+                        !errorMessageRedundantWithChip(err, ec)
+                      ) {
+                        <span class="err-detail">{{ err.message }}</span>
+                      }
+                      @if ((issueChipSuggestionKey(ec) | translate) !== issueChipSuggestionKey(ec)) {
+                        <span class="err-suggestion">{{ issueChipSuggestionKey(ec) | translate }}</span>
+                      }
+                    }
+                  </span>
+                  @if (vm.studentMode) {
+                    <app-student-explanation-block [code]="ec" [education]="err.education" />
+                    @if (syntaxCorrectionFor(ec); as synFix) {
+                      <div class="ai-syntax-fix">
+                        <span class="snippet-label">{{ 'analyzer.aiCorrectedExample' | translate }}</span>
+                        <pre class="code-block snippet-optimized">{{ synFix.correctedQuery }}</pre>
+                        @if (synFix.explanation) {
+                          <p class="ai-syntax-fix__note">{{ synFix.explanation }}</p>
+                        }
+                      </div>
+                    }
+                  }
+                } @else {
+                  <span class="issue-chip chip-error chip-block">
+                    <span class="chip-main">
+                      {{ err.message }}
+                      @if (err.line != null) {
+                        <span class="err-pos">
+                          (L{{ err.line }}@if (err.column != null) { · C{{ err.column }} })
+                        </span>
+                      }
+                    </span>
+                  </span>
+                }
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <ng-container
+          [ngTemplateOutlet]="aiComplementPanel"
+          [ngTemplateOutletContext]="{
+            comp: aiComplementAt(0),
+            loading: aiComplementLoadingAt(0),
+            stmtIndex: 0,
+            analysis: result,
+            scriptLevel: false
+          }" />
+
+        <!-- Optimization suggestions -->
+        @if (result.optimizations?.length) {
+          <div class="result-section" qwerysCollapsible>
+            <div class="section-title-row">
+              <h3 class="section-title">{{ 'analyzer.optimizationsTitle' | translate }}</h3>
+              <div class="tts-toolbar tts-toolbar--inline">
+                @if (vm.blindMode && speechService.isSupported()) {
+                  @if ((speechService.speaking$ | async) === true) {
+                    <button
+                      type="button"
+                      class="tts-button tts-button--stop"
+                      (click)="stopSpeaking()"
+                      [attr.aria-label]="'tts.stop' | translate"
+                      [title]="'tts.stop' | translate">⏹️</button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="tts-button"
+                      (click)="speakText(speechTextOptimizations())"
+                      [attr.aria-label]="'tts.readAloud' | translate"
+                      [title]="'tts.readAloud' | translate">🔊</button>
+                  }
+                }
+                <div class="tts-caption">{{ speechTextOptimizations() }}</div>
+              </div>
+            </div>
+
+            @for (opt of result.optimizations; track $index) {
+              <div class="opt-card">
+                <div class="opt-header">
+                  <span class="impact-badge impact-{{ opt.impact.toLowerCase() }}">
+                    {{ opt.impact === 'HIGH' ? '🔴' : opt.impact === 'MEDIUM' ? '🟡' : '🟢' }}
+                    {{ impactKey(opt.impact) | translate }}
+                  </span>
+                  <ng-container
+                    [ngTemplateOutlet]="diffButton"
+                    [ngTemplateOutletContext]="{
+                      opt: opt,
+                      analysis: result,
+                      stmtIndex: 0
+                    }" />
+                </div>
+
+                <p class="opt-desc">
+                  @if (opt.ruleId) {
+                    {{ (descriptionKey(opt) | translate) !== descriptionKey(opt) ? (descriptionKey(opt) | translate) : opt.description }}
+                  } @else {
+                    {{ opt.description }}
+                  }
+                </p>
+
+                @if (opt.original) {
+                  <span class="snippet-label">{{ 'analyzer.original' | translate }}</span>
+                  @if (optimizationSnippetKey(opt, 'original'); as origKey) {
+                    <pre class="code-block snippet-original">{{ (origKey | translate) !== origKey ? (origKey | translate) : opt.original }}</pre>
+                  } @else {
+                    <pre class="code-block snippet-original">{{ opt.original }}</pre>
+                  }
+                }
+                @if (opt.optimized) {
+                  <span class="snippet-label">{{ 'analyzer.optimizedLabel' | translate }}</span>
+                  @if (optimizationSnippetKey(opt, 'optimized'); as optKey) {
+                    <pre class="code-block snippet-optimized">{{ (optKey | translate) !== optKey ? (optKey | translate) : opt.optimized }}</pre>
+                  } @else {
+                    <pre class="code-block snippet-optimized">{{ opt.optimized }}</pre>
+                  }
+                }
+              </div>
+            }
+            @if (aiOptimizationNotes) {
+              <div class="ai-optimization-notes" aria-live="polite">
+                <h4 class="ai-optimization-notes__title">
+                  <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+                  {{ 'analyzer.aiOptimizationNotesTitle' | translate }}
+                </h4>
+                <p class="ai-complement-text">{{ aiOptimizationNotes }}</p>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Perfect query -->
+        @if (showsPerfect(result)) {
+          <div class="perfect-msg">
+            <div class="perfect-msg__title">{{ 'analyzer.perfect' | translate }}</div>
+            @if (optionalImprovementsCount(result); as optCount) {
+              @if (optCount > 0) {
+                <div class="perfect-msg__sub">
+                  <mat-icon class="perfect-msg__icon">tips_and_updates</mat-icon>
+                  <span>{{ 'analyzer.optionalImprovementsCount' | translate: { count: optCount } }}</span>
+                </div>
+              }
+            }
+          </div>
+        }
+
+      </div>
+
+    } @else if (multiResult) {
+
+      <div
+        id="analyzer-results-panel"
+        class="multi-result-container"
+        role="region"
+        [attr.aria-label]="'analyzer.panelResult' | translate"
+        [attr.aria-live]="vm.blindMode ? 'polite' : null"
+        [attr.aria-atomic]="vm.blindMode ? 'false' : null">
+        <div class="multi-header">
+          <span class="multi-count">{{ multiResult.statements.length }} {{ 'analyzer.statements' | translate }}</span>
+          <span class="analysis-time">{{ 'analyzer.multiExecutionTotal' | translate: { ms: multiResult.totalExecutionTimeMs } }}</span>
+          <div class="tts-toolbar tts-toolbar--inline multi-tts">
+            @if (vm.blindMode && speechService.isSupported()) {
+              @if ((speechService.speaking$ | async) === true) {
+                <button
+                  type="button"
+                  class="tts-button tts-button--stop"
+                  (click)="stopSpeaking()"
+                  [attr.aria-label]="'tts.stop' | translate"
+                  [title]="'tts.stop' | translate">⏹️</button>
+              } @else {
+                <button
+                  type="button"
+                  class="tts-button"
+                  (click)="speakText(fullMultiAnalysisSpeechText())"
+                  [attr.aria-label]="'tts.readAloud' | translate"
+                  [title]="'tts.readAloud' | translate">🔊</button>
+              }
+              @if ((speechService.speaking$ | async) === true) {
+                <span class="tts-reading-hint" aria-hidden="true">{{ 'tts.readingNow' | translate }}</span>
+              }
+            }
+            <div class="tts-caption">{{ fullMultiAnalysisSpeechText() }}</div>
+          </div>
+        </div>
+
+        <ng-container
+          [ngTemplateOutlet]="exportActionsBar"
+          [ngTemplateOutletContext]="{
+            analysis: null,
+            stmtIndex: 0,
+            vmExport: vm
+          }" />
+
+        @if (vm.expertMode) {
+          @if (expertPipelineSupported) {
+            <section class="technical-metrics technical-metrics--multi-summary" [attr.aria-label]="'expert.metricsTitle' | translate">
+              <h3 class="technical-metrics__title">{{ 'expert.metricsTitle' | translate }}</h3>
+              @if (hasExpertMultiStatements) {
+                <p class="technical-metrics__scope">
+                  {{ 'expert.metricsScopeStatement' | translate: { index: (activeExpertStatementIndex ?? 0) + 1 } }}
+                </p>
+              }
+              <dl class="technical-metrics__grid">
+                <div class="technical-metrics__item">
+                  <dt>{{ 'expert.tokenCount' | translate }}</dt>
+                  <dd>{{ formatMetric(activeMetrics?.tokenCount ?? activeExpertAnalysis?.tokens?.length) }}</dd>
+                </div>
+                <div class="technical-metrics__item">
+                  <dt>{{ 'expert.astDepth' | translate }}</dt>
+                  <dd>{{ formatMetric(activeMetrics?.astDepth) }}</dd>
+                </div>
+                <div class="technical-metrics__item">
+                  <dt>{{ 'expert.lexingTime' | translate }}</dt>
+                  <dd>{{ formatMetric(activeMetrics?.lexingTimeMs) }} ms</dd>
+                </div>
+                <div class="technical-metrics__item">
+                  <dt>{{ 'expert.parsingTime' | translate }}</dt>
+                  <dd>{{ formatMetric(activeMetrics?.parsingTimeMs) }} ms</dd>
+                </div>
+                <div class="technical-metrics__item">
+                  <dt>{{ 'expert.semanticTime' | translate }}</dt>
+                  <dd>{{ formatMetric(activeMetrics?.semanticTimeMs) }} ms</dd>
+                </div>
+                <div class="technical-metrics__item">
+                  <dt>{{ 'expert.rulesEvaluated' | translate }}</dt>
+                  <dd>{{ formatMetric(activeMetrics?.rulesEvaluated) }}</dd>
+                </div>
+              </dl>
+            </section>
+          } @else {
+            <p class="expert-metrics-notice">{{ 'expert.metricsNotAvailable' | translate }}</p>
+          }
+        }
+
+        @if (multiResult.statements.length > 1) {
+        <div class="script-level-card" qwerysCollapsible>
+          <h3 class="script-level-title">{{ 'analyzer.scriptLevelTitle' | translate }}</h3>
+          <p class="script-level-sub">{{ 'analyzer.scriptLevelSubtitle' | translate }}</p>
+          <div class="health-meter-row">
+            <span class="health-label">{{ 'analyzer.scriptHealth' | translate }}</span>
+            <div class="health-track" role="progressbar" [attr.aria-valuenow]="multiResult.scriptHealthPercent ?? 100" aria-valuemin="0" aria-valuemax="100">
+              <div
+                class="health-fill"
+                [class.health-fill--mid]="(multiResult.scriptHealthPercent ?? 100) < 80 && (multiResult.scriptHealthPercent ?? 100) >= 50"
+                [class.health-fill--low]="(multiResult.scriptHealthPercent ?? 100) < 50"
+                [style.width.%]="multiResult.scriptHealthPercent ?? 100"></div>
+            </div>
+            <span class="health-pct">{{ multiResult.scriptHealthPercent ?? 100 }}%</span>
+          </div>
+
+          @if (multiResult.scriptLevel; as sl) {
+            @if (vm.studentMode) {
+              <app-student-progress-bar
+                [errors]="studentProgressErrors(sl, -1)"
+                [issues]="studentProgressIssues(sl.issues, -1)"
+                [aiWarnings]="aiStudentWarningCount(-1)"
+                [aiErrors]="aiStudentErrorCount(-1)" />
+            }
+
+            @if (sl.issues?.length) {
+              <div class="result-section script-level-section">
+                <div class="section-title-row section-title-row--compact">
+                  <h4 class="section-title section-title--compact">{{ 'analyzer.issuesTitle' | translate }}</h4>
+                  <div class="tts-toolbar tts-toolbar--inline">
+                    @if (vm.blindMode && speechService.isSupported()) {
+                      @if ((speechService.speaking$ | async) === true) {
+                        <button
+                          type="button"
+                          class="tts-button tts-button--stop"
+                          (click)="stopSpeaking()"
+                          [attr.aria-label]="'tts.stop' | translate"
+                          [title]="'tts.stop' | translate">⏹️</button>
+                      } @else {
+                        <button
+                          type="button"
+                          class="tts-button"
+                          (click)="speakText(speechTextIssuesFor(sl))"
+                          [attr.aria-label]="'tts.readAloud' | translate"
+                          [title]="'tts.readAloud' | translate">🔊</button>
+                      }
+                    }
+                    <div class="tts-caption">{{ speechTextIssuesFor(sl) }}</div>
+                  </div>
+                </div>
+                <div class="chips-wrap chips-wrap--stacked">
+                  @for (issue of sl.issues; track $index) {
+                    <div class="chip-stack">
+                    @if (issue.code; as ic) {
+                      <span class="issue-chip chip-{{ issue.type }} chip-block">
+                        <span class="chip-main">
+                          @if ((issueChipTitleKey(ic) | translate) !== issueChipTitleKey(ic)) {
+                            {{ issueChipTitleKey(ic) | translate }}
+                          } @else if ((issueChipFlatKey(ic) | translate) !== issueChipFlatKey(ic)) {
+                            {{ issueChipFlatKey(ic) | translate }}
+                          } @else {
+                            {{ issue.message }}
+                          }
+                        </span>
+                        @if (
+                          ((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) ||
+                          ((issueChipSuggestionKey(ic) | translate) !== issueChipSuggestionKey(ic))
+                        ) {
+                          @if ((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) {
+                            <span class="err-detail">{{ issueChipDescriptionKey(ic) | translate }}</span>
+                          }
+                          @if ((issueChipSuggestionKey(ic) | translate) !== issueChipSuggestionKey(ic)) {
+                            <span class="err-suggestion">{{ issueChipSuggestionKey(ic) | translate }}</span>
+                          }
+                        }
+                      </span>
+                      @if (vm.studentMode) {
+                        <app-student-explanation-block [code]="ic" />
+                      }
+                    }
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (sl.errors?.length) {
+              <div
+                class="result-section script-level-section"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true">
+                <div class="section-title-row section-title-row--compact">
+                  <h4 class="section-title section-title--compact">{{ 'analyzer.errorsTitle' | translate }}</h4>
+                  <div class="tts-toolbar tts-toolbar--inline">
+                    @if (vm.blindMode && speechService.isSupported()) {
+                      @if ((speechService.speaking$ | async) === true) {
+                        <button
+                          type="button"
+                          class="tts-button tts-button--stop"
+                          (click)="stopSpeaking()"
+                          [attr.aria-label]="'tts.stop' | translate"
+                          [title]="'tts.stop' | translate">⏹️</button>
+                      } @else {
+                        <button
+                          type="button"
+                          class="tts-button"
+                          (click)="speakText(speechTextErrorsFor(sl))"
+                          [attr.aria-label]="'tts.readAloud' | translate"
+                          [title]="'tts.readAloud' | translate">🔊</button>
+                      }
+                    }
+                    <div class="tts-caption">{{ speechTextErrorsFor(sl) }}</div>
+                  </div>
+                </div>
+                <div class="chips-wrap chips-wrap--stacked">
+                  @for (err of sl.errors; track $index) {
+                    <div class="chip-stack">
+                    @if (err.code; as ec) {
+                      <span class="issue-chip chip-error chip-block">
+                        <span class="chip-main">
+                          @if ((issueChipTitleKey(ec) | translate) !== issueChipTitleKey(ec)) {
+                            {{ issueChipTitleKey(ec) | translate }}
+                          } @else if ((issueChipFlatKey(ec) | translate) !== issueChipFlatKey(ec)) {
+                            {{ issueChipFlatKey(ec) | translate }}
+                          } @else {
+                            {{ err.message }}
+                          }
+                          @if (err.line != null) {
+                            <span class="err-pos">(L{{ err.line }}@if (err.column != null) { · C{{ err.column }} })</span>
+                          }
+                        </span>
+                        @if (
+                          ((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) ||
+                          ((issueChipSuggestionKey(ec) | translate) !== issueChipSuggestionKey(ec))
+                        ) {
+                          @if ((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) {
+                            <span class="err-detail">{{ issueChipDescriptionKey(ec) | translate }}</span>
+                          }
+                          @if ((issueChipSuggestionKey(ec) | translate) !== issueChipSuggestionKey(ec)) {
+                            <span class="err-suggestion">{{ issueChipSuggestionKey(ec) | translate }}</span>
+                          }
+                        }
+                      </span>
+                      @if (vm.studentMode) {
+                        <app-student-explanation-block [code]="ec" [education]="err.education" />
+                        @if (syntaxCorrectionFor(ec, -1); as synFix) {
+                          <div class="ai-syntax-fix">
+                            <span class="snippet-label">{{ 'analyzer.aiCorrectedExample' | translate }}</span>
+                            <pre class="code-block snippet-optimized">{{ synFix.correctedQuery }}</pre>
+                            @if (synFix.explanation) {
+                              <p class="ai-syntax-fix__note">{{ synFix.explanation }}</p>
+                            }
+                          </div>
+                        }
+                      }
+                    }
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (scriptLevelAllClear(sl, multiResult.scriptHealthPercent)) {
+              <p class="script-level-ok">{{ 'analyzer.scriptLevelAllClear' | translate }}</p>
+
+            <ng-container
+              [ngTemplateOutlet]="aiComplementPanel"
+              [ngTemplateOutletContext]="{
+                comp: scriptAiComplement,
+                loading: scriptAiComplementLoading,
+                stmtIndex: -1,
+                analysis: sl,
+                scriptLevel: true
+              }" />
+            }
+          }
+        </div>
+        }
+
+        @for (stmt of multiResult.statements; track $index) {
+          <div class="stmt-card" [class.expanded]="expandedStatements.has($index)">
+
+            <!-- Header always visible — click to expand/collapse -->
+            <div
+              class="stmt-header"
+              [class.stmt-header--expert-active]="vm.expertMode && (activeExpertStatementIndex ?? 0) === $index"
+              (click)="toggleStatement($index)"
+              (keydown.enter)="toggleStatement($index)"
+              (keydown.space)="$event.preventDefault(); toggleStatement($index)"
+              role="button"
+              tabindex="0"
+              [attr.aria-expanded]="expandedStatements.has($index)"
+              [attr.aria-label]="'analyzer.statementToggle' | translate: { index: $index + 1 }">
+              <span class="stmt-index">#{{ $index + 1 }}</span>
+
+              @if (vm.blindMode && speechService.isSupported()) {
+                <span class="stmt-tts-wrap" (click)="$event.stopPropagation(); $event.preventDefault()">
+                  @if ((speechService.speaking$ | async) === true) {
+                    <button
+                      type="button"
+                      class="tts-button tts-button--stop"
+                      (click)="stopSpeaking()"
+                      [attr.aria-label]="'tts.stop' | translate"
+                      [title]="'tts.stop' | translate">⏹️</button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="tts-button"
+                      (click)="speakText(speechTextForStatement(stmt, $index + 1))"
+                      [attr.aria-label]="'tts.readAloud' | translate"
+                      [title]="'tts.readAloud' | translate">🔊</button>
+                  }
+                </span>
+              }
+
+              @switch (displayValidity(stmt, $index)) {
+                @case ('invalid') {
+                  <span class="validity-badge badge-invalid">
+                    <mat-icon class="badge-icon">cancel</mat-icon>
+                    {{ 'analyzer.invalid' | translate }}
+                  </span>
+                }
+                @case ('validAiReviewed') {
+                  <span class="validity-badge badge-valid badge-ai-reviewed">
+                    <mat-icon class="badge-icon">verified</mat-icon>
+                    {{ 'analyzer.validAiReviewed' | translate }}
+                  </span>
+                }
+                @case ('validWithAiFindings') {
+                  <span class="validity-badge badge-warnings">
+                    <mat-icon class="badge-icon">auto_awesome</mat-icon>
+                    {{ 'analyzer.validWithAiFindings' | translate }}
+                  </span>
+                }
+                @case ('validWithWarnings') {
+                  <span class="validity-badge badge-warnings">
+                    <mat-icon class="badge-icon">warning</mat-icon>
+                    {{ 'analyzer.validWithWarnings' | translate }}
+                  </span>
+                }
+                @case ('validWithWarningsAndAi') {
+                  <span class="validity-badge badge-warnings">
+                    <mat-icon class="badge-icon">warning</mat-icon>
+                    {{ 'analyzer.validWithWarningsAndAi' | translate }}
+                  </span>
+                }
+                @default {
+                  <span class="validity-badge badge-valid">
+                    <mat-icon class="badge-icon">check_circle</mat-icon>
+                    {{ 'analyzer.valid' | translate }}
+                  </span>
+                }
+              }
+
+              <span class="analysis-time">{{ stmt.analysisTimeMs }} ms</span>
+              <mat-icon class="expand-icon">
+                {{ expandedStatements.has($index) ? 'expand_less' : 'expand_more' }}
+              </mat-icon>
+            </div>
+
+            <!-- Collapsible detail -->
+            @if (expandedStatements.has($index)) {
+              <div class="stmt-body">
+
+                @if (vm.studentMode) {
+                  <app-student-progress-bar
+                    [errors]="studentProgressErrors(stmt, $index)"
+                    [issues]="studentProgressIssues(stmt.issues, $index)"
+                    [aiWarnings]="aiStudentWarningCount($index)"
+                    [aiErrors]="aiStudentErrorCount($index)"
+                    labelKey="student.practicesScoreStatement"
+                    [labelParams]="{ index: $index + 1 }" />
+                }
+
+                @if (vm.expertMode && expertPipelineSupported) {
+                  <section class="technical-metrics technical-metrics--compact" [attr.aria-label]="'expert.metricsTitle' | translate">
+                    <h3 class="technical-metrics__title technical-metrics__title--compact">{{ 'expert.metricsTitle' | translate }}</h3>
+                    <dl class="technical-metrics__grid">
+                      <div class="technical-metrics__item">
+                        <dt>{{ 'expert.tokenCount' | translate }}</dt>
+                        <dd>{{ formatMetric(stmt.metrics?.tokenCount ?? stmt.tokens?.length) }}</dd>
+                      </div>
+                      <div class="technical-metrics__item">
+                        <dt>{{ 'expert.astDepth' | translate }}</dt>
+                        <dd>{{ formatMetric(stmt.metrics?.astDepth) }}</dd>
+                      </div>
+                      <div class="technical-metrics__item">
+                        <dt>{{ 'expert.lexingTime' | translate }}</dt>
+                        <dd>{{ formatMetric(stmt.metrics?.lexingTimeMs) }} ms</dd>
+                      </div>
+                      <div class="technical-metrics__item">
+                        <dt>{{ 'expert.parsingTime' | translate }}</dt>
+                        <dd>{{ formatMetric(stmt.metrics?.parsingTimeMs) }} ms</dd>
+                      </div>
+                      <div class="technical-metrics__item">
+                        <dt>{{ 'expert.semanticTime' | translate }}</dt>
+                        <dd>{{ formatMetric(stmt.metrics?.semanticTimeMs) }} ms</dd>
+                      </div>
+                      <div class="technical-metrics__item">
+                        <dt>{{ 'expert.rulesEvaluated' | translate }}</dt>
+                        <dd>{{ formatMetric(stmt.metrics?.rulesEvaluated) }}</dd>
+                      </div>
+                    </dl>
+                  </section>
+                }
+
+                <ng-container
+                  [ngTemplateOutlet]="exportActionsBar"
+                  [ngTemplateOutletContext]="{
+                    analysis: stmt,
+                    stmtIndex: $index,
+                    vmExport: vm
+                  }" />
+
+                @if (stmt.issues?.length) {
+                  <div class="result-section" qwerysCollapsible>
+                    <div class="section-title-row">
+                      <h3 class="section-title">{{ 'analyzer.issuesTitle' | translate }}</h3>
+                      <div class="tts-toolbar tts-toolbar--inline">
+                        @if (vm.blindMode && speechService.isSupported()) {
+                          @if ((speechService.speaking$ | async) === true) {
+                            <button
+                              type="button"
+                              class="tts-button tts-button--stop"
+                              (click)="stopSpeaking()"
+                              [attr.aria-label]="'tts.stop' | translate"
+                              [title]="'tts.stop' | translate">⏹️</button>
+                          } @else {
+                            <button
+                              type="button"
+                              class="tts-button"
+                              (click)="speakText(speechTextIssuesFor(stmt))"
+                              [attr.aria-label]="'tts.readAloud' | translate"
+                              [title]="'tts.readAloud' | translate">🔊</button>
+                          }
+                        }
+                        <div class="tts-caption">{{ speechTextIssuesFor(stmt) }}</div>
+                      </div>
+                    </div>
+                    <div class="chips-wrap chips-wrap--stacked">
+                      @for (issue of stmt.issues; track $index) {
+                        <div class="chip-stack">
+                        @if (issue.code; as ic) {
+                          <span class="issue-chip chip-{{ issue.type }} chip-block">
+                            <span class="chip-main">
+                              @if ((issueChipTitleKey(ic) | translate) !== issueChipTitleKey(ic)) {
+                                {{ issueChipTitleKey(ic) | translate }}
+                              } @else if ((issueChipFlatKey(ic) | translate) !== issueChipFlatKey(ic)) {
+                                {{ issueChipFlatKey(ic) | translate }}
+                              } @else {
+                                {{ issue.message }}
+                              }
+                            </span>
+                            @if (
+                              ((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) ||
+                              ((issueChipSuggestionKey(ic) | translate) !== issueChipSuggestionKey(ic)) ||
+                              (
+                                !((issueChipFlatKey(ic) | translate) !== issueChipFlatKey(ic)) &&
+                                !((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) &&
+                                ((issueChipTitleKey(ic) | translate) !== issueChipTitleKey(ic)) &&
+                                issue.message && issue.message !== ic
+                              )
+                            ) {
+                              @if ((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) {
+                                <span class="err-detail">{{ issueChipDescriptionKey(ic) | translate }}</span>
+                              }
+                              @if (
+                                !((issueChipFlatKey(ic) | translate) !== issueChipFlatKey(ic)) &&
+                                !((issueChipDescriptionKey(ic) | translate) !== issueChipDescriptionKey(ic)) &&
+                                ((issueChipTitleKey(ic) | translate) !== issueChipTitleKey(ic)) &&
+                                issue.message && issue.message !== ic
+                              ) {
+                                <span class="err-detail">{{ issue.message }}</span>
+                              }
+                              @if ((issueChipSuggestionKey(ic) | translate) !== issueChipSuggestionKey(ic)) {
+                                <span class="err-suggestion">{{ issueChipSuggestionKey(ic) | translate }}</span>
+                              }
+                            }
+                          </span>
+                          @if (vm.studentMode) {
+                            <app-student-explanation-block [code]="ic" />
+                          }
+                        } @else {
+                          <span class="issue-chip chip-{{ issue.type }} chip-block">
+                            <span class="chip-main">{{ issue.message }}</span>
+                          </span>
+                        }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+
+                @if (stmt.errors?.length) {
+                  <div
+                    class="result-section"
+                    qwerysCollapsible
+                    role="alert"
+                    aria-live="assertive"
+                    aria-atomic="true">
+                    <div class="section-title-row">
+                      <h3 class="section-title">{{ 'analyzer.errorsTitle' | translate }}</h3>
+                      <div class="tts-toolbar tts-toolbar--inline">
+                        @if (vm.blindMode && speechService.isSupported()) {
+                          @if ((speechService.speaking$ | async) === true) {
+                            <button
+                              type="button"
+                              class="tts-button tts-button--stop"
+                              (click)="stopSpeaking()"
+                              [attr.aria-label]="'tts.stop' | translate"
+                              [title]="'tts.stop' | translate">⏹️</button>
+                          } @else {
+                            <button
+                              type="button"
+                              class="tts-button"
+                              (click)="speakText(speechTextErrorsFor(stmt))"
+                              [attr.aria-label]="'tts.readAloud' | translate"
+                              [title]="'tts.readAloud' | translate">🔊</button>
+                          }
+                        }
+                        <div class="tts-caption">{{ speechTextErrorsFor(stmt) }}</div>
+                      </div>
+                    </div>
+                    <div class="chips-wrap chips-wrap--stacked">
+                      @for (err of stmt.errors; track $index) {
+                        <div class="chip-stack">
+                        @if (err.code; as ec) {
+                          <span class="issue-chip chip-error chip-block">
+                            <span class="chip-main">
+                              @if ((issueChipTitleKey(ec) | translate) !== issueChipTitleKey(ec)) {
+                                {{ issueChipTitleKey(ec) | translate }}
+                              } @else if ((issueChipFlatKey(ec) | translate) !== issueChipFlatKey(ec)) {
+                                {{ issueChipFlatKey(ec) | translate }}
+                              } @else {
+                                {{ err.message }}
+                              }
+                              @if (err.line != null) {
+                                <span class="err-pos">
+                                  (L{{ err.line }}@if (err.column != null) { · C{{ err.column }} })
+                                </span>
+                              }
+                            </span>
+                            @if (
+                              ((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) ||
+                              ((issueChipSuggestionKey(ec) | translate) !== issueChipSuggestionKey(ec)) ||
+                              (
+                                !((issueChipFlatKey(ec) | translate) !== issueChipFlatKey(ec)) &&
+                                !((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) &&
+                                ((issueChipTitleKey(ec) | translate) !== issueChipTitleKey(ec)) &&
+                                err.message && err.message !== ec
+                              )
+                            ) {
+                              @if ((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) {
+                                <span class="err-detail">{{ issueChipDescriptionKey(ec) | translate }}</span>
+                              }
+                              @if (
+                                !((issueChipFlatKey(ec) | translate) !== issueChipFlatKey(ec)) &&
+                                !((issueChipDescriptionKey(ec) | translate) !== issueChipDescriptionKey(ec)) &&
+                                ((issueChipTitleKey(ec) | translate) !== issueChipTitleKey(ec)) &&
+                                err.message && err.message !== ec
+                              ) {
+                                <span class="err-detail">{{ err.message }}</span>
+                              }
+                              @if ((issueChipSuggestionKey(ec) | translate) !== issueChipSuggestionKey(ec)) {
+                                <span class="err-suggestion">{{ issueChipSuggestionKey(ec) | translate }}</span>
+                              }
+                            }
+                          </span>
+                          @if (vm.studentMode) {
+                            <app-student-explanation-block [code]="ec" [education]="err.education" />
+                            @if (syntaxCorrectionFor(ec, $index); as synFix) {
+                              <div class="ai-syntax-fix">
+                                <span class="snippet-label">{{ 'analyzer.aiCorrectedExample' | translate }}</span>
+                                <pre class="code-block snippet-optimized">{{ synFix.correctedQuery }}</pre>
+                                @if (synFix.explanation) {
+                                  <p class="ai-syntax-fix__note">{{ synFix.explanation }}</p>
+                                }
+                              </div>
+                            }
+                          }
+                        } @else {
+                          <span class="issue-chip chip-error chip-block">
+                            <span class="chip-main">
+                              {{ err.message }}
+                              @if (err.line != null) {
+                                <span class="err-pos">
+                                  (L{{ err.line }}@if (err.column != null) { · C{{ err.column }} })
+                                </span>
+                              }
+                            </span>
+                          </span>
+                        }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+
+
+                <ng-container
+                  [ngTemplateOutlet]="aiComplementPanel"
+                  [ngTemplateOutletContext]="{
+                    comp: aiComplementAt($index),
+                    loading: aiComplementLoadingAt($index),
+                    stmtIndex: $index,
+                    analysis: stmt,
+                    scriptLevel: false
+                  }" />
+                @if (stmt.optimizations?.length) {
+                  <div class="result-section" qwerysCollapsible>
+                    <div class="section-title-row">
+                      <h3 class="section-title">{{ 'analyzer.optimizationsTitle' | translate }}</h3>
+                      <div class="tts-toolbar tts-toolbar--inline">
+                        @if (vm.blindMode && speechService.isSupported()) {
+                          @if ((speechService.speaking$ | async) === true) {
+                            <button
+                              type="button"
+                              class="tts-button tts-button--stop"
+                              (click)="stopSpeaking()"
+                              [attr.aria-label]="'tts.stop' | translate"
+                              [title]="'tts.stop' | translate">⏹️</button>
+                          } @else {
+                            <button
+                              type="button"
+                              class="tts-button"
+                              (click)="speakText(speechTextOptimizationsFor(stmt))"
+                              [attr.aria-label]="'tts.readAloud' | translate"
+                              [title]="'tts.readAloud' | translate">🔊</button>
+                          }
+                        }
+                        <div class="tts-caption">{{ speechTextOptimizationsFor(stmt) }}</div>
+                      </div>
+                    </div>
+                    @for (opt of stmt.optimizations; track $index) {
+                      <div class="opt-card">
+                        <div class="opt-header">
+                          <span class="impact-badge impact-{{ opt.impact.toLowerCase() }}">
+                            {{ opt.impact === 'HIGH' ? '🔴' : opt.impact === 'MEDIUM' ? '🟡' : '🟢' }}
+                            {{ impactKey(opt.impact) | translate }}
+                          </span>
+                          <ng-container
+                            [ngTemplateOutlet]="diffButton"
+                            [ngTemplateOutletContext]="{
+                              opt: opt,
+                              analysis: stmt,
+                              stmtIndex: $index
+                            }" />
+                        </div>
+                        <p class="opt-desc">
+                          @if (opt.ruleId) {
+                            {{ (descriptionKey(opt) | translate) !== descriptionKey(opt) ? (descriptionKey(opt) | translate) : opt.description }}
+                          } @else {
+                            {{ opt.description }}
+                          }
+                        </p>
+                        @if (opt.original) {
+                          <span class="snippet-label">{{ 'analyzer.original' | translate }}</span>
+                          @if (optimizationSnippetKey(opt, 'original'); as origKey) {
+                            <pre class="code-block snippet-original">{{ (origKey | translate) !== origKey ? (origKey | translate) : opt.original }}</pre>
+                          } @else {
+                            <pre class="code-block snippet-original">{{ opt.original }}</pre>
+                          }
+                        }
+                        @if (opt.optimized) {
+                          <span class="snippet-label">{{ 'analyzer.optimizedLabel' | translate }}</span>
+                          @if (optimizationSnippetKey(opt, 'optimized'); as optKey) {
+                            <pre class="code-block snippet-optimized">{{ (optKey | translate) !== optKey ? (optKey | translate) : opt.optimized }}</pre>
+                          } @else {
+                            <pre class="code-block snippet-optimized">{{ opt.optimized }}</pre>
+                          }
+                        }
+                      </div>
+                    }
+                    @if (aiOptimizationNotesAt($index)) {
+                      <div class="ai-optimization-notes" aria-live="polite">
+                        <h4 class="ai-optimization-notes__title">
+                          <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+                          {{ 'analyzer.aiOptimizationNotesTitle' | translate }}
+                        </h4>
+                        <p class="ai-complement-text">{{ aiOptimizationNotesAt($index) }}</p>
+                      </div>
+                    }
+                  </div>
+                }
+
+                @if (showsPerfect(stmt, $index)) {
+                  <div class="perfect-msg">
+                    <div class="perfect-msg__title">{{ 'analyzer.perfect' | translate }}</div>
+                    @if (optionalImprovementsCount(stmt, $index); as optCount) {
+                      @if (optCount > 0) {
+                        <div class="perfect-msg__sub">
+                          <mat-icon class="perfect-msg__icon">tips_and_updates</mat-icon>
+                          <span>{{ 'analyzer.optionalImprovementsCount' | translate: { count: optCount } }}</span>
+                        </div>
+                      }
+                    }
+                  </div>
+                }
+
+              </div>
+            }
+
+          </div>
+        }
+      </div>
+
+    } @else if (!isLoading) {
+
+      <div class="result-placeholder">
+        <mat-icon class="placeholder-icon">analytics</mat-icon>
+        <p>{{ 'analyzer.placeholder' | translate }}</p>
+      </div>
+
+    }
+
+    }
+
+  </section>
+
+  }
+
+</div>

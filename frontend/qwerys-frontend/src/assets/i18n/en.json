@@ -1,0 +1,2845 @@
+{
+  "nav": {
+    "analyzer": "Query Analyzer",
+    "migration": "Code Migration",
+    "schema": "Schema Explorer",
+    "history": "History",
+    "ai": "AI Suggestions",
+    "settings": "Settings",
+    "logout": "Log out",
+    "endSession": "End session",
+    "guestBanner": {
+      "title": "Enjoying QWERYS?",
+      "cta": "Create a free account →"
+    },
+    "menu": "Open navigation menu"
+  },
+  "toolbar": {
+    "title": "QWERYS",
+    "changeThemeToDark": "Switch to dark mode",
+    "changeThemeToLight": "Switch to light mode",
+    "changeLanguage": "Change language",
+    "accessibility": "Accessibility",
+    "menuToggle": "Open or close menu"
+  },
+  "pwa": {
+    "install": "Install QWERYS as app",
+    "installed": "App installed successfully"
+  },
+  "engines": {
+    "predefined": "Predefined",
+    "custom": "My engines"
+  },
+  "analyzer": {
+    "title": "Query Analyzer",
+    "subtitle": "Write your query, choose the database engine and analyze it.",
+    "dbTypeLabel": "Database engine",
+    "schemaValidation": "Validate against real DB",
+    "schemaValidationHint": "Connect your DB to detect non-existent tables and columns",
+    "explorerImportPrompt": "Schema Explorer is connected to {{engine}} · {{host}}:{{port}} · {{database}} ({{user}}). Use these credentials to validate?",
+    "explorerImportYes": "Yes, use them",
+    "explorerImportNo": "No, other DB",
+    "schemaConnectFailed": "Could not connect to the database. Check path, host, port, and credentials.",
+    "aiComplementTitle": "AI perspective (complementary)",
+    "aiComplementScriptTitle": "AI perspective — whole script",
+    "aiComplementSubtitle": "Independent analysis that complements and corrects the native engine when needed.",
+    "aiComplementLoading": "Generating complementary analysis…",
+    "aiComplementRefresh": "Refresh AI analysis",
+    "aiComplementProvider": "Source: {{provider}}",
+    "aiOptimizationNotesTitle": "AI notes on native optimizations",
+    "aiNativeReviewTitle": "Native analysis review",
+    "aiDisagreeHint": "The AI disagrees with the native analysis in this context.",
+    "aiAdditionalErrorsTitle": "Errors found by AI",
+    "aiAdditionalWarningsTitle": "Warnings found by AI",
+    "aiOptimizationsTitle": "Optimization suggestions (AI)",
+    "aiOptimizationsSubtitle": "AI-only findings with current code and improved proposal.",
+    "aiCorrectedExample": "Corrected example (AI)",
+    "validAiReviewed": "VALID · AI reviewed",
+    "validWithAiFindings": "VALID · AI findings",
+    "validWithWarningsAndAi": "VALID WITH WARNINGS · AI findings",
+    "optionalImprovements": "Optional improvements available",
+    "optionalImprovementsCount": "{{count}} optional improvement(s) suggested",
+    "aiWarningFallback": "AI warning detected; review this before running in production.",
+    "groupSql": "SQL",
+    "groupNosql": "NoSQL",
+    "queryLabel": "Query",
+    "queryPlaceholder": "SELECT * FROM users WHERE ...",
+    "analyzeBtn": "Analyze Query",
+    "clearBtn": "Clear",
+    "analyzing": "Analyzing...",
+    "historySaved": "Analysis saved to your history.",
+    "historySavedAction": "View history",
+    "healthBtn": "Check connection",
+    "connectionSuccess": "Connection successful!",
+    "healthOk": "Backend is running correctly.",
+    "panelEditor": "Query Editor",
+    "panelResult": "Analysis result",
+    "valid": "VALID",
+    "invalid": "INVALID",
+    "validWithWarnings": "Valid with warnings",
+    "metadata": {
+      "aiCustom": "AI-assisted analysis for custom engine \"{{engine}}\".",
+      "approximate": "Approximate analysis of \"{{engine}}\" using {{base}} rules. Set GROQ_API_KEY for full AI analysis.",
+      "referenceTitle": "Compare with {{base}} (reference only)"
+    },
+    "issuesTitle": "Errors & Warnings",
+    "optimizationsTitle": "Optimization Suggestions",
+    "errorsTitle": "Detected errors",
+    "perfect": "Your query is perfect! ✅",
+    "noResult": "Write a query and press Analyze Query",
+    "placeholder": "Write a query and press Analyze Query",
+    "original": "Original",
+    "optimizedLabel": "Optimized",
+    "collapsibleCollapse": "Collapse section",
+    "collapsibleExpand": "Expand section",
+    "collapsibleAriaCollapse": "Collapse this section",
+    "collapsibleAriaExpand": "Expand this section",
+    "stepNavAria": "Guided analysis steps",
+    "stepWrite": "1. Write your query",
+    "stepConfigure": "2. Choose engine",
+    "stepAnalyze": "3. Analyze",
+    "stepResults": "4. Results",
+    "stepBack": "Back",
+    "stepNext": "Next",
+    "statementToggle": "Statement {{index}}: expand or collapse details",
+    "statements": "statements analyzed",
+    "multiExecutionTotal": "{{ms}} ms total",
+    "scriptLevelTitle": "Whole script (cross-statement)",
+    "scriptLevelSubtitle": "Rules that only make sense across all statements together (transactions, sessions, batches, etc.). Per-statement cards below stay unchanged.",
+    "scriptHealth": "Script health",
+    "scriptLevelAllClear": "No cross-statement issues detected at script level.",
+    "impact": {
+      "high": "High impact",
+      "medium": "Medium impact",
+      "low": "Low impact"
+    },
+    "result": {
+      "complexity": "Complexity",
+      "optimized": "Optimized query",
+      "suggestions": "Suggestions",
+      "errors": "Errors",
+      "time": "Analysis time"
+    },
+    "optimizations": {
+      "OPT-001": {
+        "description": "SELECT * fetches all columns, including ones you don't need. Specify only the columns you need to reduce I/O, memory usage and network transfer, and to allow the engine to use covering indexes."
+      },
+      "OPT-002": {
+        "description": "The column used in WHERE may not have an index. Without an index, the engine performs a full table scan on every query. Consider creating an index on the filter column to improve performance."
+      },
+      "OPT-003": {
+        "description": "This query has no LIMIT/TOP clause and could return an unlimited number of rows. Add pagination to protect against excessive memory usage and slow response times."
+      },
+      "OPT-004": {
+        "description": "Comma-separated tables in FROM with a WHERE join condition is SQL-89 (implicit JOIN) syntax. Use explicit JOIN ... ON for better readability and to prevent accidental Cartesian products if the WHERE condition is later removed."
+      },
+      "OPT-005": {
+        "description": "Subqueries in WHERE are executed once per row in the outer result. Consider rewriting them as a JOIN for significantly better performance."
+      },
+      "OPT-006": {
+        "description": "In SQL, column = NULL always evaluates to UNKNOWN, never TRUE. No row will ever match this condition — it is a silent correctness bug. Use IS NULL or IS NOT NULL to test for null values correctly."
+      },
+      "OPT-007": {
+        "description": "Applying a function to a column in WHERE (e.g. YEAR(date) = 2023) prevents the engine from using the index on that column. Rewrite the condition so the function applies to the constant side, or create a functional index."
+      },
+      "OPT-008": {
+        "description": "Cartesian product detected: multiple tables in FROM without a join condition between them. The result multiplies ALL rows from the first table with ALL rows from the second. Add an explicit JOIN condition."
+      },
+      "OPT-009": {
+        "description": "NOT IN with a subquery that can return NULL produces unexpected results — the entire condition evaluates to FALSE. Use NOT EXISTS or add IS NOT NULL in the subquery to guarantee correct results."
+      },
+      "OPT-010": {
+        "description": "Redundant or unnecessary ORDER BY detected. Verify whether the ordering is truly needed for the final result, as it adds processing overhead."
+      },
+      "OPT-011": {
+        "description": "A leading wildcard in LIKE '%value' prevents the engine from using the column index. The engine must scan the entire table. Consider using full-text search (FULLTEXT INDEX) or rewriting the condition."
+      },
+      "OPT-PROC-001": {
+        "description": "You walk rows with a cursor only to update or delete one by one. A single set-based UPDATE or DELETE is usually much faster.",
+        "original": "Open a cursor, loop with FETCH into variables, and run UPDATE or DELETE once per row.",
+        "optimized": "One UPDATE or DELETE that applies to every matching row at once (JOIN/WHERE/MERGE), instead of repeating work row by row."
+      },
+      "OPT-PROC-002": {
+        "description": "Inside the loop you run a query per iteration for another row. Batch the work—bulk loads, temp tables, or set operations depending on your engine.",
+        "original": "Each loop iteration runs a SELECT or FETCH to pull another row (often by primary key).",
+        "optimized": "Batch data: Oracle favors bulk collects (e.g. BULK COLLECT); SQL Server favors table-valued parameters or temp tables; PostgreSQL favors arrays or bulk INSERT…SELECT; MySQL favors fewer round-trips by processing in chunks."
+      },
+      "OPT-PROC-003": {
+        "description": "The exact same query repeats each iteration while inputs do not change. Move it outside the loop and reuse the result.",
+        "original": "The same literal query runs inside the loop even though the relevant inputs stay fixed.",
+        "optimized": "Run that query once before the loop and reuse its result inside the loop."
+      },
+      "OPT-PROC-004": {
+        "description": "You execute dynamic SQL even though the statement text is fixed. Use static SQL so the engine can optimize and the code stays clearer.",
+        "original": "Dynamic SQL (EXECUTE, sp_executesql, etc.) with fixed text that does not depend on variables.",
+        "optimized": "Replace with static SQL so the optimizer can plan it and the code stays easier to read."
+      },
+      "OPT-PROC-005": {
+        "description": "You commit or roll back inside the loop. That multiplies engine work and can slow badly. Batch commits at the end when safe.",
+        "original": "COMMIT or ROLLBACK inside the loop body (once per iteration).",
+        "optimized": "Commit or roll back after a batch of work finishes when it is safe—not every iteration."
+      },
+      "OPT-PROC-006": {
+        "description": "You concatenate long text inside the loop without an efficient accumulator. Use your engine’s recommended string-building approach to avoid extra cost.",
+        "original": "A large string is built by concatenating text on every loop iteration.",
+        "optimized": "Accumulate efficiently for your engine (buffer, list of chunks, etc.) instead of growing the string step by step."
+      },
+      "OPT-CURSOR-LOOP": {
+        "description": "A procedural loop that FETCHes a cursor and runs UPDATE or DELETE each iteration is usually much slower than one statement that updates or deletes all matching rows—unless you truly need different logic per row.",
+        "original": "LOOP/WHILE/FOR with FETCH from the cursor and UPDATE or DELETE inside each iteration.",
+        "optimized": "One UPDATE, DELETE, or MERGE with the same predicates using joins or subqueries equivalent to the cursor."
+      }
+    },
+    "issues": {
+      "SEM-001": "DELETE without WHERE will delete ALL records in the table. Add a WHERE clause to filter which records to delete.",
+      "SEM-002": "UPDATE without WHERE will modify ALL records in the table. Add a WHERE clause to filter which records to update.",
+      "SE001": "Missing column list after SELECT.",
+      "SE002": "Missing table name after FROM.",
+      "SE003": "Incomplete WHERE condition. Use a full expression like: column = value",
+      "SE004": "SELECT * with JOIN may return unexpected or duplicate columns. Specify only the columns you need.",
+      "SE007": "Possible SQL injection detected. Use parameterized queries instead of string concatenation.",
+      "SE008": "Duplicate column in SELECT list. Remove the duplicate reference.",
+      "SE009": "ORDER BY column is not in the SELECT list.",
+      "SE010": "LIMIT without ORDER BY may return inconsistent results. Add ORDER BY for deterministic pagination.",
+      "PARSE-INCOMPLETE": "The query is incomplete. Check that the syntax is properly closed.",
+      "PARSE-INCOMPLETE-LIKE": "LIKE requires a search value in quotes, for example: LIKE '%text%'",
+      "SYN-001-SQL": {
+        "title": "SQL syntax error",
+        "description": "The parser reported invalid SQL at the indicated position.",
+        "suggestion": "Fix the construct shown in the detail message; check parentheses, commas, and keywords."
+      },
+      "SYN-001-PARTIQL": {
+        "title": "PartiQL syntax error (DynamoDB)",
+        "description": "The PartiQL statement is not valid at the indicated position.",
+        "suggestion": "Review PartiQL SELECT/INSERT/UPDATE/DELETE and literals supported by DynamoDB."
+      },
+      "ES-SYNTAX-001": {
+        "title": "Invalid JSON — query cannot be parsed",
+        "description": "The query is not valid JSON. The analyzer cannot continue.",
+        "suggestion": "Check JSON syntax: balanced braces, brackets, commas, and quotes."
+      },
+      "SE-LIKE-ALL": "LIKE '%' matches ALL records — it is equivalent to removing the WHERE clause. Specify a real search term.",
+      "SE-LIKE-SHORT": "Search term is too short (1-2 characters). This could return millions of rows. Use at least 3 characters.",
+      "SE-NULL-EQUALS": "Use IS NULL or IS NOT NULL to compare with NULL. Comparisons using = NULL always return false in SQL.",
+      "SE-BETWEEN-INV": "BETWEEN range is inverted. The first value must be less than the second. E.g.: BETWEEN 1 AND 100.",
+      "SE-DIV-ZERO": "Division by zero detected in the expression. This will cause a runtime error.",
+      "SE-EMPTY-STR": "Comparison with empty string ('') detected. Verify if this is intentional or if the real value is missing.",
+      "SE-CARTESIAN": "Cartesian product detected: multiple tables in FROM without a JOIN condition. This multiplies every row against every other row.",
+      "SE-TAUTOLOGY": "WHERE 1=1 filters nothing — it is always true. Returns every record in the table.",
+      "SE-IMPOSSIBLE": "WHERE 1=0 or WHERE FALSE never returns rows. This query will always return empty.",
+      "SE-SELF-CMP": "A column is compared to itself. This condition is always true and filters nothing.",
+      "SE-BETWEEN-SINGLE": "BETWEEN with the same value on both ends is equivalent to a simple = . Use = value instead.",
+      "SE-EMPTY-IN": "The IN () list is empty. This condition is never true — the query will return zero rows.",
+      "SE-CONTRADICTS": "The same column requires two different values with AND. This is impossible — no row can satisfy both conditions simultaneously.",
+      "SE-RANGE-IMPOSSIBLE": "The numeric range is impossible: the condition requires the value to be simultaneously greater and less than values that contradict each other.",
+      "SE-DANGER-SCOPE": "DELETE or UPDATE with WHERE 1=1 will affect ALL records even though it has a WHERE clause. This is as dangerous as having no WHERE at all.",
+      "SE-INSERT-NO-COLS": "INSERT without an explicit column list is fragile. If the table schema changes (columns added, removed, or reordered), this INSERT will fail silently. Use: INSERT INTO table (col1, col2) VALUES (val1, val2).",
+      "SCH-001": "Table does not exist in the connected database.",
+      "SCH-001-MONGODB": "Collection does not exist in the connected database",
+      "SCH-001-CASSANDRA": "Table does not exist in the connected keyspace",
+      "SCH-001-ELASTICSEARCH": "Index does not exist in the connected cluster",
+      "SCH-001-REDIS": "Key does not exist in the connected Redis database",
+      "SCH-001-DYNAMODB": "Table does not exist in DynamoDB",
+      "SCH-002": "Column not found in the referenced table.",
+      "SCH-003": "Type mismatch between column and literal in a comparison.",
+      "AI-CUSTOM-APPROX": "Approximate analysis for your custom engine using the base engine rules (no Groq). Set ai.api-key on the server for AI-assisted analysis.",
+      "MY001": "ON DUPLICATE KEY requires a UNIQUE index or PRIMARY KEY on the table. Without one, this statement behaves as a plain INSERT.",
+      "MY002": "Non-aggregated column in SELECT is not in GROUP BY. MySQL 5.x allows this when ONLY_FULL_GROUP_BY is off, but MySQL 8+ enforces it by default. Add the column to GROUP BY or wrap it in an aggregate function.",
+      "MY003": "LIMIT without ORDER BY returns rows in an arbitrary order. Add ORDER BY to get predictable results.",
+      "MY004": "The PASSWORD() or ENCRYPT() function was removed in MySQL 8.0. Use bcrypt or another application-level hashing mechanism instead.",
+      "MY005": "JSON_TABLE() requires MySQL 8.0 or later. Verify your server version before using this function.",
+      "MY006": "An AUTO_INCREMENT column must be defined as a key (PRIMARY KEY or UNIQUE INDEX). MySQL requires this.",
+      "PG001": "ILIKE is case-insensitive but may perform a full table scan. For large tables, create a GIN index with pg_trgm: CREATE INDEX ON table USING gin(column gin_trgm_ops).",
+      "PG002": "The RETURNING clause is empty. Specify at least one column: RETURNING id, updated_at.",
+      "PG003": "SERIAL and BIGSERIAL are deprecated in PostgreSQL 14+. Use identity columns instead: column INT GENERATED ALWAYS AS IDENTITY.",
+      "PG004": "Malformed PostgreSQL array operator usage (@>, <@, &&). These operators must appear between two array expressions.",
+      "PG005": "LATERAL must reference a subquery or a set-returning function. Example: JOIN LATERAL (SELECT ...) AS t ON true.",
+      "PG006": "WITH RECURSIVE requires UNION ALL between the base case and the recursive case.",
+      "LT001": "SQLite does not support RIGHT JOIN or FULL OUTER JOIN. Rewrite using LEFT JOIN with the table order reversed.",
+      "LT002": "ALTER TABLE DROP COLUMN requires SQLite 3.35+. ALTER TABLE RENAME COLUMN requires SQLite 3.25+. On older versions you must recreate the table.",
+      "LT003": "SQLite foreign key enforcement is disabled by default. Run PRAGMA foreign_keys = ON at the start of each connection.",
+      "LT004": "SQLite has no native DATE or DATETIME type. Values are stored as TEXT, REAL, or INTEGER. Use date() / datetime() / strftime() functions for comparisons.",
+      "LT005": "Window functions (OVER clause) require SQLite 3.25 or later. Check your version with SELECT sqlite_version().",
+      "LT006": "A WITHOUT ROWID table must have an explicit PRIMARY KEY defined.",
+      "SS001": "SELECT TOP without ORDER BY returns arbitrary rows. Add ORDER BY to get deterministic results.",
+      "SS002": "WITH (NOLOCK) may return dirty reads (uncommitted data). Consider using READ COMMITTED SNAPSHOT ISOLATION instead.",
+      "SS003": "Temporary table created with SELECT INTO #temp. Remember to DROP TABLE when done, or it will persist for the duration of the connection.",
+      "SS004": "CURSOR detected. Cursors are significantly slower than set-based operations. Rewrite using UPDATE/INSERT/DELETE with JOINs or window functions.",
+      "SS005": "Old-style implicit JOIN syntax detected in WHERE clause. Use explicit JOIN ... ON syntax for clarity.",
+      "SS006": "MERGE statement without OUTPUT clause. Consider adding OUTPUT to capture inserted, updated, or deleted rows.",
+      "SS007": "@@IDENTITY may return IDs generated by triggers, not just the current INSERT. Use SCOPE_IDENTITY() to get the ID from the current scope only.",
+      "SS008": "The data types text, ntext, and image are deprecated since SQL Server 2005. Replace with: text → varchar(MAX), ntext → nvarchar(MAX), image → varbinary(MAX).",
+      "ORA001": "Oracle requires FROM DUAL for SELECT without a real table. Example: SELECT 1+1 FROM DUAL.",
+      "ORA002": "ROWNUM > n in WHERE always returns zero rows. ROWNUM is assigned before ORDER BY, so the condition is always false. Wrap the query in a subquery.",
+      "ORA003": "ROWNUM without ORDER BY returns rows in an unpredictable order. Wrap the query: SELECT * FROM (SELECT * FROM table ORDER BY col) WHERE ROWNUM <= n.",
+      "ORA004": "NVL evaluates both arguments even when the first is not NULL. COALESCE short-circuits and is more efficient when the second argument is expensive to compute.",
+      "ORA005": "DECODE is Oracle-specific and not portable to other databases. Replace with standard SQL CASE WHEN.",
+      "ORA006": "Use VARCHAR2 instead of VARCHAR in Oracle. Oracle reserves the right to change VARCHAR semantics in future releases.",
+      "ORA007": "Oracle DATE includes a time component (unlike ANSI SQL DATE). For date-only comparisons use TRUNC(date_col).",
+      "ORA008": "CONNECT BY without START WITH begins traversal from ALL rows, causing exponential performance degradation. Add START WITH with your root condition.",
+      "ORA009": "Potential implicit type conversion between CHAR/VARCHAR2 and NUMBER. This prevents index usage and causes full table scans. Use TO_NUMBER() or store numbers as NUMBER type.",
+      "DDL-001": "The view selects every column from the base table. If the table changes, the view may break or expose unexpected columns. List only the columns you really need in the view definition.",
+      "DDL-002": "The index definition does not clearly specify which columns it should cover. An index needs concrete columns to be useful. Fix CREATE INDEX and list the correct columns.",
+      "DDL-003": "You alter the table by renaming or dropping a column. Views, reports, or other objects may still reference that name and fail afterward. Check dependents and update them before applying the change.",
+      "DDL-004": "You drop a table without an \"if exists\" safeguard. If the name does not match, the whole script can stop mid-deploy. Use IF EXISTS for safer, repeatable scripts.",
+      "DDL-005": "You drop an entire database—destructive and hard to undo without backups. Confirm environment, backups, and that nothing production-critical relies on that database before running.",
+      "DCL-001": "You grant all privileges on the object. That is usually more access than people need and increases damage if an account is abused. Grant only SELECT, INSERT, UPDATE, or DELETE as each role truly requires.",
+      "DCL-002": "You revoke privileges from a highly privileged account (for example an administrator). You might accidentally lock out maintenance access. Verify the login and impact before applying the revoke.",
+      "TCL-001": "You opened a transaction but no COMMIT or ROLLBACK appears by the end of the flow. Locks and uncommitted changes may linger. Finish with COMMIT to save or ROLLBACK to discard.",
+      "TCL-002": "There is a ROLLBACK without a matching start of transaction (BEGIN or equivalent). The order does not line up. Ensure each transaction has a clear beginning and end.",
+      "TCL-003": "You reuse the same savepoint name more than once inside the transaction. It is easy to roll back to the wrong place on error. Give each SAVEPOINT a unique name.",
+      "TCL-004": "The isolation level allows reading changes other transactions have not committed yet. Results can be inconsistent or \"dirty.\" If you need stable reads, use a stricter isolation level.",
+      "SCR-MULTI-001": {
+        "title": "Multiple statements failed validation",
+        "description": "More than one statement in this script has blocking errors. Fix them in order; later statements may depend on earlier ones succeeding.",
+        "suggestion": "Expand each numbered statement below, resolve errors from top to bottom, then re-analyze the whole script."
+      },
+      "PROC-001": "You declare a variable and never use it in the block. Remove it or use it to keep the code clear.",
+      "PROC-002": "You use a name that is not declared in this scope. The engine will not know what value to use. Declare it first or fix the spelling.",
+      "PROC-003": "The same variable is declared twice in the same scope. Remove the duplicate declaration or rename one of them.",
+      "PROC-004": "You assign to something that is not declared as a variable here. Declare it first or correct the name.",
+      "PROC-005": "The block is empty and does nothing useful. Remove it or add the logic you need.",
+      "PROC-010": "The IF condition is always true, so the branches are misleading. Simplify the code or fix the condition so it reflects a real decision.",
+      "PROC-011": "The WHILE condition is always satisfied; the loop may run forever and hang the session. Change the condition or guarantee a clear exit.",
+      "PROC-012": "The loop has no clear way to exit when it should finish. Add an exit condition (for example EXIT WHEN) so it cannot spin endlessly.",
+      "PROC-013": "The FOR range appears to run backwards without a supported stepping direction. Check the bounds so the iteration matches your intent.",
+      "PROC-014": "The CASE does not say what happens when no branch matches. Add ELSE or make sure every situation is covered.",
+      "PROC-015": "The procedure calls itself without a clear base case; it can overflow the stack or never stop. Define when recursion must stop.",
+      "PROC-020": "You declare a cursor and never open it; it will never run. Open it where needed or remove the declaration.",
+      "PROC-021": "You open a cursor and never close it. That can leak server resources. Always close the cursor when you are done.",
+      "PROC-022": "You fetch from the cursor before opening it. Open the cursor first, then fetch.",
+      "PROC-023": "You fetch from the cursor after it was closed. Re-open if you need more rows or fix the order of OPEN, FETCH, and CLOSE.",
+      "PROC-024": "You use a cursor to pull a single row; often a direct query into variables is simpler. Consider SELECT INTO or your engine’s equivalent.",
+      "PROC-026": "You OPEN a cursor that is not declared in this block. The engine does not know which query to run. DECLARE the cursor (DECLARE … CURSOR …) before OPEN or fix the name.",
+      "PROC-030": "This block can fail at runtime and has no error handling. Add a way to catch and record failures so they are not silent.",
+      "PROC-031": "You catch every error without re-raising or logging properly. Failures stay hidden and debugging is painful. Handle specific cases or at least log and re-throw when appropriate.",
+      "PROC-032": "You raise an error without enough message or context. Maintainers will not know what failed. Add a clear message and, if applicable, an error code.",
+      "PROC-033": "The error handler only ignores the failure or prints something trivial. The real problem disappears. Log the error and decide whether it should propagate or be fixed.",
+      "PROC-034": "The same error situation is handled twice in one block. Remove the duplicate or unify the logic so behavior is predictable.",
+      "PROC-SEM-001": "You assign to a variable but never read it afterward in conditions or expressions. Remove it or use it where it matters.",
+      "PROC-SEM-002": "You read a variable that was never given a value after declaration. Assign before use or fix the control flow.",
+      "PROC-SEM-003": "This is a function and a path reaches the end without returning a value. Ensure every branch returns or raises a controlled error.",
+      "PROC-SEM-004": "There is code after an unconditional return or raise; it never runs. Delete it or move logic above the exit.",
+      "PROC-SEM-005": "Recursion has no base case the analyzer can see. Define when it must stop or replace with a bounded loop.",
+      "PROC-SEM-006": "The loop condition never changes inside the body; the loop might never finish. Update the controlling variable or condition each iteration.",
+      "PROC-SEM-007": "The cursor is opened on one branch and closed on another depending on flow; if paths mismatch it may stay open. Use one clear path to open and close, or a single finally-style block.",
+      "PROC-SEM-008": "You compare a variable to itself; the condition does not filter anything useful. Fix the comparison to use two distinct values.",
+      "PROC-SEM-009": "What you return does not match the function’s declared type. Align the declared type with the returned value.",
+      "PROC-SEM-010": "You modify an input-only parameter. Callers do not expect side effects on inputs. Use a local variable for internal changes.",
+      "OPT-PROC-001": "You walk rows with a cursor only to update or delete one by one. A single set-based UPDATE or DELETE is usually much faster.",
+      "OPT-PROC-002": "Inside the loop you run a query per iteration for another row. Batch the work—bulk loads, temp tables, or set operations depending on your engine.",
+      "OPT-PROC-003": "The exact same query repeats each iteration while inputs do not change. Move it outside the loop and reuse the result.",
+      "OPT-PROC-004": "You execute dynamic SQL even though the statement text is fixed. Use static SQL so the engine can optimize and the code stays clearer.",
+      "OPT-PROC-005": "You commit or roll back inside the loop. That multiplies engine work and can slow badly. Batch commits at the end when safe.",
+      "OPT-PROC-006": "You concatenate long text inside the loop without an efficient accumulator. Use your engine’s recommended string-building approach to avoid extra cost.",
+      "PROC-ORA-001": "The procedure does not say whether it runs with the definer’s rights or the invoker’s. Explicitly choose what fits your security and auditing policy.",
+      "PROC-ORA-002": "You select into variables without handling \"no row\" or \"too many rows.\" Add handling for NO_DATA_FOUND and TOO_MANY_ROWS.",
+      "PROC-ORA-003": "A variable type refers to a table that does not appear in the known schema. Verify the table name and that analysis has the right schema context.",
+      "PROC-ORA-004": "Committing or rolling back inside a trigger is unsafe; it can break the main transaction. Keep COMMIT and ROLLBACK out of triggers.",
+      "PROC-ORA-005": "You mark a transaction autonomous but the intent is unclear. Confirm you really need that behavior or simplify the design.",
+      "PROC-ORA-006": "You bulk-load many rows into a collection without a limit. On large tables that can exhaust memory. Process in batches with a reasonable size.",
+      "PROC-ORA-007": "You bulk-update without saving exceptions per row; one failure can cancel the whole batch. Consider allowing partial failures when your use case allows.",
+      "PROC-ORA-008": "For looping query results, an implicit FOR loop over the query is often simpler than an explicit cursor. Prefer the simplest form that meets your need.",
+      "PROC-SS-001": "SQL Server procedures often benefit from turning off extra \"rows affected\" messages for less client noise. Enable SET NOCOUNT ON at the start when appropriate.",
+      "PROC-SS-002": "You opened TRY without CATCH. Errors have no defined handling. Always pair TRY with CATCH or another valid strategy.",
+      "PROC-SS-003": "You use the older RAISERROR-style pattern; modern versions prefer THROW for clearer error reporting.",
+      "PROC-SS-004": "You opened a cursor without a final DEALLOCATE. Release the cursor when finished so it does not linger in the session.",
+      "PROC-SS-005": "You join a large workload using a table variable; it can be limiting. For big sets consider an explicit temp table.",
+      "PROC-SS-006": "The code uses GOTO labels; structured IF and loops are easier to maintain. Refactor away from GOTO.",
+      "PROC-SS-007": "SELECT * INTO a temp table ties the shape to the source query; schema drift is silent. List only the columns you need.",
+      "PROC-SS-008": "You read the last generated identity globally; triggers or other scopes can interfere. Use SCOPE_IDENTITY() (or equivalent) for the current INSERT scope.",
+      "PROC-SS-009": "A very long deliberate wait holds the connection busy. Shorten the delay or move work off-session.",
+      "PROC-SS-010": "Dynamic SQL is built by concatenating values without parameters. That invites injection and bugs. Use parameterized sp_executesql.",
+      "PROC-PG-001": "The function omits an explicit LANGUAGE clause (for example plpgsql). The server may reject or mis-handle the body. Add the proper LANGUAGE.",
+      "PROC-PG-002": "The function runs with elevated privileges but search_path is not locked down. Someone could hijack object resolution. Set a safe search_path on the definition.",
+      "PROC-PG-003": "The function is marked non-volatile but the body writes to tables. Fix the volatility label or remove writes.",
+      "PROC-PG-004": "The function should return a set of rows but a path returns nothing. Ensure RETURN QUERY or RETURN on every branch.",
+      "PROC-PG-005": "This is a trigger function and it does not return NEW or OLD as required. Return the correct row for BEFORE/AFTER triggers.",
+      "PROC-PG-006": "NOTIFY/LISTEN sits inside a very long transaction; messages may be delayed or work may stall. Shorten the transaction or move notifications.",
+      "PROC-PG-007": "Dynamic SQL is built by concatenating untrusted fragments—a classic injection risk. Use safe quoting or parameterized EXECUTE.",
+      "PROC-PG-008": "For dynamic SQL, EXECUTE ... USING is safer and clearer than pasting literals. Prefer USING when possible.",
+      "PROC-PG-009": "GET DIAGNOSTICS is requested but the result is unused. Remove it or use it for logging and error control.",
+      "PROC-PG-010": "A catch-all exception handler swallows errors without RAISE or logging. Handle specific cases or at least log and re-throw.",
+      "PROC-MY-001": "The procedure omits a deterministic declaration MySQL relies on for replication and planning. Declare DETERMINISTIC or NOT DETERMINISTIC appropriately.",
+      "PROC-MY-002": "SQL SECURITY was not chosen; default is often DEFINER, which can surprise you on permissions. Pick INVOKER or DEFINER deliberately.",
+      "PROC-MY-003": "The cursor has no handler for end-of-result; the loop may not terminate cleanly. Add a NOT FOUND handler.",
+      "PROC-MY-004": "The handler exits the whole block when continuing might be enough. Consider CONTINUE vs EXIT for that error type.",
+      "PROC-MY-005": "SIGNAL is raised without a standard SQLSTATE. Clients cannot classify the failure. Provide SQLSTATE and a clear message.",
+      "PROC-MY-006": "The trigger updates the same table that fired it; MySQL cannot recurse that way safely. Restructure logic or use another table.",
+      "PROC-MY-007": "The function declares MODIFIES SQL DATA when it should only read or touch nothing. Align the SQL characteristic with actual behavior.",
+      "PROC-MY-008": "The procedure declares an OUT parameter that is never assigned on every path. Assign it on all exits or adjust the signature.",
+      "MGO-SYNTAX-001": {
+        "title": "Invalid MongoDB syntax",
+        "description": "The query structure is invalid (documents, pipeline brackets, or parentheses).",
+        "suggestion": "Use db.collection.find({ field: 'value' }).limit(100) or insertOne/updateMany/aggregate(...)."
+      },
+      "MGO-CHAIN-001": {
+        "title": "Unrecognized chained method",
+        "description": "After find/aggregate there is a .method() the analyzer does not recognize or is misspelled.",
+        "suggestion": "Chain common methods: .limit(n), .skip(n), .sort({}), .project({}), .hint({}). Check the method name."
+      },
+      "MGO-WRONG-ENGINE": {
+        "title": "Wrong database engine",
+        "description": "This input does not look like MongoDB syntax. MongoDB queries must start with db.collectionName.method(...)",
+        "suggestion": "Check the selected engine or use MongoDB shell syntax: db.users.find({ field: 'value' })"
+      },
+      "RDS-WRONG-ENGINE": {
+        "title": "Incorrect syntax for Redis",
+        "description": "This query does not look like a Redis command.",
+        "suggestion": "Check the selected engine or use Redis commands: SET key value, GET key, HSET hash field value."
+      },
+      "CQL-WRONG-ENGINE": {
+        "title": "Incorrect syntax for Cassandra",
+        "description": "This query does not look like Cassandra CQL.",
+        "suggestion": "Use CQL syntax: SELECT … FROM keyspace.table WHERE partition_key = ?"
+      },
+      "ES-WRONG-ENGINE": {
+        "title": "Incorrect syntax for Elasticsearch",
+        "description": "This query does not look like Elasticsearch JSON or REST syntax.",
+        "suggestion": "Use JSON Query DSL ({ \"query\": { … } }) or REST: GET index/_search"
+      },
+      "SQL-WRONG-ENGINE": {
+        "title": "Incorrect syntax for SQL",
+        "description": "This query does not look like SQL for the selected relational engine.",
+        "suggestion": "Verify the engine (MySQL, PostgreSQL, SQL Server, Oracle, SQLite) or paste valid SQL."
+      },
+      "DDB-WRONG-ENGINE": {
+        "title": "Incorrect syntax for DynamoDB",
+        "description": "This payload does not look like DynamoDB PartiQL, SDK expressions, or management JSON.",
+        "suggestion": "Use PartiQL, SDK expressions (SET/REMOVE/ADD), or JSON with TransactItems."
+      },
+      "UNKNOWN-ENGINE": {
+        "title": "Unrecognized engine",
+        "description": "The selected database engine is not supported by the analyzer.",
+        "suggestion": "Choose a supported engine from the dropdown."
+      },
+      "MGO-JS-001": {
+        "title": "$where operator detected — security risk",
+        "description": "$where executes JavaScript server-side on each document, opening NoSQL injection vectors and degrading performance.",
+        "suggestion": "Replace $where with native filters ($eq, $in, $gte, $lte) or an aggregation pipeline."
+      },
+      "MGO-REGEX-001": {
+        "title": "Regular expression without index",
+        "description": "$regex or /.../  patterns generally don't use B-tree indexes unless anchored by a fixed prefix (^text).",
+        "suggestion": "Consider a text index, a normalized search field, or pre-filter documents with other criteria first."
+      },
+      "MGO-NOFILTER-001": {
+        "title": "Operation without filter",
+        "description": "find/update/delete without a filter may affect ALL documents in the collection.",
+        "suggestion": "Add an explicit filter criterion or confirm you intend to process the entire collection."
+      },
+      "MGO-LOOKUP-001": {
+        "title": "Incomplete $lookup",
+        "description": "$lookup requires localField+foreignField, or the pipeline subquery syntax.",
+        "suggestion": "Use: {$lookup:{from:'col',localField:'a',foreignField:'b',as:'res'}} or pipeline subquery syntax."
+      },
+      "MGO-UNWIND-001": {
+        "title": "$unwind: path must start with $",
+        "description": "The $unwind field must be a field reference starting with $.",
+        "suggestion": "Change to: {$unwind: '$fieldName'}"
+      },
+      "MGO-GROUP-001": {
+        "title": "$group missing _id field",
+        "description": "$group requires the _id field to define the grouping key.",
+        "suggestion": "Add _id: null to group all documents, or _id: '$field' to group by a field."
+      },
+      "MGO-FACET-001": {
+        "title": "Forbidden stage inside $facet",
+        "description": "$out, $merge, and $indexStats cannot be used inside $facet sub-pipelines.",
+        "suggestion": "Move these stages outside the $facet or restructure the pipeline."
+      },
+      "MGO-PIPELINE-001": {
+        "title": "Pipeline without early $match",
+        "description": "A pipeline with more than 5 stages that doesn't start with $match may process all documents unnecessarily.",
+        "suggestion": "Add {$match: { criteria }} at the beginning of the pipeline to reduce documents processed."
+      },
+      "MGO-GRAPH-001": {
+        "title": "$graphLookup with excessive depth",
+        "description": "maxDepth greater than 10 in $graphLookup can cause severe performance issues on large graphs.",
+        "suggestion": "Reduce maxDepth or add restrictSearchWithMatch to limit the search space."
+      },
+      "MGO-TX-OUT-001": {
+        "title": "$out / $merge inside transaction",
+        "description": "$out and $merge cannot be used inside MongoDB transactions.",
+        "suggestion": "Execute the stage outside the transaction or use an intermediate temporary collection."
+      },
+      "MGO-TX-001": {
+        "title": "Transaction started without visible commit/abort",
+        "description": "startTransaction() is present but commitTransaction() / abortTransaction() are not visible in the same script.",
+        "suggestion": "Always commit on success and explicitly abort or roll back on failures, including async/error paths."
+      },
+      "MGO-TX-002": {
+        "title": "Writes with manual transaction wiring",
+        "description": "There are db.* writes with manual startTransaction but session.withTransaction() is not used.",
+        "suggestion": "Prefer withTransaction() — it retries on transient errors and keeps rollback paths centralized."
+      },
+      "MGO-TX-003": {
+        "title": "Transaction window likely too long",
+        "description": "maxCommitTimeMS, timeoutMS, or similar options suggest a duration above ~60s, which MongoDB often aborts.",
+        "suggestion": "Shorten work per attempt, move long I/O outside the transaction, and use reasonable timeouts."
+      },
+      "MGO-TX-004": {
+        "title": "Invalid startTransaction options literal",
+        "description": "startTransaction expects an options document, not a bare string or JSON array literal.",
+        "suggestion": "Pass an object like { readConcern: { level: 'local' }, maxCommitTimeMS: 9000 } as appropriate."
+      },
+      "MGO-CS-001": {
+        "title": "Change stream cursor open",
+        "description": "db.collection.watch() keeps a server cursor until you close it.",
+        "suggestion": "Use try-with-resources, explicit close, or your driver helper so cursors are not left open."
+      },
+      "MGO-CS-002": {
+        "title": "watch() without pipeline",
+        "description": "No pipeline (e.g. $match) filters change events on the server.",
+        "suggestion": "Prefer leading [{ $match: { ... } }] to cut network and load when you do not need every event."
+      },
+      "MGO-CS-003": {
+        "title": "resumeAfter is not valid",
+        "description": "resumeAfter must be the opaque resume token document (with _id fields as the driver expects), not null or {}.",
+        "suggestion": "Persist and reuse resumeToken / getResumeToken() from the previous watch iteration; do not hand-build tokens."
+      },
+      "MGO-CS-004": {
+        "title": "fullDocument: updateLookup cost",
+        "description": "updateLookup fetches full documents on updates and can be expensive on large collections.",
+        "suggestion": "Prefer default / whenNeeded or project early if you only need a subset of fields."
+      },
+      "MGO-ARRAY-001": {
+        "title": "$elemMatch with no condition",
+        "description": "$elemMatch with no conditions has no useful effect.",
+        "suggestion": "Add at least one condition inside $elemMatch: {$elemMatch: {field: value}}"
+      },
+      "MGO-ARRAY-002": {
+        "title": "$push / $addToSet: use $each for multiple values",
+        "description": "To add multiple values at once, it's more efficient to use $each.",
+        "suggestion": "Use: {$push: {$each: [val1, val2]}} instead of multiple individual $push operations."
+      },
+      "MGO-ARRAY-003": {
+        "title": "$pull with empty condition",
+        "description": "An empty condition {} in $pull will remove all matching elements from the array.",
+        "suggestion": "Add a specific condition or confirm you intend to empty the array."
+      },
+      "MGO-TEXT-001": {
+        "title": "Text search without text index",
+        "description": "$text requires a text index to exist on the collection to work.",
+        "suggestion": "Create the index with: db.collection.createIndex({ field: 'text' })"
+      },
+      "MGO-TEXT-002": {
+        "title": "Unsupported language in $text",
+        "description": "The $language value is not a language recognized by MongoDB.",
+        "suggestion": "Check MongoDB documentation for supported languages, or remove $language to use the default."
+      },
+      "MGO-GEO-001": {
+        "title": "Geospatial query without geospatial index",
+        "description": "$near and $nearSphere require a 2dsphere or 2d index on the coordinates field.",
+        "suggestion": "Create the index with: db.collection.createIndex({ location: '2dsphere' })"
+      },
+      "MGO-GEO-002": {
+        "title": "Unclosed GeoJSON polygon",
+        "description": "GeoJSON polygons must be closed: the first and last coordinate points must be identical.",
+        "suggestion": "Make sure the last element of the coordinates array equals the first."
+      },
+      "MGO-GEO-003": {
+        "title": "$near without $maxDistance",
+        "description": "Without $maxDistance, $near may return results from the entire collection, degrading performance.",
+        "suggestion": "Add $maxDistance: meters to limit the search radius."
+      },
+      "MGO-JS-002": {
+        "title": "$function detected — JavaScript on server",
+        "description": "$function executes custom JavaScript on the server, which may cause performance and security issues.",
+        "suggestion": "Use native aggregation operators instead of $function whenever possible."
+      },
+      "MGO-JS-003": {
+        "title": "mapReduce is deprecated",
+        "description": "mapReduce is deprecated since MongoDB 5.0 and may be removed in future versions.",
+        "suggestion": "Migrate to aggregation pipeline: $group, $project, $reduce and similar operators offer the same functionality with better performance."
+      },
+      "MGO-OBJECTID-001": {
+        "title": "ObjectId compared as string",
+        "description": "Comparing a 24-character hex string directly with _id will always fail, because _id is of type ObjectId.",
+        "suggestion": "Use the ObjectId wrapper: { _id: ObjectId('your-id-here') }"
+      },
+      "RDS-SYNTAX-001": {
+        "title": "Empty or invalid Redis command",
+        "description": "The query has no content or its structure could not be parsed.",
+        "suggestion": "Write a valid Redis command, for example: SET mykey \"value\" or GET mykey."
+      },
+      "RDS-INJ-001": {
+        "title": "Possible command injection detected",
+        "description": "The command contains dangerous characters (;, newlines, $(), backticks) that may allow injection.",
+        "suggestion": "Avoid concatenating user input directly into commands. Use parameterized clients or Lua with ARGV."
+      },
+      "RDS-CMD-001": {
+        "title": "Unrecognized Redis command",
+        "description": "The command is not in the analyzer's catalog of supported commands.",
+        "suggestion": "Use one of the cataloged commands: strings, hashes, lists, sets, sorted sets, admin, streams, geo, HLL, scripting, bitfield."
+      },
+      "RDS-HMSET-001": {
+        "title": "HMSET is deprecated — use HSET",
+        "description": "HMSET was deprecated in Redis 4.0 and may be removed in future versions.",
+        "suggestion": "Replace HMSET with HSET. Since Redis 4.0, HSET accepts multiple field/value pairs directly."
+      },
+      "RDS-KEYS-001": {
+        "title": "KEYS * blocks the server",
+        "description": "KEYS * performs a full blocking scan of all keys. It can freeze Redis in production environments.",
+        "suggestion": "Use SCAN with a cursor and MATCH to iterate keys without blocking, or maintain an index set."
+      },
+      "RDS-KEYS-002": {
+        "title": "KEYS with pattern — avoid in production",
+        "description": "KEYS scans the entire keyspace even with a pattern (e.g. user:*). It can degrade Redis under load.",
+        "suggestion": "Replace KEYS pattern with SCAN cursor MATCH pattern COUNT n to iterate without blocking the server."
+      },
+      "RDS-FLUSH-001": {
+        "title": "Destructive operation: deletes ALL keys",
+        "description": "FLUSHDB deletes all keys in the current database. FLUSHALL deletes all keys in every database.",
+        "suggestion": "Add CONFIRM as the last argument only in controlled environments, or remove the command entirely."
+      },
+      "RDS-SESS-001": {
+        "title": "Session key without expiry — possible memory leak",
+        "description": "A key named 'session' or 'token' was set without an expiration time.",
+        "suggestion": "Add EX/PX/EXAT/PXAT to SET or call EXPIRE so session/token keys are evicted automatically."
+      },
+      "RDS-ARGS-001": {
+        "title": "Incorrect number of arguments",
+        "description": "The command received an invalid number of arguments according to its official signature.",
+        "suggestion": "Check the command's signature in the official Redis documentation."
+      },
+      "RDS-TX-001": {
+        "title": "WATCH inside an active transaction",
+        "description": "WATCH must be called before MULTI, not inside a transaction block.",
+        "suggestion": "Call WATCH on keys before MULTI, or use UNWATCH before starting the transaction."
+      },
+      "RDS-TX-002": {
+        "title": "EXEC without prior MULTI",
+        "description": "EXEC was called without opening a transaction with MULTI first.",
+        "suggestion": "Send MULTI first, queue commands, then send EXEC."
+      },
+      "RDS-TX-003": {
+        "title": "DISCARD without active MULTI block",
+        "description": "DISCARD only applies after MULTI and before EXEC has been executed.",
+        "suggestion": "Open a transaction with MULTI before using DISCARD."
+      },
+      "RDS-TX-004": {
+        "title": "Blocking commands inside MULTI/EXEC",
+        "description": "BLPOP/BRPOP/BRPOPLPUSH inside transactions may cause unexpected behavior.",
+        "suggestion": "Avoid BLPOP/BRPOP/BRPOPLPUSH inside MULTI/EXEC. Use LPOP/RPOP or design the logic outside the transaction."
+      },
+      "RDS-PUB-001": {
+        "title": "Mixing SUBSCRIBE and PSUBSCRIBE",
+        "description": "Using SUBSCRIBE and PSUBSCRIBE on the same connection is allowed but may cause confusion.",
+        "suggestion": "Use one style or clearly document which channels are pattern-matched."
+      },
+      "RDS-PUB-002": {
+        "title": "Empty channel name in PUBLISH",
+        "description": "A PUBLISH command was issued with an empty channel name.",
+        "suggestion": "Use a non-empty channel string as the PUBLISH argument."
+      },
+      "RDS-PUB-003": {
+        "title": "PUBSUB CHANNELS * may be slow",
+        "description": "Listing all channels with PUBSUB CHANNELS * can be slow on high-traffic Redis instances.",
+        "suggestion": "Use a narrower pattern or monitor channel count in staging before running in production."
+      },
+      "RDS-XStream-001": {
+        "title": "XREADGROUP requires GROUP group consumer",
+        "description": "XREADGROUP needs the GROUP keyword followed by group name and consumer name.",
+        "suggestion": "Add GROUP mygroup myconsumer after options and stream keys."
+      },
+      "RDS-XStream-002": {
+        "title": "Stream may not exist — use MKSTREAM",
+        "description": "XGROUP CREATE will fail if the stream does not exist. MKSTREAM creates it automatically.",
+        "suggestion": "Add MKSTREAM at the end of XGROUP CREATE to create the stream if it does not exist yet."
+      },
+      "RDS-XStream-003": {
+        "title": "XPENDING without range returns summary only",
+        "description": "Without start/end/count parameters, XPENDING returns only an aggregate summary.",
+        "suggestion": "Pass start/end/count after key and group to inspect specific pending entries."
+      },
+      "RDS-XStream-004": {
+        "title": "XADD MAXLEN without ~ uses exact trimming (slow)",
+        "description": "Exact trimming with MAXLEN = is much more expensive than approximate trimming.",
+        "suggestion": "Use MAXLEN ~ N for approximate trimming unless you need a strictly exact length."
+      },
+      "RDS-XStream-010": {
+        "title": "XADD requires key, ID, and at least one field-value pair",
+        "description": "XADD needs: stream key, ID (* for auto), and at least one field/value pair.",
+        "suggestion": "Correct format: XADD key * field value [field value ...] (with optional MAXLEN/~)."
+      },
+      "RDS-GEO-001": {
+        "title": "GEORADIUS is deprecated since Redis 6.2",
+        "description": "GEORADIUS and GEORADIUSBYMEMBER were replaced by GEOSEARCH in Redis 6.2.",
+        "suggestion": "Rewrite using GEOSEARCH/GEOSEARCHSTORE with FROMMEMBER/FROMLONLAT options."
+      },
+      "RDS-GEO-002": {
+        "title": "Latitude out of valid range for GEOADD",
+        "description": "Latitude must be between -85.05112878 and 85.05112878 to be representable in Redis's geospatial system.",
+        "suggestion": "Verify the order (longitude, latitude, member) and valid ranges in GEOADD."
+      },
+      "RDS-GEO-003": {
+        "title": "Longitude out of valid range for GEOADD",
+        "description": "Longitude must be between -180 and 180.",
+        "suggestion": "GEOADD expects longitude before latitude for each point: GEOADD key lon lat member."
+      },
+      "RDS-GEO-004": {
+        "title": "Invalid distance unit in GEODIST",
+        "description": "The specified unit is not valid for GEODIST.",
+        "suggestion": "Use one of the valid units as the last argument: m, km, mi, or ft."
+      },
+      "RDS-HLL-001": {
+        "title": "PFCOUNT with many keys — consider PFMERGE first",
+        "description": "PFCOUNT with more than 10 keys performs expensive cross-slot merging in Redis Cluster environments.",
+        "suggestion": "Use PFMERGE to merge into one key, then PFCOUNT once for cluster-friendly workloads."
+      },
+      "RDS-HLL-002": {
+        "title": "PFMERGE destination key is also a source",
+        "description": "PFMERGE has the same key as destination and source. This is valid but may be confusing.",
+        "suggestion": "Double-check that merging a HyperLogLog key with itself is intentional."
+      },
+      "RDS-Script-001": {
+        "title": "SCRIPT FLUSH removes all cached scripts",
+        "description": "SCRIPT FLUSH clears all Lua scripts from the server cache. Do not run in production without caution.",
+        "suggestion": "Use only in dev/staging environments or during controlled maintenance."
+      },
+      "RDS-Script-002": {
+        "title": "Long script — consider EVALSHA with SCRIPT LOAD",
+        "description": "Long scripts are resent in full on every EVAL call. EVALSHA avoids retransmitting the script.",
+        "suggestion": "Load once with SCRIPT LOAD, then call EVALSHA with the resulting SHA1 digest."
+      },
+      "RDS-Script-003": {
+        "title": "Access Redis keys through the KEYS array in scripts",
+        "description": "Lua scripts that access keys without using KEYS[] may not work correctly in Redis Cluster.",
+        "suggestion": "Replace literal key arguments with KEYS[1], KEYS[2], ... matching the numkeys value."
+      },
+      "RDS-BIT-001": {
+        "title": "Bitfield offset must be non-negative",
+        "description": "GET/SET/INCRBY inside BITFIELD do not accept negative offsets.",
+        "suggestion": "Use non-negative offsets (integers ≥ 0) for GET/SET/INCRBY in BITFIELD."
+      },
+      "RDS-BIT-002": {
+        "title": "BITCOUNT on non-existent key returns 0",
+        "description": "This is not an error — Redis treats a missing key as an empty zero bitmap.",
+        "suggestion": "No change needed. The behavior is correct and expected."
+      },
+      "RDS-BIT-003": {
+        "title": "BITOP NOT requires exactly one source key",
+        "description": "BITOP NOT only accepts one source key, not multiple.",
+        "suggestion": "Use the format: BITOP NOT destkey sourcekey"
+      },
+      "CQL-FILTER-001": {
+        "title": "ALLOW FILTERING detected — full cluster scan risk",
+        "description": "ALLOW FILTERING forces Cassandra to scan all cluster partitions to resolve the query. On large tables this causes timeouts and severe performance degradation.",
+        "suggestion": "Add the partition key to the WHERE clause to restrict the scan. If you need to filter by this column frequently, consider a dedicated query table."
+      },
+      "CQL-FULLSCAN-001": {
+        "title": "SELECT without WHERE — full cluster scan",
+        "description": "A SELECT without a WHERE clause reads all cluster partitions, which is extremely expensive in Cassandra and can cause timeouts on tables with millions of rows.",
+        "suggestion": "Add a WHERE clause with the partition key to restrict the scan to the minimum necessary."
+      },
+      "CQL-NOWHERE-001": {
+        "title": "UPDATE without WHERE — targets indeterminate partitions",
+        "description": "An UPDATE without a WHERE clause in Cassandra may affect unintended rows and most drivers will reject this operation.",
+        "suggestion": "Specify the partition key in WHERE to target exactly the rows you want to update."
+      },
+      "CQL-NOWHERE-002": {
+        "title": "DELETE without WHERE — uncontrolled mass deletion",
+        "description": "A DELETE without a WHERE clause may delete unintended rows. This is a dangerous operation in production clusters.",
+        "suggestion": "Specify the partition key in WHERE to target exactly the rows you want to delete."
+      },
+      "CQL-JOIN-001": {
+        "title": "JOIN not supported in Cassandra",
+        "description": "Cassandra does not support JOIN operations between tables. The data model is designed for single-table queries optimized by partition key.",
+        "suggestion": "Denormalize your data model or perform separate queries and combine results on the client side."
+      },
+      "CQL-ORDERBY-001": {
+        "title": "ORDER BY only valid on clustering columns",
+        "description": "ORDER BY in CQL is only valid for clustering key columns, and only in the opposite direction from the table definition. ORDER BY on other columns will fail at runtime.",
+        "suggestion": "Ensure the ORDER BY column is a clustering column. If you need a different order, consider a query table with a different clustering order."
+      },
+      "CQL-TTL-001": {
+        "title": "TTL too short (less than 60 seconds)",
+        "description": "The specified TTL is less than 60 seconds, which may cause unexpected data expiration in production.",
+        "suggestion": "Use TTL >= 60 seconds or omit the TTL if the data should be persistent."
+      },
+      "CQL-EMPTY": {
+        "title": "Empty CQL statement",
+        "description": "No CQL content was provided for analysis.",
+        "suggestion": "Write a valid CQL query, for example: SELECT * FROM table WHERE id = ? or INSERT INTO table (col) VALUES (?)."
+      },
+      "CQL-LEX": {
+        "title": "Lexical error in CQL query",
+        "description": "The analyzer encountered a character or sequence it could not interpret as a valid CQL token.",
+        "suggestion": "Review the query syntax and fix the indicated error to continue."
+      },
+      "CQL-SYN-001": {
+        "title": "CQL syntax error",
+        "description": "The CQL statement is not valid at the reported line or column.",
+        "suggestion": "Fix the syntax at the indicated position; check quotes, types, and keywords."
+      },
+      "CQL-STRUCT-START": {
+        "title": "CQL statement does not begin with a valid command",
+        "description": "A CQL statement must begin with SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, BATCH or another valid command.",
+        "suggestion": "Start the statement with a valid CQL command: SELECT, INSERT INTO, UPDATE, DELETE FROM, etc."
+      },
+      "CQL-STRUCT-SELECT": {
+        "title": "SELECT without FROM clause",
+        "description": "Every SELECT statement in CQL must specify the source table with FROM.",
+        "suggestion": "Use SELECT columns FROM keyspace.table WHERE condition."
+      },
+      "CQL-STRUCT-INSERT": {
+        "title": "INSERT without INTO",
+        "description": "CQL INSERT syntax requires the INTO keyword followed by the table name.",
+        "suggestion": "Use the format: INSERT INTO table [(columns)] VALUES (...) [USING TTL n]."
+      },
+      "CQL-STRUCT-INSERT-VALUES": {
+        "title": "INSERT without VALUES clause",
+        "description": "An INSERT statement must include VALUES (...) with the data to insert.",
+        "suggestion": "Provide a VALUES clause or use INSERT JSON if your driver supports it."
+      },
+      "CQL-STRUCT-UPDATE": {
+        "title": "UPDATE without SET clause",
+        "description": "Every UPDATE statement in CQL must specify the columns to modify with SET.",
+        "suggestion": "Use the format: UPDATE table [USING TTL n] SET col = value [, ...] WHERE condition."
+      },
+      "CQL-STRUCT-DELETE": {
+        "title": "DELETE without FROM clause",
+        "description": "The DELETE statement in CQL must specify the source table with FROM.",
+        "suggestion": "Use the format: DELETE [columns] FROM table WHERE condition."
+      },
+      "CQL-STRUCT-CREATE-TABLE": {
+        "title": "Incomplete or invalid CREATE TABLE structure",
+        "description": "The CREATE TABLE statement does not follow the minimum structure required by CQL. The table name or column definition list is missing.",
+        "suggestion": "Use: CREATE TABLE [IF NOT EXISTS] table (column type [PRIMARY KEY], ..., PRIMARY KEY ((pk), ck))."
+      },
+      "CQL-BATCH-001": {
+        "title": "BATCH does not end with APPLY BATCH",
+        "description": "A BATCH block must be closed with APPLY BATCH. Without this closing statement the batch is invalid and will be rejected by Cassandra.",
+        "suggestion": "Add APPLY BATCH; at the end of the block to complete the batch transaction."
+      },
+      "CQL-BATCH-002": {
+        "title": "COUNTER BATCH contains non-counter statements",
+        "description": "A BATCH marked as COUNTER can only contain counter column updates. INSERT, DELETE and regular updates are not allowed inside this batch type.",
+        "suggestion": "Move INSERT/DELETE/regular UPDATE statements outside the COUNTER BATCH, or change the batch type."
+      },
+      "CQL-BATCH-003": {
+        "title": "UNLOGGED BATCH spans multiple tables",
+        "description": "Unlogged batches spanning multiple tables lose atomicity. Only the same partition token guarantees atomicity in Cassandra.",
+        "suggestion": "Restrict the UNLOGGED BATCH to a single table/partition, or use separate statements for clarity."
+      },
+      "CQL-BATCH-004": {
+        "title": "Batch too large — anti-pattern in Cassandra",
+        "description": "Large batches increase coordinator memory pressure and can cause timeouts. They are a known anti-pattern in Cassandra.",
+        "suggestion": "Split work into smaller batches or use async writes with concurrency limits in the driver."
+      },
+      "CQL-BATCH-005": {
+        "title": "Performance BATCH — prefer UNLOGGED",
+        "description": "When all INSERTs target the same partition, BATCH can be used for performance. UNLOGGED is the most efficient option in this case.",
+        "suggestion": "Use BEGIN UNLOGGED BATCH when all operations target the same partition."
+      },
+      "CQL-COL-001": {
+        "title": "Empty list append has no effect",
+        "description": "Appending an empty list [] to a list column produces no change in the stored data. The operation is redundant.",
+        "suggestion": "Remove the redundant operation or supply list elements before appending."
+      },
+      "CQL-COL-002": {
+        "title": "Empty map merge has no effect",
+        "description": "Merging an empty map {} into a map column produces no change in the stored data. The operation is redundant.",
+        "suggestion": "Remove the redundant operation or supply map entries before merging."
+      },
+      "CQL-COL-003": {
+        "title": "Cannot delete cell of primary key column",
+        "description": "In Cassandra it is not possible to delete individual map entries when the referenced key is a primary key column.",
+        "suggestion": "To delete the entire row use DELETE FROM table WHERE partition_key = ?."
+      },
+      "CQL-COL-004": {
+        "title": "Negative list index",
+        "description": "List access index in CQL must be a non-negative integer. Negative indexes are not valid in Cassandra.",
+        "suggestion": "Use a valid list index (>= 0) in the bracket expression."
+      },
+      "CQL-LIST-001": {
+        "title": "Frequent list mutations are expensive",
+        "description": "Mutation operations on list columns (append, prepend, by index) are internally expensive in Cassandra because they require read-before-write.",
+        "suggestion": "Prefer SET or MAP as collection type, or model one-to-many relationships with clustering columns."
+      },
+      "CQL-LWT-001": {
+        "title": "Lightweight Transaction (LWT) — uses Paxos protocol",
+        "description": "INSERT ... IF NOT EXISTS and UPDATE ... IF condition use the Paxos consensus protocol, which has significantly higher latency than regular writes.",
+        "suggestion": "Use LWT only when you need linearizable semantics. For conflict-free cases, prefer regular INSERT."
+      },
+      "CQL-LWT-002": {
+        "title": "IF condition on primary key column",
+        "description": "LWT conditions (IF condition) cannot reference partition key or clustering columns. They can only be applied to regular columns.",
+        "suggestion": "Move conditions to regular columns only. PK columns belong in the WHERE clause."
+      },
+      "CQL-LWT-003": {
+        "title": "LWT inside BATCH — same partition only",
+        "description": "Lightweight Transactions inside a BATCH are only allowed when all statements target the same partition. Cross-partition LWT BATCH is not supported.",
+        "suggestion": "Ensure all statements in the LWT BATCH share the same partition key."
+      },
+      "CQL-LWT-004": {
+        "title": "BATCH with LWT across multiple partitions",
+        "description": "Cassandra does not support BATCH combining Lightweight Transactions from different partitions. This will produce a runtime error.",
+        "suggestion": "Separate LWTs by partition or redesign to group data in the same partition."
+      },
+      "CQL-LWT-005": {
+        "title": "Unrecognized columns in IF condition",
+        "description": "The columns referenced in the IF condition do not match columns defined in the CREATE TABLE detected in this script.",
+        "suggestion": "Verify that column names in IF exactly match the table definition."
+      },
+      "CQL-MV-001": {
+        "title": "Materialized view missing full primary key",
+        "description": "A Materialized View must include all primary key columns of the base table. If any is missing, Cassandra will reject the statement.",
+        "suggestion": "Include all partition key and clustering key columns of the base table in the view PRIMARY KEY."
+      },
+      "CQL-MV-002": {
+        "title": "Materialized view WHERE missing IS NOT NULL for PK columns",
+        "description": "The WHERE clause of a Materialized View must include IS NOT NULL for all primary key columns. Rows with null PK cannot be replicated into views.",
+        "suggestion": "Add AND column IS NOT NULL to the WHERE for each partition/clustering key column of the base table."
+      },
+      "CQL-MV-003": {
+        "title": "Too many Materialized Views per table",
+        "description": "Having more than 3 Materialized Views on the same base table multiplies write overhead in Cassandra, as each write must be replicated to all views.",
+        "suggestion": "Reduce the number of views or explicitly denormalize data into separate query tables."
+      },
+      "CQL-UDT-001": {
+        "title": "UDT in collection without FROZEN wrapper",
+        "description": "In Cassandra, User-Defined Types used inside collections (LIST, SET, MAP) must be wrapped with FROZEN<TypeName>. Without FROZEN the server will reject the statement.",
+        "suggestion": "Use FROZEN<TypeName> inside the collection type: LIST<FROZEN<my_type>> or MAP<text, FROZEN<my_type>>."
+      },
+      "CQL-UDT-002": {
+        "title": "Unsupported operation on UDT",
+        "description": "Cassandra only supports adding fields to a User-Defined Type with ALTER TYPE ... ADD. Renaming or dropping fields is not supported and requires recreating dependent tables.",
+        "suggestion": "Create a new UDT with the desired structure and migrate data, or recreate tables that depend on this type."
+      },
+      "CQL-TTL-002": {
+        "title": "TTL of 0 removes data expiration",
+        "description": "A TTL of 0 does not delete the data — it removes the existing TTL and makes the data permanent. This behavior is frequently confused with deletion.",
+        "suggestion": "Omit USING TTL if you want the data to be permanent, or use DELETE if you want to remove it."
+      },
+      "CQL-TTL-003": {
+        "title": "Negative TTL is invalid",
+        "description": "The TTL value must be a positive integer representing the time-to-live in seconds. A negative TTL is invalid and will be rejected by Cassandra.",
+        "suggestion": "Provide a positive TTL in seconds, for example: USING TTL 86400 for 24 hours."
+      },
+      "CQL-TTL-004": {
+        "title": "TTL() not available on primary key columns",
+        "description": "The TTL() function can only be applied to regular columns. Partition key and clustering key columns do not have individual TTL.",
+        "suggestion": "Use TTL(regular_column) selecting only columns that are not part of the primary key."
+      },
+      "CQL-TTL-005": {
+        "title": "TTL() requires a specific column name",
+        "description": "TTL(*) is not valid syntax in Cassandra. The TTL() function requires the name of a specific column, not a wildcard.",
+        "suggestion": "Use TTL(column_name) with a specific regular column: SELECT TTL(description) FROM table WHERE id = ?."
+      },
+      "CQL-WT-001": {
+        "title": "WRITETIME not available on primary key columns",
+        "description": "The WRITETIME() function can only be applied to regular columns. Partition key and clustering key columns do not have individual write timestamps.",
+        "suggestion": "Select WRITETIME(regular_column) with a column that is not part of the primary key."
+      },
+      "CQL-WT-002": {
+        "title": "WRITETIME() requires a specific column name",
+        "description": "WRITETIME(*) is not valid syntax in Cassandra. The WRITETIME() function requires the name of a specific column, not a wildcard.",
+        "suggestion": "Use WRITETIME(column_name) with a regular column: SELECT WRITETIME(email) FROM users WHERE id = ?."
+      },
+      "CQL-IDX-001": {
+        "title": "Secondary index on partition key is redundant",
+        "description": "Partition key columns are already natively indexed in Cassandra. Creating a secondary index on them is redundant and does not improve performance.",
+        "suggestion": "Drop the secondary index on the partition key. Partition key queries are already efficient without an additional index."
+      },
+      "CQL-IDX-002": {
+        "title": "Unnamed secondary index",
+        "description": "Unnamed indexes receive auto-generated names from Cassandra. This makes administration and long-term maintenance more difficult.",
+        "suggestion": "Assign a descriptive name to the index: CREATE INDEX descriptive_name ON table (column)."
+      },
+      "CQL-IDX-003": {
+        "title": "Secondary index on high-cardinality column",
+        "description": "Secondary indexes in Cassandra are inefficient for columns with many unique values (high cardinality) such as emails or UUIDs. Every node must be queried.",
+        "suggestion": "Consider denormalization with query tables, or use SASI/SAI (Storage-Attached Index) if your Cassandra version supports it."
+      },
+      "CQL-IDX-004": {
+        "title": "CREATE CUSTOM INDEX without USING class",
+        "description": "A CREATE CUSTOM INDEX requires specifying the implementation with USING 'index.class'. Without this clause the statement is incomplete.",
+        "suggestion": "Specify the attached index class: CREATE CUSTOM INDEX ON table(column) USING 'org.apache.cassandra.index.sasi.SASIIndex'."
+      },
+      "CQL-DCL-001": {
+        "title": "DCL permissions operation detected",
+        "description": "GRANT, REVOKE or CREATE/DROP USER/ROLE statements affect cluster security. Applying incorrect permissions can block access or create vulnerabilities.",
+        "suggestion": "Apply the principle of least privilege. Verify role scope and keyspace/table target before executing in production."
+      },
+      "DDB-JOIN": {
+        "title": "DynamoDB PartiQL does not support JOINs",
+        "description": "PartiQL on DynamoDB cannot combine tables with JOINs. Each statement must target a single table.",
+        "suggestion": "Use one table per statement, query related items with separate requests, or design PK/SK and GSI patterns for your access paths."
+      },
+      "DDB-GROUP": {
+        "title": "DynamoDB PartiQL does not support GROUP BY",
+        "description": "GROUP BY is not available in DynamoDB PartiQL; aggregation should happen outside the engine or via precomputed data.",
+        "suggestion": "Pre-aggregate in application code, use a GSI with precomputed aggregates, or use another analytics tool."
+      },
+      "DDB-HAVING": {
+        "title": "DynamoDB PartiQL does not support HAVING",
+        "description": "HAVING is not supported in DynamoDB PartiQL because classic SQL-style grouping is not part of that surface.",
+        "suggestion": "Filter before aggregating outside DynamoDB, or redesign the access pattern."
+      },
+      "DDB-WHERE-SELECT": {
+        "title": "SELECT without WHERE — expensive table scan",
+        "description": "A read without a partition key condition often implies a broad Scan, costly in RCUs and latency.",
+        "suggestion": "Add equality (or an allowed key operator) on the partition key in WHERE to scope the read."
+      },
+      "DDB-SELECT-STAR": {
+        "title": "Avoid SELECT * in DynamoDB",
+        "description": "Fetching every attribute consumes more read capacity than necessary.",
+        "suggestion": "List only the columns or attributes you need (projection) to reduce RCU cost."
+      },
+      "DDB-ORDER": {
+        "title": "ORDER BY is efficient on sort key within one partition",
+        "description": "With Query, ordering aligns with the sort key within a single partition key; otherwise patterns may be surprising or costly.",
+        "suggestion": "Ensure ORDER BY uses the sort key within one partition key, or remove it if it does not match your model."
+      },
+      "DDB-UPDATE-NO-WHERE": {
+        "title": "UPDATE without WHERE — partition key required",
+        "description": "In DynamoDB PartiQL, UPDATE must identify items via key conditions; without WHERE the operation is invalid in practice.",
+        "suggestion": "Add WHERE with the partition key (and sort key when the table defines one)."
+      },
+      "DDB-DELETE-NO-WHERE": {
+        "title": "DELETE without WHERE — partition key required",
+        "description": "Deleting without a partition key does not safely define which items to remove.",
+        "suggestion": "Add WHERE with the partition key (and sort key when required)."
+      },
+      "DDB-PK-NEG": {
+        "title": "Inequality or NOT IN on partition key column",
+        "description": "DynamoDB does not support not-equal style conditions on the partition key as part of an efficient key condition.",
+        "suggestion": "If the column is the PK, use equality or supported key shapes; if it is not the PK, confirm your schema. For NOT IN on key attributes, consider filters or redesign."
+      },
+      "DDB-LIKE-LEAD": {
+        "title": "Leading wildcard in LIKE — scan risk",
+        "description": "A LIKE pattern starting with '%' cannot use prefix indexing and tends to scan a lot of data.",
+        "suggestion": "Avoid a leading '%'; anchor the prefix or use begins_with / prefix queries in the SDK."
+      },
+      "DDB-EXPR-EMPTY": {
+        "title": "Empty DynamoDB expression",
+        "description": "No expression text was provided for analysis (FilterExpression, KeyConditionExpression, etc.).",
+        "suggestion": "Provide a non-empty expression string."
+      },
+      "DDB-EXPR-LEX": {
+        "title": "Lexical error in DynamoDB expression",
+        "description": "The analyzer hit an invalid character or token in SDK expression syntax.",
+        "suggestion": "Fix the syntax near the location indicated in the server message (or detail payload)."
+      },
+      "DDB-EXPR-PARSE": {
+        "title": "Parse error in DynamoDB expression",
+        "description": "The expression could not be parsed as a valid tree (parentheses, operators, or malformed call arguments).",
+        "suggestion": "Check parentheses, operators, and function call arguments."
+      },
+      "DDB-EXPR-INPUT": {
+        "title": "Invalid JSON input for expression analyzer",
+        "description": "Structured payloads must include kind, expression, and consistent maps when applicable.",
+        "suggestion": "Provide valid JSON with kind and expression per the analyzer API."
+      },
+      "DDB-KCE-NO-OR": {
+        "title": "KeyConditionExpression does not support OR",
+        "description": "Key conditions for Query must be a conjunction (AND), not OR across branches.",
+        "suggestion": "Use AND only, or issue separate query operations."
+      },
+      "DDB-KCE-PK-META": {
+        "title": "Partition key metadata missing",
+        "description": "Without the partition key attribute name, KeyConditionExpression cannot be validated.",
+        "suggestion": "Include partitionKeyAttributeName and expressionAttributeNames in the analysis JSON."
+      },
+      "DDB-KCE-PK-MISSING": {
+        "title": "KeyConditionExpression must include the partition key",
+        "description": "Query key conditions must reference the partition key with a supported operator.",
+        "suggestion": "Add an equality between the PK path (or its #placeholder) and a :value placeholder."
+      },
+      "DDB-KCE-PK-MULTI": {
+        "title": "More than one partition key condition",
+        "description": "Only one atomic condition on the partition key is allowed in KeyConditionExpression.",
+        "suggestion": "Combine logic into a single partition key condition."
+      },
+      "DDB-KCE-PK-OP": {
+        "title": "Invalid operator or shape for partition key",
+        "description": "The partition key in KeyConditionExpression only supports = (not BETWEEN or IN or begins_with on the PK).",
+        "suggestion": "Use = between the PK path and a single value placeholder; use begins_with on the sort key only when applicable."
+      },
+      "DDB-KCE-SK-OP": {
+        "title": "Unsupported operator on sort key",
+        "description": "The sort key in KeyConditionExpression allows =, range comparisons, BETWEEN, and begins_with; IN and some other operators are not valid there.",
+        "suggestion": "Use =, <, >, <=, >=, BETWEEN, or begins_with as appropriate; IN is not supported for sort keys in KeyConditionExpression."
+      },
+      "DDB-KCE-SK-FUNC": {
+        "title": "Only begins_with() allowed on sort key here",
+        "description": "Besides comparators, begins_with is the typical function allowed on the sort key path in KeyConditionExpression.",
+        "suggestion": "Remove other function calls on the sort key path."
+      },
+      "DDB-FE-ATTR-EXISTS-ARGS": {
+        "title": "attribute_exists requires one argument",
+        "description": "attribute_exists must take exactly one attribute path.",
+        "suggestion": "Use attribute_exists(#name.path)."
+      },
+      "DDB-FE-ATTR-NOT-EXISTS-ARGS": {
+        "title": "attribute_not_exists requires one argument",
+        "description": "attribute_not_exists must take exactly one attribute path.",
+        "suggestion": "Use attribute_not_exists(#name.path)."
+      },
+      "DDB-FE-CONTAINS-ARGS": {
+        "title": "contains requires two arguments",
+        "description": "Signature is contains(path, operand).",
+        "suggestion": "Provide the attribute path and the value or substring placeholder."
+      },
+      "DDB-FE-BEGINS-ARGS": {
+        "title": "begins_with requires two arguments",
+        "description": "Signature is begins_with(path, substr).",
+        "suggestion": "Provide the attribute path and the prefix placeholder."
+      },
+      "DDB-FE-SIZE-COMP": {
+        "title": "size() must appear in a comparison",
+        "description": "size(attr) only makes sense compared to a value (e.g. size(#a) > :n).",
+        "suggestion": "Place size(...) on the left or right side of =, <>, <, >, <=, or >=."
+      },
+      "DDB-FE-IN-LARGE": {
+        "title": "IN with many values may hurt performance",
+        "description": "Very long IN lists increase pressure and expression size.",
+        "suggestion": "Split into batches or redesign the access pattern."
+      },
+      "DDB-FE-TYPE-MIX": {
+        "title": "Comparing two attribute paths can be misleading",
+        "description": "Attribute-to-attribute comparisons without typed value placeholders can yield unexpected results in DynamoDB.",
+        "suggestion": "Compare each side to a typed value placeholder when possible."
+      },
+      "DDB-FE-KEY-FILTER": {
+        "title": "Partition key equality in FilterExpression",
+        "description": "FilterExpression is applied after data is read; PK equality there wastes RCUs versus KeyConditionExpression on Query.",
+        "suggestion": "Promote partition-key equality to KeyConditionExpression on Query operations."
+      },
+      "DDB-PE-NAME-MAP": {
+        "title": "ExpressionAttributeNames entry missing",
+        "description": "Each #name placeholder must map to the real attribute name.",
+        "suggestion": "Add expressionAttributeNames entries for every # token used."
+      },
+      "DDB-PE-VAL-MAP": {
+        "title": "ProjectionExpression should not use unmapped :values",
+        "description": "Projections list attribute paths; :value placeholders belong in ExpressionAttributeValues for other expression types.",
+        "suggestion": "Remove :values from ProjectionExpression or map only names with # per the API."
+      },
+      "DDB-PE-DUP": {
+        "title": "Duplicate attribute in ProjectionExpression",
+        "description": "The same path appears more than once in the comma-separated list.",
+        "suggestion": "Remove repeated paths."
+      },
+      "DDB-UE-SET-REMOVE": {
+        "title": "SET and REMOVE the same attribute",
+        "description": "You cannot assign and remove the same path in one UpdateExpression.",
+        "suggestion": "Keep either SET or REMOVE for that attribute."
+      },
+      "DDB-UE-ADD-TYPE": {
+        "title": "ADD only for Number and Set",
+        "description": "The ADD action in UpdateExpression does not apply to String or Map.",
+        "suggestion": "Use SET for strings/maps or change the attribute type."
+      },
+      "DDB-UE-DEL-TYPE": {
+        "title": "DELETE only on sets",
+        "description": "DELETE removes elements from SS, NS, or BS sets.",
+        "suggestion": "Ensure the attribute is a typed set before using DELETE."
+      },
+      "DDB-UE-IFNE-WHERE": {
+        "title": "if_not_exists only in SET",
+        "description": "if_not_exists cannot be used in REMOVE, ADD, or DELETE clauses of the same UpdateExpression.",
+        "suggestion": "Move if_not_exists into a SET clause."
+      },
+      "DDB-UE-LAPPEND": {
+        "title": "list_append expects lists",
+        "description": "The second argument to list_append should map to a list in ExpressionAttributeValues.",
+        "suggestion": "Ensure the second operand is a placeholder bound to a JSON array."
+      },
+      "DDB-CE-TAUTO": {
+        "title": "Condition always evaluates to true",
+        "description": "Comparing the same placeholder to itself does not guard unwanted writes.",
+        "suggestion": "Compare against a distinct value or use attribute_exists / size checks."
+      },
+      "DDB-CE-PK-EXISTS": {
+        "title": "attribute_exists on primary key is redundant",
+        "description": "The primary key always exists on a stored item in DynamoDB.",
+        "suggestion": "You can drop attribute_exists for the partition key (and sort key)."
+      },
+      "ES-STRUCT-001": {
+        "title": "Aggregation type used as query type",
+        "description": "An aggregation key appears directly inside 'query' instead of inside 'aggs'.",
+        "suggestion": "Move the aggregation to the correct block: {\"aggs\":{\"name\":{\"type\":{...}}}}"
+      },
+      "ES-MATCH-ALL": {
+        "title": "match_all without filters scans ALL documents",
+        "description": "A match_all query without filters traverses the entire index, which is very expensive on large indices.",
+        "suggestion": "Add a filter inside bool: {\"query\":{\"bool\":{\"filter\":[...]}}}"
+      },
+      "ES-WILDCARD-LEAD": {
+        "title": "Leading wildcard causes full index scan",
+        "description": "A pattern starting with * or ? cannot use the inverted index and scans the entire index.",
+        "suggestion": "Use edge n-grams in the field mapping instead of leading wildcards."
+      },
+      "ES-REGEX": {
+        "title": "Regexp query is CPU-intensive",
+        "description": "Regular expression queries are evaluated term by term and can destabilize the cluster on large indices.",
+        "suggestion": "Use a keyword field with a terms query, or edge n-grams for prefix matching."
+      },
+      "ES-SCRIPT": {
+        "title": "Script query executes on every document",
+        "description": "Scripts are evaluated for each document in the index — very slow and potentially unsafe in production.",
+        "suggestion": "Index the computed value at write time and query the indexed field instead."
+      },
+      "ES-SIZE-LIMIT": {
+        "title": "size exceeds Elasticsearch maximum limit (10000)",
+        "description": "Elasticsearch cannot return more than 10000 documents in a single request.",
+        "suggestion": "Use search_after or the Scroll API for pagination beyond 10000 results."
+      },
+      "ES-DEEP-PAGE": {
+        "title": "Deep pagination (from + size > 10000)",
+        "description": "Deep pagination via from+size is expensive and disabled by default in Elasticsearch.",
+        "suggestion": "Use search_after for deep pagination — it is stateless and scales well."
+      },
+      "ES-CROSS-001": {
+        "title": "Multiple queries without size limit",
+        "description": "Several queries in the script have no 'size' defined and may retrieve large result sets.",
+        "suggestion": "Add 'size' to each query to control the result window."
+      },
+      "ES-CROSS-002": {
+        "title": "Mixed query types in script",
+        "description": "The script combines aggregation-only queries with search queries. Verify the intent of each.",
+        "suggestion": "Separate aggregation and search queries if they serve different purposes."
+      },
+      "ES-NESTED-DEPTH": {
+        "title": "Query too deeply nested (depth > 5)",
+        "description": "Queries with more than 5 levels of nesting significantly reduce performance.",
+        "suggestion": "Flatten the query or use bool to combine conditions at the same level."
+      },
+      "ES-TRACK-TOTAL": {
+        "title": "track_total_hits: false skips exact document count",
+        "description": "This option improves performance but the response will not include the exact total document count.",
+        "suggestion": "This is a valid optimization. Remove it if you need the exact total count."
+      },
+      "ES-SOURCE-FETCH": {
+        "title": "Fetching full _source is expensive for large result sets",
+        "description": "Returning full _source transfers all fields even if you don't need them.",
+        "suggestion": "Use 'fields' to select only the needed attributes instead of _source: true."
+      },
+      "ES-EXPLAIN": {
+        "title": "explain: true is for debugging only",
+        "description": "Explain mode computes and returns detailed relevance scoring, adding significant overhead.",
+        "suggestion": "Remove explain: true before using the query in production."
+      },
+      "ES-PROFILE": {
+        "title": "profile: true is for debugging only",
+        "description": "Profile mode measures internal execution times, adding significant overhead.",
+        "suggestion": "Remove profile: true before using the query in production."
+      },
+      "ES-DATE-FORMAT": {
+        "title": "Date range without 'format' may cause ambiguous parsing",
+        "description": "Without specifying the format, Elasticsearch may interpret the date incorrectly depending on the index configuration.",
+        "suggestion": "Specify 'format' in the range query to avoid ambiguity: \"format\": \"yyyy-MM-dd\""
+      },
+      "ES-DATE-TZ": {
+        "title": "Date range without time_zone may return unexpected results",
+        "description": "Without time_zone, date comparisons use UTC, which may be incorrect for multi-timezone data.",
+        "suggestion": "Add time_zone: '+00:00' or your target timezone to the range query."
+      },
+      "ES-DATE-HIST-INTERVAL": {
+        "title": "date_histogram requires calendar_interval or fixed_interval",
+        "description": "Without specifying an interval, the date_histogram aggregation cannot group documents by time.",
+        "suggestion": "Add calendar_interval (e.g. '1d', '1M') or fixed_interval (e.g. '7d', '1h')."
+      },
+      "ES-DATE-HIST-DEPRECATED": {
+        "title": "'interval' in date_histogram is deprecated since ES 7.2",
+        "description": "The 'interval' field was replaced by 'calendar_interval' and 'fixed_interval' in Elasticsearch 7.2.",
+        "suggestion": "Replace 'interval' with 'calendar_interval' or 'fixed_interval'."
+      },
+      "ES-FUZZY-HIGH": {
+        "title": "fuzziness > 2 impacts performance without improving recall",
+        "description": "Fuzziness values greater than 2 generate too many term variations and slow down the search.",
+        "suggestion": "Use fuzziness: 1 or 2; consider AUTO for field-length-aware fuzziness."
+      },
+      "ES-REGEXP-STATES": {
+        "title": "Regexp without max_determinized_states limit may cause out-of-memory errors",
+        "description": "Complex regular expressions generate large automata. Without a limit, they may exhaust node memory.",
+        "suggestion": "Add max_determinized_states: 10000 to limit automaton complexity."
+      },
+      "ES-MLT-FREQ": {
+        "title": "more_like_this without min_term_freq includes very rare terms",
+        "description": "Without min_term_freq, the query includes terms that appear very few times and contribute little to results.",
+        "suggestion": "Set min_term_freq: 2 to filter out terms that appear only once."
+      },
+      "ES-PHRASE-SLOP": {
+        "title": "High slop in match_phrase reduces precision significantly",
+        "description": "A slop greater than 5 allows too much distance between phrase words, returning irrelevant results.",
+        "suggestion": "Keep slop <= 2 for reasonable precision; use match for looser matching."
+      },
+      "ES-NESTED-NO-PATH": {
+        "title": "nested aggregation requires 'path' field",
+        "description": "Without 'path', the nested aggregation does not know which document field is of type nested.",
+        "suggestion": "Add path: 'field_name' where field_name is the nested object field."
+      },
+      "ES-REV-NESTED-CONTEXT": {
+        "title": "reverse_nested must be used inside a nested aggregation",
+        "description": "reverse_nested only makes sense as a sub-aggregation of nested to return to the root document.",
+        "suggestion": "Place reverse_nested as a sub-aggregation of a nested aggregation."
+      },
+      "ES-TERMS-NO-SIZE": {
+        "title": "terms aggregation without explicit size returns only the top 10",
+        "description": "The default size in terms is 10, which may hide relevant buckets.",
+        "suggestion": "Set size explicitly to control how many buckets are returned."
+      },
+      "ES-CARDINALITY-THRESHOLD": {
+        "title": "precision_threshold > 40000 uses excessive memory with minimal gain",
+        "description": "Values above 40000 consume a lot of memory without significantly improving precision.",
+        "suggestion": "Set precision_threshold between 1000 and 40000 for the best memory/accuracy balance."
+      },
+      "ES-BUCKET-SCRIPT-PATH": {
+        "title": "bucket_script requires buckets_path to reference sibling aggregations",
+        "description": "Without buckets_path, the bucket_script script has no access to sibling aggregation values.",
+        "suggestion": "Add buckets_path: { var1: 'agg_name' } to bucket_script."
+      },
+      "ES-BUCKET-SEL-FIELDS": {
+        "title": "bucket_selector requires both buckets_path and script",
+        "description": "bucket_selector needs both fields: references to sibling aggregations and the filter condition.",
+        "suggestion": "Add buckets_path (references) and script (condition) to bucket_selector."
+      },
+      "ES-MOVING-AVG-DEPRECATED": {
+        "title": "moving_avg is deprecated — use moving_fn instead",
+        "description": "The moving_avg aggregation was replaced by moving_fn in recent versions of Elasticsearch.",
+        "suggestion": "Replace moving_avg with moving_fn using MovingFunctions.unweightedAvg(values)."
+      },
+      "ES-AGG-DEPTH": {
+        "title": "Deeply nested aggregations (> 4 levels) impact memory and performance",
+        "description": "Aggregations with more than 4 nesting levels impact cluster memory and performance.",
+        "suggestion": "Restructure aggregations to reduce nesting or use composite aggregation."
+      },
+      "ES-FUNC-SCORE-QUERY": {
+        "title": "function_score without query evaluates ALL documents",
+        "description": "Without an inner query, function_score applies scoring functions to all documents in the index.",
+        "suggestion": "Add a query inside function_score to filter documents before applying functions."
+      },
+      "ES-FUNC-SCORE-REPLACE": {
+        "title": "boost_mode 'replace' ignores the original relevance score",
+        "description": "With boost_mode: replace, the original query score is completely discarded.",
+        "suggestion": "Use boost_mode: 'multiply' or 'sum' to combine the original score with the function score."
+      },
+      "ES-SCRIPT-SCORE-LANG": {
+        "title": "script_score without lang defaults to 'painless'",
+        "description": "Without specifying the language, Elasticsearch assumes painless. It is good practice to be explicit.",
+        "suggestion": "Add lang: 'painless' to make the intent clear."
+      },
+      "ES-CONST-SCORE-BOOST": {
+        "title": "constant_score without boost defaults to 1.0",
+        "description": "Without specifying boost, all documents receive a score of 1.0, which may not be the intent.",
+        "suggestion": "Add boost: 1.5 (or desired value) to make the score explicit."
+      },
+      "ES-GEO-DIST-UNIT": {
+        "title": "geo_distance without unit defaults to meters",
+        "description": "Without specifying the unit, the distance is interpreted in meters, which may be unexpected.",
+        "suggestion": "Add unit: 'km', 'mi', 'm', etc. to make the intent explicit."
+      },
+      "ES-GEO-BBOX-LAT": {
+        "title": "geo_bounding_box: top_left latitude must be greater than bottom_right latitude",
+        "description": "The bounding box coordinates are inverted — top_left must have a greater latitude than bottom_right.",
+        "suggestion": "Swap top_left and bottom_right coordinates, or correct the latitude values."
+      },
+      "ES-GEO-SHAPE-REL": {
+        "title": "geo_shape without relation defaults to 'intersects'",
+        "description": "Without specifying the spatial relation, Elasticsearch uses 'intersects', which may not be the intent.",
+        "suggestion": "Add relation: 'intersects', 'within', or 'contains' to make the intent explicit."
+      },
+      "ES-KNN-K": {
+        "title": "knn requires the 'k' field (number of nearest neighbors)",
+        "description": "Without 'k', the knn query does not know how many neighbors to return.",
+        "suggestion": "Add k: 10 (or your desired number) to the knn query."
+      },
+      "ES-KNN-CANDIDATES": {
+        "title": "knn without num_candidates may reduce recall",
+        "description": "Without num_candidates, Elasticsearch uses a default value that may not be sufficient for good accuracy.",
+        "suggestion": "Set num_candidates to at least 1.5 * k for good accuracy (e.g. k=10 → num_candidates=15)."
+      },
+      "MGO-SV-001": {
+        "title": "Required field missing for your collection rules",
+        "description": "The document you insert is missing a field your team marked as mandatory in the validation rules.",
+        "suggestion": "Add the missing field with a sensible value, or update the rules if the requirement changed.",
+        "studentExplanation": "Think of a form with a required box left empty: the office will reject it. Your insert is that form and one required box is empty.",
+        "voiceSummary": "Insert is missing a field your rules say must be present. Add it or relax the rules.",
+        "technicalMessage": "MGO-SV-001: insert document omits a key listed in $jsonSchema required; violates collection validator."
+      },
+      "MGO-SV-002": {
+        "title": "Extra field not allowed by your rules",
+        "description": "The document includes a field that your validation rules do not allow.",
+        "suggestion": "Remove the unexpected field or extend the rules to list it under allowed properties.",
+        "studentExplanation": "Like bringing an extra item to a potluck when the host said only three dishes—your data brought something not on the approved list.",
+        "voiceSummary": "A field is present that your schema forbids. Drop it or allow it in the schema.",
+        "technicalMessage": "MGO-SV-002: additionalProperties:false rejects a key present on the insert payload."
+      },
+      "MGO-SV-003": {
+        "title": "Value type does not match the rule",
+        "description": "A field’s value looks like the wrong kind of data compared to what your rules expect.",
+        "suggestion": "Match the value to the expected shape (text, number, date, list, etc.) or adjust the rule if the model changed.",
+        "studentExplanation": "It is like writing a word where a number was asked—the slot shape does not match what you put in.",
+        "voiceSummary": "A field’s value type does not match the schema. Fix the value or the schema.",
+        "technicalMessage": "MGO-SV-003: insert value JSON kind incompatible with $jsonSchema property type union for that field."
+      },
+      "LUA-001": {
+        "title": "Fragile error handling in the script",
+        "description": "The script calls Redis in a way that stops the whole script when a single command fails.",
+        "suggestion": "Use the safer call style so failures can be handled without aborting the entire script.",
+        "studentExplanation": "Like pulling one wrong lever that shuts down the whole factory line instead of flashing a warning you can fix.",
+        "voiceSummary": "Prefer the safer Redis call so one command error does not kill the whole script.",
+        "technicalMessage": "LUA-001: redis.call() used; redis.pcall() recommended for error isolation in Redis Lua."
+      },
+      "LUA-002": {
+        "title": "Loop may never finish",
+        "description": "A loop looks endless because nothing obvious stops it.",
+        "suggestion": "Add a clear stop condition, a counter limit, or an exit path so the script cannot spin forever.",
+        "studentExplanation": "Like a merry-go-round with no brake—if nothing changes, it could spin without stopping.",
+        "voiceSummary": "Possible infinite loop detected. Add a finite exit or break.",
+        "technicalMessage": "LUA-002: while/repeat construct has no verifiable break/exit (infinite loop heuristic)."
+      },
+      "LUA-003": {
+        "title": "Global variable in the script",
+        "description": "The script writes to a global name instead of a local one, which is slower and easier to misuse.",
+        "suggestion": "Declare variables with local so each run stays tidy and faster.",
+        "studentExplanation": "Like writing everyone’s notes on a shared whiteboard instead of your own notepad—others might overwrite and it is messier.",
+        "voiceSummary": "Use local variables instead of globals in Lua for clarity and speed.",
+        "technicalMessage": "LUA-003: assignment to global (non-local) in Redis Lua; prefer local bindings."
+      },
+      "LUA-004": {
+        "title": "Keys and script may disagree in cluster mode",
+        "description": "The script may touch keys that were not declared up front, which breaks in clustered setups.",
+        "suggestion": "Pass every key you read or write through the declared keys list and use KEYS[n] inside the script.",
+        "studentExplanation": "Like a delivery list that names three doors but the driver tries a fourth—cluster mode needs the exact named doors.",
+        "voiceSummary": "Declare all keys in KEYS and match numkeys for cluster-safe Lua.",
+        "technicalMessage": "LUA-004: KEYS[] usage vs numkeys / cross-slot key access heuristic in LuaAnalyzer."
+      },
+      "LUA-005": {
+        "title": "Arguments treated as numbers without converting",
+        "description": "Script arguments from the client are text; using them in math without converting can misbehave.",
+        "suggestion": "Convert arguments with a numeric cast before doing arithmetic.",
+        "studentExplanation": "Like doing math on price tags still in their plastic sleeves—the number is there but you should unwrap it first.",
+        "voiceSummary": "Wrap ARGV values with tonumber before arithmetic.",
+        "technicalMessage": "LUA-005: ARGV[] used in arithmetic without tonumber() wrapper."
+      },
+      "LUA-006": {
+        "title": "Very long script",
+        "description": "The script is long enough that it is hard to read, test, and reuse safely.",
+        "suggestion": "Split logic into smaller scripts or load helpers once and reuse their hash.",
+        "studentExplanation": "Like a single recipe that fills ten pages—easier to follow when split into steps or cards.",
+        "voiceSummary": "Script exceeds fifty lines. Consider splitting or shared modules.",
+        "technicalMessage": "LUA-006: Lua script line count > 50; maintainability / SCRIPT LOAD recommendation."
+      },
+      "LUA-007": {
+        "title": "Many Redis calls inside a loop",
+        "description": "Each loop trip talks to the server again, which can be slow and noisy under load.",
+        "suggestion": "Batch work with a client-side pipeline outside Lua or shrink what each iteration does.",
+        "studentExplanation": "Like calling the front desk once per sock instead of asking for the whole drawer—many small trips add up.",
+        "voiceSummary": "redis.call inside a loop without client pipelining. Batch outside or reduce iterations.",
+        "technicalMessage": "LUA-007: redis.call inside loop body; N round-trips per execution (performance warning)."
+      },
+      "RDS-PIP-001": {
+        "title": "Risky command queued inside a transaction block",
+        "description": "A command that can freeze or wipe data was placed inside a queued transaction.",
+        "suggestion": "Move broad scans and full-database wipes outside MULTI/EXEC or avoid them entirely in production.",
+        "studentExplanation": "Like locking the building doors and then planning to search every room with a bulldozer—dangerous while the queue is active.",
+        "voiceSummary": "KEYS or FLUSH inside MULTI/EXEC. Remove or relocate.",
+        "technicalMessage": "RDS-PIP-001: KEYS * or FLUSH* detected inside MULTI/EXEC pipeline."
+      },
+      "RDS-PIP-002": {
+        "title": "Very large batch of queued commands",
+        "description": "More than a thousand commands are queued in one go, which can time out or spike memory.",
+        "suggestion": "Split into smaller batches or raise client timeouts only after measuring safe sizes.",
+        "studentExplanation": "Like stacking a thousand plates for one trip—easier and safer in several smaller stacks.",
+        "voiceSummary": "Over one thousand pipelined or queued commands. Split batches.",
+        "technicalMessage": "RDS-PIP-002: pipeline or MULTI queue > 1000 commands (RedisAnalyzer)."
+      },
+      "RDS-PIP-003": {
+        "title": "Watch without a matching finish",
+        "description": "The script starts watching keys for changes but never completes the intended transaction.",
+        "suggestion": "Pair watch with MULTI, queued work, EXEC, or explicitly cancel with UNWATCH.",
+        "studentExplanation": "Like setting an alarm but never pressing start or stop—the system stays waiting awkwardly.",
+        "voiceSummary": "WATCH with no later EXEC in script. Finish or UNWATCH.",
+        "technicalMessage": "RDS-PIP-003: WATCH without matching EXEC in same script (cross-script heuristic)."
+      },
+      "RDS-ACL-001": {
+        "title": "Account rules look too powerful",
+        "description": "The access-control line grants very wide command or key patterns.",
+        "suggestion": "Narrow categories and key patterns to what that identity truly needs.",
+        "studentExplanation": "Like giving a temp badge that opens every door including the vault—trim access to real needs.",
+        "voiceSummary": "ACL user may be overprivileged. Tighten categories and key patterns.",
+        "technicalMessage": "RDS-ACL-001: ACL SETUSER pattern suggests +@all or dangerous category breadth."
+      },
+      "RDS-ACL-002": {
+        "title": "Read-only style rules with broad key reach",
+        "description": "The profile is read-focused but still matches a very wide set of keys.",
+        "suggestion": "Tighten the key pattern to real prefixes your app uses.",
+        "studentExplanation": "Like a library pass that says reading only but works for every shelf in every branch—still risky if lost.",
+        "voiceSummary": "Read-style ACL with very broad tilde pattern. Narrow prefixes.",
+        "technicalMessage": "RDS-ACL-002: read-oriented ACL still uses overly broad ~* style glob."
+      },
+      "RDS-ACL-003": {
+        "title": "Removing a protected default user",
+        "description": "Deleting the default user can lock administration if no other superuser exists.",
+        "suggestion": "Ensure another admin account exists before removing defaults.",
+        "studentExplanation": "Like removing the only master key copy—make sure someone else can still open the office.",
+        "voiceSummary": "ACL DELUSER on default user. Confirm another admin exists.",
+        "technicalMessage": "RDS-ACL-003: ACL DELUSER default — operational lockout risk."
+      },
+      "RDS-MOD-001": {
+        "title": "JSON module dependency",
+        "description": "The command needs the RedisJSON module loaded on the server.",
+        "suggestion": "Install and enable RedisJSON on every node before relying on this in production.",
+        "studentExplanation": "Like needing a special attachment for your drill—without the module the command will not exist on plain Redis.",
+        "voiceSummary": "JSON command requires RedisJSON module on the cluster.",
+        "technicalMessage": "RDS-MOD-001: JSON.* command family (RedisJSON module required)."
+      },
+      "RDS-MOD-002": {
+        "title": "Search module dependency",
+        "description": "The command needs RediSearch (or compatible) loaded.",
+        "suggestion": "Provision the search module and index before using FT.* in production paths.",
+        "studentExplanation": "Like expecting a bookstore search desk in a warehouse that only stacks boxes—add the search service first.",
+        "voiceSummary": "FT search command needs RediSearch module deployed.",
+        "technicalMessage": "RDS-MOD-002: FT.* command (RediSearch / secondary module dependency)."
+      },
+      "CAS-BATCH-001": {
+        "title": "Batch is extremely large",
+        "description": "The batch bundles many statements, which strains the coordinator.",
+        "suggestion": "Split into smaller batches or use asynchronous writes with a concurrency cap.",
+        "studentExplanation": "Like handing a courier fifty heavy boxes at once—split trips so nothing collapses.",
+        "voiceSummary": "Cassandra batch over fifty statements. Shrink or async writes.",
+        "technicalMessage": "CAS-BATCH-001: estimated batch statement count > 50 (coordinator pressure / ERROR severity in CqlAnalyzer)."
+      },
+      "CAS-BATCH-002": {
+        "title": "Batch crosses partition boundaries",
+        "description": "Statements target different partition keys, so you lose single-partition benefits.",
+        "suggestion": "Group writes that share one partition or send separate batches per partition.",
+        "studentExplanation": "Like mailing letters to many cities in one envelope—sort by destination before posting.",
+        "voiceSummary": "Batch spans multiple partitions. Prefer single-partition batches.",
+        "technicalMessage": "CAS-BATCH-002: cross-partition BATCH anti-pattern (CqlAnalyzer.analyzePartitionKeysInBatch)."
+      },
+      "CAS-BATCH-003": {
+        "title": "Good use of an unlogged single-partition batch",
+        "description": "An unlogged batch targets one partition, which matches Cassandra’s happy path for throughput.",
+        "suggestion": "Keep this pattern; avoid mixing unrelated partitions in the same batch.",
+        "studentExplanation": "Like loading one moving truck for one neighborhood—efficient when everything shares the same stop.",
+        "voiceSummary": "Unlogged batch on one partition looks healthy.",
+        "technicalMessage": "CAS-BATCH-003: BEGIN UNLOGGED BATCH with single known partition (INFO advisory)."
+      },
+      "CAS-BATCH-004": {
+        "title": "Logged batch used where unlogged would do",
+        "description": "A durable cluster-wide batch wraps only one partition’s writes, which costs more than needed.",
+        "suggestion": "Switch to BEGIN UNLOGGED BATCH when every mutation shares the same partition key.",
+        "studentExplanation": "Like insured overnight shipping for a letter you could walk next door—lighter option fits.",
+        "voiceSummary": "Logged batch on single partition. Prefer UNLOGGED.",
+        "technicalMessage": "CAS-BATCH-004: LOGGED BATCH with single-partition DML — prefer UNLOGGED (CqlAnalyzer)."
+      },
+      "CAS-BATCH-005": {
+        "title": "Counter batch mixes regular writes",
+        "description": "A counter-only batch contains statements that are not counter updates.",
+        "suggestion": "Move inserts, deletes, and normal updates outside the counter batch.",
+        "studentExplanation": "Like a coins-only lane with someone trying to pay with a couch—split incompatible items.",
+        "voiceSummary": "COUNTER BATCH contains non-counter statements. Move them out.",
+        "technicalMessage": "CAS-BATCH-005: COUNTER BATCH contains non-counter DML (CqlAnalyzer.batchContainsNonCounterStatement)."
+      },
+      "CAS-LWT-001": {
+        "title": "Conditional write on a hot partition",
+        "description": "Lightweight transactions on a busy partition key contend heavily and slow everyone.",
+        "suggestion": "Spread hot keys, reduce Paxos use, or redesign access so consensus hits cooler partitions.",
+        "studentExplanation": "Like asking everyone in a stadium line to re-vote each step—works but jams if the line is huge.",
+        "voiceSummary": "LWT on hot or high-cardinality partition. Expect slowness.",
+        "technicalMessage": "CAS-LWT-001: LWT (IF / IF NOT EXISTS) on hot partition heuristic (Paxos path)."
+      },
+      "CAS-LWT-002": {
+        "title": "Several conditional writes in one batch",
+        "description": "Multiple lightweight transactions in a single batch do not behave as one atomic Paxos round.",
+        "suggestion": "Keep at most one conditional statement per batch or run them outside BATCH.",
+        "studentExplanation": "Like several veto votes stacked in one envelope—Cassandra still counts them separately.",
+        "voiceSummary": "Multiple LWT statements in one BATCH. Use one or split.",
+        "technicalMessage": "CAS-LWT-002: countLwtStatementsInBatch > 1 (CqlAnalyzer.analyzeBatch)."
+      },
+      "CAS-LWT-003": {
+        "title": "Remember to read the yes-or-no flag",
+        "description": "A conditional insert, update, or delete may do nothing if the check fails.",
+        "suggestion": "In application code read the applied or CAS result before assuming data changed.",
+        "studentExplanation": "Like asking “did the door actually lock?” instead of walking away assuming it clicked.",
+        "voiceSummary": "Check wasApplied after IF / IF NOT EXISTS writes.",
+        "technicalMessage": "CAS-LWT-003: driver should verify ResultSet.wasApplied() / CAS outcome for LWT DML."
+      },
+      "CAS-UDF-001": {
+        "title": "Function stability not declared",
+        "description": "The user-defined function does not state whether its results are deterministic.",
+        "suggestion": "Add the deterministic clause your Cassandra version supports, or keep the body free of randomness and side effects.",
+        "studentExplanation": "Like a recipe that never says bake time—engines need a hint whether output is repeatable.",
+        "voiceSummary": "Cassandra UDF missing DETERMINISTIC declaration. Add or document purity.",
+        "technicalMessage": "CAS-UDF-001: CREATE FUNCTION without DETERMINISTIC keyword (CqlAnalyzer.analyzeCreateFunction)."
+      },
+      "CAS-UDF-002": {
+        "title": "Function may run too long inside queries",
+        "description": "The function body has heavy loops that can block reads and writes.",
+        "suggestion": "Simplify logic, lower iteration counts, or move heavy work to the application tier.",
+        "studentExplanation": "Like doing a marathon inside a checkout line—everyone behind you waits.",
+        "voiceSummary": "UDF loop complexity high. Simplify or move work off node.",
+        "technicalMessage": "CAS-UDF-002: CassandraJsParser loopRules — many loops or large numeric bound in UDF body."
+      },
+      "CAS-UDF-003": {
+        "title": "Function touches the outside world",
+        "description": "The function body appears to call network, disk, or other impure APIs.",
+        "suggestion": "Remove external access; UDFs must stay pure and fast for safe execution in Cassandra.",
+        "studentExplanation": "Like asking the bank teller to step out mid-transaction—breaks the safe sandbox.",
+        "voiceSummary": "UDF shows I/O or impure API patterns. Remove them.",
+        "technicalMessage": "CAS-UDF-003: CassandraJsParser impure() — JS/Java UDF body matched forbidden I/O patterns."
+      },
+      "CAS-UDA-001": {
+        "title": "Aggregate missing starting value",
+        "description": "Creating an aggregate without an initial state leaves behavior unclear.",
+        "suggestion": "Provide INITCOND with a literal compatible with the state type, even if null.",
+        "studentExplanation": "Like a scoreboard with no starting score—set zero or an agreed baseline.",
+        "voiceSummary": "CREATE AGGREGATE lacks INITCOND. Add explicit initial state.",
+        "technicalMessage": "CAS-UDA-001: CREATE AGGREGATE without INITCOND clause (CqlAnalyzer.analyzeCreateAggregate)."
+      },
+      "CAS-UDA-002": {
+        "title": "State function not found in script",
+        "description": "The aggregate references a state function that this script never defines.",
+        "suggestion": "Define SFUNC earlier in the migration or fix the name and keyspace.",
+        "studentExplanation": "Like referencing chapter five in a booklet that only has four chapters.",
+        "voiceSummary": "SFUNC name missing from script context. Define or correct it.",
+        "technicalMessage": "CAS-UDA-002: SFUNC qualified name not present in SchemaRegistry (CqlAnalyzer)."
+      },
+      "CAS-TRG-001": {
+        "title": "Trigger class cannot be verified here",
+        "description": "Triggers load Java classes at runtime; static analysis cannot see the classpath.",
+        "suggestion": "Ship the JAR to every node and validate trigger behavior in staging.",
+        "studentExplanation": "Like hiring a magician without a rehearsal—you must test on the real stage.",
+        "voiceSummary": "Trigger Java class not statically verified. Test in staging.",
+        "technicalMessage": "CAS-TRG-001: CREATE TRIGGER — Java class not on analyzer classpath (CqlAnalyzer.analyzeCreateTrigger)."
+      },
+      "CAS-TRG-002": {
+        "title": "Trigger targets system data",
+        "description": "A trigger is attached to a system keyspace table, which Cassandra rejects.",
+        "suggestion": "Point triggers only at application tables under your keyspaces.",
+        "studentExplanation": "Like wiring a home alarm to the city hall breaker—off limits.",
+        "voiceSummary": "Trigger on system table invalid. Use application tables.",
+        "technicalMessage": "CAS-TRG-002: trigger ON system keyspace table (isSystemKeyspaceTable)."
+      },
+      "CAS-DCL-001": {
+        "title": "Role can log in but has no password",
+        "description": "A login-capable role was created without a password clause.",
+        "suggestion": "Add a strong password and explicitly set LOGIN or SUPERUSER only when needed.",
+        "studentExplanation": "Like issuing an ID badge that opens doors but never sets a PIN—unsafe.",
+        "voiceSummary": "CREATE ROLE without PASSWORD for login role. Add credentials.",
+        "technicalMessage": "CAS-DCL-001: CREATE ROLE missing WITH PASSWORD when login-capable (RoleWithScan)."
+      },
+      "CAS-DCL-002": {
+        "title": "All-powerful grant or revoke",
+        "description": "Granting or revoking every permission at once is unusually broad or risky.",
+        "suggestion": "List specific permissions on specific resources instead of ALL.",
+        "studentExplanation": "Like handing master keys to every room when one closet was requested.",
+        "voiceSummary": "GRANT or REVOKE ALL style clause. Prefer least privilege.",
+        "technicalMessage": "CAS-DCL-002: GRANT/REVOKE ALL or ALL PERMISSIONS pattern (CqlAnalyzer DCL)."
+      },
+      "CAS-DCL-003": {
+        "title": "Superuser flag enabled",
+        "description": "The role is marked as superuser, which bypasses normal limits.",
+        "suggestion": "Reserve superuser for break-glass accounts and use narrow roles elsewhere.",
+        "studentExplanation": "Like giving airport security master override to every intern—keep it rare.",
+        "voiceSummary": "SUPERUSER true on role. Use sparingly.",
+        "technicalMessage": "CAS-DCL-003: SUPERUSER = true in CREATE/ALTER ROLE (CqlAnalyzer)."
+      },
+      "CAS-DCL-004": {
+        "title": "Keyspace-wide permission change",
+        "description": "The grant or revoke applies to an entire keyspace, affecting every table inside.",
+        "suggestion": "If only one table needs access, scope the statement to that table.",
+        "studentExplanation": "Like painting every room because one wall needed touch-up—narrow the brush.",
+        "voiceSummary": "GRANT or REVOKE on whole keyspace. Consider table scope.",
+        "technicalMessage": "CAS-DCL-004: GRANT/REVOKE on keyspace resource (all tables)."
+      },
+      "CAS-DCL-005": {
+        "title": "Odd role nesting",
+        "description": "A login-capable identity receives a role that cannot log in on its own, which is usually accidental.",
+        "suggestion": "Enable LOGIN on the delegated role or grant a role meant for interactive use.",
+        "studentExplanation": "Like giving your house key to a guest who only has a library card—mismatch of access types.",
+        "voiceSummary": "Non-LOGIN role granted to LOGIN user. Review design.",
+        "technicalMessage": "CAS-DCL-005: registry hasNonLoginGrantedToLoginUser delegation mismatch."
+      },
+      "CAS-AUTH-001": {
+        "title": "Password looks weak",
+        "description": "The password is short or only letters and digits.",
+        "suggestion": "Use at least eight characters mixing letters, numbers, and symbols for human accounts.",
+        "studentExplanation": "Like a bike lock with three digits—easy for others to guess.",
+        "voiceSummary": "Weak Cassandra password heuristic. Strengthen it.",
+        "technicalMessage": "CAS-AUTH-001: isWeakCassandraPassword — length < 8 or letters+digits only."
+      },
+      "DDB-TX-001": {
+        "title": "Too many actions in one transaction",
+        "description": "The request lists more than one hundred steps, which DynamoDB rejects.",
+        "suggestion": "Split into multiple transactions or reorder work so unrelated writes are separate.",
+        "studentExplanation": "Like stuffing a hundred envelopes through a mail slot that only accepts ten at a time.",
+        "voiceSummary": "TransactItems over one hundred. Split the transaction.",
+        "technicalMessage": "DDB-TX-001: TransactItems.size() > 100 (DynamoDB hard limit)."
+      },
+      "DDB-TX-002": {
+        "title": "Reads and writes mixed in one transaction API",
+        "description": "The same payload mixes Get with write actions, which the write transaction API disallows.",
+        "suggestion": "Use the read-only transaction API for Gets or drop Gets from this payload.",
+        "studentExplanation": "Like trying to checkout and inventory-count in one impossible single receipt line.",
+        "voiceSummary": "TransactItems mixes Get with writes. Separate APIs.",
+        "technicalMessage": "DDB-TX-002: anyGet && anyWrite in same TransactItems (TransactWriteItems incompatibility)."
+      },
+      "DDB-TX-003": {
+        "title": "Condition check missing its rule text",
+        "description": "A condition check item has no expression to evaluate.",
+        "suggestion": "Add ConditionExpression describing what must be true before the check succeeds.",
+        "studentExplanation": "Like a referee asked to blow the whistle but no rule was written down.",
+        "voiceSummary": "ConditionCheck missing ConditionExpression.",
+        "technicalMessage": "DDB-TX-003: ConditionCheck item with empty ConditionExpression."
+      },
+      "DDB-TX-004": {
+        "title": "Many tables touched in one transaction",
+        "description": "The transaction references more than one table, which is allowed but harder and costlier.",
+        "suggestion": "Document why it is intentional or split work; you can mark the payload as justified in tooling.",
+        "studentExplanation": "Like one contract signing for apartments in three cities—possible but needs a reason on file.",
+        "voiceSummary": "Multi-table transaction advisory. Confirm intent or split.",
+        "technicalMessage": "DDB-TX-004: distinct table count > 1 without multiTableJustified flag."
+      },
+      "DDB-COND-001": {
+        "title": "Update helpers used inside a condition",
+        "description": "Functions meant for updates appear inside a condition expression, which DynamoDB does not support.",
+        "suggestion": "Move those checks into UpdateExpression or use a transaction item designed for checks.",
+        "studentExplanation": "Like using a oven timer to unlock a door—the gadget belongs in the kitchen step, not the lock.",
+        "voiceSummary": "if_not_exists or list_append in ConditionExpression. Remove or relocate.",
+        "technicalMessage": "DDB-COND-001: if_not_exists / list_append detected in ConditionExpression (DynamoDbExpressionAnalyzer)."
+      },
+      "DDB-COND-002": {
+        "title": "Exists-check missing a real field path",
+        "description": "The exists function needs a field path, not a value placeholder.",
+        "suggestion": "Pass a name path such as #pk or status, not a :value token.",
+        "studentExplanation": "Like asking “does it exist?” without saying what “it” is.",
+        "voiceSummary": "attribute_exists argument must be an attribute path.",
+        "technicalMessage": "DDB-COND-002: attribute_exists arity or non-PathExpr argument."
+      },
+      "DDB-COND-003": {
+        "title": "Size check on a number field",
+        "description": "Length-style checks do not apply to numeric attributes in DynamoDB.",
+        "suggestion": "Compare numbers directly or store lengths in a separate attribute if you need them.",
+        "studentExplanation": "Like measuring the weight of a sound—numbers need math, not length rulers.",
+        "voiceSummary": "size() on Number or Number Set invalid. Use numeric compares.",
+        "technicalMessage": "DDB-COND-003: size() on N/NS attribute types (unsupported)."
+      },
+      "DDB-STR-001": {
+        "title": "Change stream on but no item expiry rules",
+        "description": "Streams only keep history for about a day unless you also manage item lifetime separately.",
+        "suggestion": "Turn on table TTL if rows should disappear on their own, alongside streaming.",
+        "studentExplanation": "Like recording security video without deciding how long to keep tapes—set retention for the rows too.",
+        "voiceSummary": "Stream enabled without TTL hint. Consider TimeToLiveSpecification.",
+        "technicalMessage": "DDB-STR-001: StreamEnabled && !TimeToLiveSpecification.Enabled (24h stream retention note)."
+      },
+      "DDB-STR-002": {
+        "title": "Stream consumer without a dead-letter path",
+        "description": "Lambda reads the stream but has no dead-letter queue for poison records.",
+        "suggestion": "Add on-failure routing so bad events cannot loop forever.",
+        "studentExplanation": "Like a mailroom with no damaged-parcel shelf—problem letters need a side bin.",
+        "voiceSummary": "Lambda stream mapping lacks DLQ. Add OnFailure or DeadLetterConfig.",
+        "technicalMessage": "DDB-STR-002: EventSourceMapping on stream without DestinationConfig.OnFailure / DeadLetterConfig."
+      },
+      "DDB-BAK-001": {
+        "title": "Production backups appear off",
+        "description": "Continuous backups look disabled while the payload marks a production environment.",
+        "suggestion": "Enable continuous backups and verify restore drills regularly.",
+        "studentExplanation": "Like leaving the fire extinguisher pin in during opening night—turn safety on for prod.",
+        "voiceSummary": "Production flag with continuous backups disabled. Enable them.",
+        "technicalMessage": "DDB-BAK-001: production && ContinuousBackupsStatus DISABLED / continuousBackupsEnabled false."
+      },
+      "DDB-BAK-002": {
+        "title": "Restore target name matches source",
+        "description": "Restoring into the same table name as the backup source risks overwriting live data.",
+        "suggestion": "Restore to a new table name first, then carefully swap traffic.",
+        "studentExplanation": "Like photocopying a book onto the original pages—use a blank notebook first.",
+        "voiceSummary": "RestoreTable target equals source table name. Use a new name.",
+        "technicalMessage": "DDB-BAK-002: RestoreTableFromBackup TargetTableName equals source table from BackupArn."
+      },
+      "DDB-BAK-003": {
+        "title": "Point-in-time recovery disabled",
+        "description": "Finer restore windows are off, so you only have ordinary backup granularity.",
+        "suggestion": "Enable PITR when the table matters and you need minute-level recovery.",
+        "studentExplanation": "Like having yearly photos instead of daily ones—you recover less detail.",
+        "voiceSummary": "PITR disabled. Consider enabling for important tables.",
+        "technicalMessage": "DDB-BAK-003: PointInTimeRecoveryStatus DISABLED or spec disables PITR."
+      },
+      "DDB-API-001": {
+        "title": "Star query on a large table",
+        "description": "Selecting every attribute on a big table forces manual pagination and heavy reads.",
+        "suggestion": "Page with continuation keys and project only needed attributes.",
+        "studentExplanation": "Like emptying a warehouse through a single door—go in batches and carry only what you need.",
+        "voiceSummary": "SELECT star on large hinted table. Paginate and project.",
+        "technicalMessage": "DDB-API-001: PartiQL SELECT * with QWERYS_TABLE_SIZE_BYTES hint > 1MB threshold."
+      },
+      "DDB-API-002": {
+        "title": "Update missing partition key filter",
+        "description": "The update statement does not clearly pin the partition key with an equality.",
+        "suggestion": "Add WHERE with partition key equality and sort key if the table defines one.",
+        "studentExplanation": "Like updating an address book without saying which contact—name the row first.",
+        "voiceSummary": "PartiQL UPDATE needs partition key equality in WHERE.",
+        "technicalMessage": "DDB-API-002: UPDATE without WHERE or without equality on partition key (PartiQL analyzer)."
+      },
+      "PNL-001": {
+        "title": "Loop may never stop",
+        "description": "A loop’s condition always looks true and nothing obvious exits early.",
+        "suggestion": "Add a finite bound, change the condition each pass, or return or break inside the body.",
+        "studentExplanation": "Like a treadmill stuck on max with no stop cord—give yourself a way off.",
+        "voiceSummary": "Painless while or for may not exit. Add break or finite condition.",
+        "technicalMessage": "PNL-001: non-escaping while / infinite for heuristic (PainlessAnalyzer)."
+      },
+      "PNL-002": {
+        "title": "Field name not in the known list",
+        "description": "The script reads a document field that your provided schema does not list.",
+        "suggestion": "Fix the spelling or refresh the mapping list you pass to the analyzer.",
+        "studentExplanation": "Like asking for aisle twelve in a store that only has ten aisles.",
+        "voiceSummary": "doc field missing from schema set. Correct name or mapping.",
+        "technicalMessage": "PNL-002: doc['field'] literal not in ctx.schemaFields."
+      },
+      "PNL-003": {
+        "title": "Changing stored data in the wrong script type",
+        "description": "A query-time script tries to rewrite the document source, which is not allowed there.",
+        "suggestion": "Move changes to an update or ingest pipeline script instead.",
+        "studentExplanation": "Like trying to rewrite a library book during a public reading—borrow the checkout desk instead.",
+        "voiceSummary": "ctx._source assignment in query script forbidden. Use update or ingest.",
+        "technicalMessage": "PNL-003: assignsToCtxSource while ctx.querySubtree true."
+      },
+      "PNL-004": {
+        "title": "Script must hand back a value",
+        "description": "This script context expects a returned result but none appears.",
+        "suggestion": "End with an explicit return that hands back the score or value the caller needs.",
+        "studentExplanation": "Like a math quiz that says “show your answer” and you only showed work.",
+        "voiceSummary": "Missing return in context that requires one.",
+        "technicalMessage": "PNL-004: requireReturn && !astContainsReturn (checkRequiresReturn)."
+      },
+      "PNL-005": {
+        "title": "Heavy loop inside an aggregation script",
+        "description": "The script walks collections inside a per-bucket path, which can scale badly.",
+        "suggestion": "Prefer doc values, parameters, or precomputed metrics instead of big loops per bucket.",
+        "studentExplanation": "Like counting beans in every jar while customers wait at each checkout.",
+        "voiceSummary": "Possible O(n) loop in aggregation script. Simplify.",
+        "technicalMessage": "PNL-005: looksLikeLinearPass inside aggsSubtree loop (METHOD_CALL heuristic)."
+      },
+      "PNL-006": {
+        "title": "Document read without safety net",
+        "description": "Field access can throw if the field is missing or the wrong type, and there is no try block.",
+        "suggestion": "Wrap doc access in try/catch or guard with safe defaults.",
+        "studentExplanation": "Like opening a locker without checking the number—have a plan if it jams.",
+        "voiceSummary": "doc access without try/catch. Add guards.",
+        "technicalMessage": "PNL-006: doc[...] present, no try keyword (ScriptException heuristic)."
+      },
+      "PNL-007": {
+        "title": "Randomness inside scoring logic",
+        "description": "Random numbers make scores change run to run, which breaks caching and tests.",
+        "suggestion": "Use fixed weights or pass any randomness through params from outside.",
+        "studentExplanation": "Like rolling dice to grade homework—results won’t match tomorrow.",
+        "voiceSummary": "Math.random in Painless. Remove for reproducible scoring.",
+        "technicalMessage": "PNL-007: source.contains(\"Math.random\") non-reproducible script warning."
+      },
+      "ES-IP-001": {
+        "title": "Pipeline lacks failure handling",
+        "description": "If a processor fails, the pipeline has no top-level or per-step recovery path.",
+        "suggestion": "Add on_failure at the pipeline or step level so errors surface clearly.",
+        "studentExplanation": "Like a factory line with no red stop button when a machine jams.",
+        "voiceSummary": "Ingest pipeline missing on_failure. Add handlers.",
+        "technicalMessage": "ES-IP-001: ingest pipeline JSON without pipeline or processor on_failure arrays."
+      },
+      "ES-IP-002": {
+        "title": "Very long processor chain",
+        "description": "More than twenty processors are chained, which is hard to maintain and debug.",
+        "suggestion": "Split into smaller pipelines and link them with a pipeline processor.",
+        "studentExplanation": "Like a recipe with twenty chapters—split into courses people can follow.",
+        "voiceSummary": "Over twenty ingest processors. Split pipeline.",
+        "technicalMessage": "ES-IP-002: processors.size() > 20."
+      },
+      "ES-IP-003": {
+        "title": "Nested pipeline reference",
+        "description": "This step calls another pipeline by name, which static checks cannot verify.",
+        "suggestion": "Confirm the child pipeline exists in every cluster before production rollout.",
+        "studentExplanation": "Like linking to another book’s chapter without checking the book is on the shelf.",
+        "voiceSummary": "Nested pipeline processor. Verify referenced pipeline exists.",
+        "technicalMessage": "ES-IP-003: processor type pipeline — referenced pipeline not statically verified."
+      },
+      "ES-IP-004": {
+        "title": "Foreach step missing inner processor",
+        "description": "A foreach processor has no inner processor object defined.",
+        "suggestion": "Add processor: { \"set\": { ... } } or another processor inside foreach.",
+        "studentExplanation": "Like a loop that says “for each item do nothing”—define the action.",
+        "voiceSummary": "foreach missing inner processor. Define processor field.",
+        "technicalMessage": "ES-IP-004: foreach processor missing non-empty processor child."
+      },
+      "ES-IP-005": {
+        "title": "Script language not spelled out",
+        "description": "The script processor omits lang; servers assume Painless anyway.",
+        "suggestion": "Write lang explicitly so operators know which engine runs.",
+        "studentExplanation": "Like shipping a battery without saying rechargeable—state it clearly.",
+        "voiceSummary": "Ingest script processor missing lang. Set painless explicitly.",
+        "technicalMessage": "ES-IP-005: script processor missing or blank lang field."
+      },
+      "ES-IP-006": {
+        "title": "Grok pattern very complex",
+        "description": "Many capture groups make grok expensive at ingest time.",
+        "suggestion": "Simplify the pattern or split parsing across multiple processors.",
+        "studentExplanation": "Like asking one regex to read a whole newspaper—give it smaller paragraphs.",
+        "voiceSummary": "Grok pattern has many captures. Simplify.",
+        "technicalMessage": "ES-IP-006: grokPatternGroupCount > 5."
+      },
+      "ES-IP-007": {
+        "title": "Rename after remove on same field",
+        "description": "A remove step drops a field that a later rename still references.",
+        "suggestion": "Reorder processors so rename happens before remove, or rename a field that still exists.",
+        "studentExplanation": "Like erasing a name tag then asking someone to read it—fix the order.",
+        "voiceSummary": "rename targets field already removed earlier. Reorder pipeline.",
+        "technicalMessage": "ES-IP-007: rename field in removedFields set from prior remove processor."
+      },
+      "ES-RX-001": {
+        "title": "Reindex runs single-threaded",
+        "description": "Without slices, large reindexes bottleneck on one coordinator path.",
+        "suggestion": "Set slices to auto or a positive integer to parallelize across shards.",
+        "studentExplanation": "Like moving a warehouse with one hand truck—rent more carts.",
+        "voiceSummary": "Reindex without slices. Add parallel slices.",
+        "technicalMessage": "ES-RX-001: reindex body missing slices field."
+      },
+      "ES-RX-002": {
+        "title": "Reindex script ignores delete events",
+        "description": "The script reads ctx._source but never checks ctx.op for deletes or no-ops.",
+        "suggestion": "Guard writes with if (ctx.op == 'index' || ctx.op == 'create') { ... }.",
+        "studentExplanation": "Like packing boxes without checking if the order was cancelled.",
+        "voiceSummary": "Reindex script uses ctx._source without ctx.op guard.",
+        "technicalMessage": "ES-RX-002: reindex script usesSource && !guardsOp."
+      },
+      "ES-RX-003": {
+        "title": "Same-cluster reindex note",
+        "description": "Reindex without a remote block copies within the cluster, typical for migrations.",
+        "suggestion": "For cross-cluster copies add source.remote with the remote cluster settings.",
+        "studentExplanation": "Like photocopying in-house versus mailing to another office—this path is in-house.",
+        "voiceSummary": "Same-cluster reindex pattern. Add remote for cross-cluster.",
+        "technicalMessage": "ES-RX-003: reindex source object without remote field (INFO advisory)."
+      },
+      "ES-ILM-001": {
+        "title": "Hot phase without rollover",
+        "description": "The hot phase never rolls indices, so they can grow without bound.",
+        "suggestion": "Add rollover with max age, size, or document count thresholds.",
+        "studentExplanation": "Like a trash can with no liner change schedule—it overflows eventually.",
+        "voiceSummary": "ILM hot phase missing rollover action.",
+        "technicalMessage": "ES-ILM-001: hot phase actions missing rollover object."
+      },
+      "ES-ILM-002": {
+        "title": "Delete phase without retention delay",
+        "description": "The delete phase lacks min_age, so timing of deletes is unclear or immediate.",
+        "suggestion": "Set min_age such as 90d so deletion happens after a clear retention window.",
+        "studentExplanation": "Like tossing files with no “keep for one year” rule—define how long to wait.",
+        "voiceSummary": "ILM delete phase missing min_age. Set retention window.",
+        "technicalMessage": "ES-ILM-002: delete phase missing or blank min_age."
+      },
+      "ES-ILM-003": {
+        "title": "Shrink listed before force merge",
+        "description": "Warm phase lists shrink before forcemerge, which is usually the opposite order.",
+        "suggestion": "Put forcemerge before shrink for clearer maintenance flow.",
+        "studentExplanation": "Like folding laundry before washing—swap to the usual efficient order.",
+        "voiceSummary": "ILM warm: shrink before forcemerge. Reorder actions.",
+        "technicalMessage": "ES-ILM-003: shrinkPos < fmPos in warm phase actions object field order."
+      },
+      "ES-ILM-004": {
+        "title": "Cold phase without freeze",
+        "description": "Cold storage keeps indices heavier in memory than a frozen index would.",
+        "suggestion": "Add freeze in cold when you want read-only archival with lower heap use.",
+        "studentExplanation": "Like storing winter coats unpacked—freezing packs them tighter.",
+        "voiceSummary": "Cold phase missing freeze action. Consider freeze.",
+        "technicalMessage": "ES-ILM-004: cold phase actions object without freeze action."
+      },
+      "ES-ILM-005": {
+        "title": "No delete phase in lifecycle policy",
+        "description": "Without delete, old indices may never leave the cluster automatically.",
+        "suggestion": "Add a delete phase or another managed cleanup path for aged data.",
+        "studentExplanation": "Like a closet that never gets cleaned—eventually there is no room.",
+        "voiceSummary": "ILM policy has no delete phase. Add cleanup phase.",
+        "technicalMessage": "ES-ILM-005: phases object missing delete phase key."
+      },
+      "ES-SNP-001": {
+        "title": "Snapshot repository not compressed",
+        "description": "The repository settings leave compression off, so snapshots use more disk.",
+        "suggestion": "Enable compress where the repository type supports it.",
+        "studentExplanation": "Like mailing clothes without vacuum bags—they take more space.",
+        "voiceSummary": "Snapshot repo compress false. Enable if supported.",
+        "technicalMessage": "ES-SNP-001: repository settings.compress not true."
+      },
+      "ES-SNP-002": {
+        "title": "Restore without rename pattern",
+        "description": "Restoring without rename can overwrite existing index names.",
+        "suggestion": "Set rename_pattern and rename_replacement to land on new names first.",
+        "studentExplanation": "Like moving furniture into a room that still has furniture—label new rooms.",
+        "voiceSummary": "Restore missing rename_pattern. Map to new index names.",
+        "technicalMessage": "ES-SNP-002: snapshot restore body without rename_pattern text."
+      },
+      "ES-SNP-003": {
+        "title": "Repository lacks verification hint",
+        "description": "No schedule or inactivity verify hint is present for the repository.",
+        "suggestion": "Periodically verify the repository or use SLM with a cron schedule.",
+        "studentExplanation": "Like a smoke detector with no test reminder—schedule a check.",
+        "voiceSummary": "Repository missing verify schedule hint. Plan verification.",
+        "technicalMessage": "ES-SNP-003: no verify_after_inactivity or schedule on repository definition."
+      },
+      "ES-SNP-004": {
+        "title": "Snapshot includes global cluster state",
+        "description": "include_global_state true snapshots cluster metadata, which can surprise production restores.",
+        "suggestion": "Prefer false unless you intentionally restore global metadata.",
+        "studentExplanation": "Like backing up the whole building blueprint when you only meant one apartment.",
+        "voiceSummary": "Snapshot include_global_state true. Prefer false unless intended.",
+        "technicalMessage": "ES-SNP-004: snapshot create include_global_state boolean true."
+      },
+      "ES-TPL-001": {
+        "title": "Template params incomplete",
+        "description": "The Mustache template references names that are missing from the params object.",
+        "suggestion": "Add each name under params or add default inverted sections in the template.",
+        "studentExplanation": "Like a form missing blanks the letter asks for—fill every referenced field.",
+        "voiceSummary": "Mustache params missing keys. Add them.",
+        "technicalMessage": "ES-TPL-001: mustacheInterpolationRoots not subset of params keys."
+      },
+      "ES-TPL-002": {
+        "title": "Optional params without defaults",
+        "description": "Sections use parameters that lack default inverted blocks in the template.",
+        "suggestion": "Add {{^name}}...{{/name}} for optional parameters that may be absent.",
+        "studentExplanation": "Like optional toppings without a “none” line on the order form.",
+        "voiceSummary": "Mustache optional sections missing {{^name}} defaults.",
+        "technicalMessage": "ES-TPL-002: emitMustacheOptionalSectionWithoutDefaultWarnings missing inverted sections."
+      },
+      "ES-TPL-003": {
+        "title": "Template looks like unsafe string assembly",
+        "description": "The template text resembles patterns used in injection or unsafe dynamic queries.",
+        "suggestion": "Build queries from structured JSON fields instead of pasting user text into clauses.",
+        "studentExplanation": "Like gluing stranger sentences into a contract—use placeholders and structured fields.",
+        "voiceSummary": "Mustache template matches SQL-injection-like heuristics. Refactor.",
+        "technicalMessage": "ES-TPL-003: containsSqlInjectionLikePattern(src) true on mustache template."
+      },
+      "ES-TPL-004": {
+        "title": "Validate template before production",
+        "description": "Templates by id or with interpolations should be dry-run with real parameters.",
+        "suggestion": "Call POST _render/template with production-like params before go-live.",
+        "studentExplanation": "Like rehearsing a speech with the actual microphone, not only on paper.",
+        "voiceSummary": "Use render template API to validate mustache with params.",
+        "technicalMessage": "ES-TPL-004: stored template / id-only / interpolation validation advisory (ElasticsearchAnalyzer)."
+      },
+      "ES-RND-001": {
+        "title": "Render params line up cleanly",
+        "description": "Every referenced template parameter is supplied and there are no unused keys.",
+        "suggestion": "Keep using this dry-run style for CI checks on stored templates too.",
+        "studentExplanation": "Like a dress rehearsal where every actor showed up with the right props.",
+        "voiceSummary": "Render template params complete and aligned. Good practice.",
+        "technicalMessage": "ES-RND-001: emitRenderTemplateParamsCompleteInfo — params cover template roots, no unused."
+      },
+      "ES-RND-002": {
+        "title": "Unused render parameter keys",
+        "description": "The params object includes keys the template never references.",
+        "suggestion": "Remove unused keys to keep requests obvious and avoid confusion.",
+        "studentExplanation": "Like packing shoes for a beach trip you never mention—drop unused baggage.",
+        "voiceSummary": "Render params contain unused keys. Remove extras.",
+        "technicalMessage": "ES-RND-002: provided param keys not in mustacheInterpolationRoots."
+      },
+      "CQL-BATCH-APPLY": {
+        "title": "Batch not closed properly",
+        "description": "A Cassandra batch block does not end with the required closing phrase.",
+        "suggestion": "Finish the batch with APPLY BATCH before the semicolon so the server accepts it.",
+        "studentExplanation": "Like sealing a letter but forgetting to write “end of letter” on a form that requires it.",
+        "voiceSummary": "BATCH must end with APPLY BATCH.",
+        "technicalMessage": "CQL-BATCH-APPLY: endsWithApplyBatch false in CqlAnalyzer.analyzeBatch."
+      },
+      "CQL-BATCH-LARGE": {
+        "title": "Very large Cassandra batch",
+        "description": "The batch contains a large number of statements, which is a known anti-pattern.",
+        "suggestion": "Split into smaller batches or use asynchronous writes with a safe concurrency limit.",
+        "studentExplanation": "Like loading one elevator with everyone in the building—several trips are safer.",
+        "voiceSummary": "Large CQL batch warning. Split or go async.",
+        "technicalMessage": "CQL-BATCH-LARGE: estimated batch count > 100 && <= CAS-BATCH-001 threshold branch."
+      },
+      "DDB-MGMT-JSON": {
+        "title": "Invalid JSON for DynamoDB management",
+        "description": "Streams, backups, or PITR payloads must be valid JSON objects.",
+        "suggestion": "Fix braces, commas, and quotes, then resend the management-style payload.",
+        "studentExplanation": "Like a customs form smudged unreadable—the officer sends it back unread.",
+        "voiceSummary": "DynamoDB management JSON parse error.",
+        "technicalMessage": "DDB-MGMT-JSON: JsonProcessingException in analyzeManagementPayload."
+      },
+      "DDB-STR-VIEW": {
+        "title": "Unknown stream view type",
+        "description": "StreamViewType is not one of the values DynamoDB recognizes.",
+        "suggestion": "Use KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, or NEW_AND_OLD_IMAGES.",
+        "studentExplanation": "Like picking a camera mode that your phone model does not offer.",
+        "voiceSummary": "Invalid DynamoDB StreamViewType.",
+        "technicalMessage": "DDB-STR-VIEW: StreamViewType not in STREAM_VIEW_TYPES set."
+      },
+      "DDB-TX-JSON": {
+        "title": "Invalid JSON for a transaction request",
+        "description": "TransactItems must live inside a single well-formed JSON object.",
+        "suggestion": "Validate JSON structure and ensure TransactItems is an array before retrying.",
+        "studentExplanation": "Like a shopping list torn in half—the cashier cannot read the cart.",
+        "voiceSummary": "Transact request JSON invalid.",
+        "technicalMessage": "DDB-TX-JSON: JsonProcessingException in analyzeTransactRequest."
+      },
+      "ES-CROSS-003": {
+        "title": "Mixed Elasticsearch API styles in one script",
+        "description": "The script combines search bodies with ingest, reindex, ILM, snapshots, or templates.",
+        "suggestion": "Send each kind to its proper HTTP path (/_search, /_ingest/pipeline, /_reindex, etc.).",
+        "studentExplanation": "Like mailing letters, parcels, and legal filings in one envelope—sort them by counter.",
+        "voiceSummary": "Script mixes Elasticsearch API payload kinds. Split requests.",
+        "technicalMessage": "ES-CROSS-003: distinctApiKinds >= 2 in analyzeCrossScriptOnly."
+      },
+      "ES-CROSS-004": {
+        "title": "Several ingest pipeline definitions together",
+        "description": "Multiple pipeline PUT definitions appear in one script; the cluster does not auto-chain them.",
+        "suggestion": "Document dependencies between pipelines in your runbook or CI.",
+        "studentExplanation": "Like stacking several recipe cards—order of filing matters only to your kitchen, not the oven.",
+        "voiceSummary": "Multiple ingest pipeline blocks in one script. Document order.",
+        "technicalMessage": "ES-CROSS-004: ingestBlocks >= 2 in analyzeCrossScriptOnly."
+      },
+      "LUA-PARSE-ERROR": {
+        "title": "Lua script could not be parsed",
+        "description": "The Redis Lua snippet has a syntax or token problem the analyzer cannot read.",
+        "suggestion": "Check quotes, brackets, if/for/end structure, and comments near the reported line.",
+        "studentExplanation": "Like a knitting pattern with a skipped row—the next stitches do not line up.",
+        "voiceSummary": "Lua parse or lex error in script.",
+        "technicalMessage": "LUA-PARSE-ERROR: LuaLexer.LexException or LuaParser.ParseException in LuaAnalyzer."
+      },
+      "MGO-AGG-PERF-001": {
+        "title": "Long pipeline without an early filter",
+        "description": "Many aggregation stages run before a selective match, so the server may scan too many documents.",
+        "suggestion": "Put a selective $match stage first to shrink the working set.",
+        "studentExplanation": "Like washing every dish in the building before choosing which shelf to fill—rinse the pile first.",
+        "voiceSummary": "Pipeline over five stages without leading $match. Add early $match.",
+        "technicalMessage": "MGO-AGG-PERF-001: stageOpens.size()>5 && first stage != $match in scanAggregationRules."
+      },
+      "MGO-ELEM-001": {
+        "title": "Element query with no real condition",
+        "description": "$elemMatch is present but empty, so it does not describe which array elements you want.",
+        "suggestion": "Add at least one predicate inside $elemMatch, for example a comparison on a field.",
+        "studentExplanation": "Like saying “any row in the spreadsheet” without saying which column to check.",
+        "voiceSummary": "$elemMatch needs inner conditions.",
+        "technicalMessage": "MGO-ELEM-001: validateElemMatch inner list empty."
+      },
+      "MGO-GEO-IDX-001": {
+        "title": "Geospatial query needs an index",
+        "description": "Near or within-style geo filters expect a 2dsphere or 2d index on the coordinate field.",
+        "suggestion": "Create the right geo index before relying on these queries in production.",
+        "studentExplanation": "Like using a map app offline with no downloaded tiles—the route cannot load.",
+        "voiceSummary": "Geo query requires 2dsphere or 2d index.",
+        "technicalMessage": "MGO-GEO-IDX-001: $near/$nearSphere/$geoWithin/$geoIntersects advisory in MongoDbAnalyzer."
+      },
+      "MGO-GEO-NEAR-001": {
+        "title": "Near query without a distance cap",
+        "description": "A $near-style query has no $maxDistance, so results and cost can sprawl.",
+        "suggestion": "Add $maxDistance (and optionally $minDistance) to bound the search radius.",
+        "studentExplanation": "Like asking for every restaurant on Earth sorted by distance—say how far you will travel.",
+        "voiceSummary": "Add $maxDistance to near queries.",
+        "technicalMessage": "MGO-GEO-NEAR-001: validateNearMaxDistance missing $maxDistance."
+      },
+      "MGO-GEO-POLY-001": {
+        "title": "Polygon ring not closed",
+        "description": "GeoJSON polygons must repeat the first coordinate as the last point of each ring.",
+        "suggestion": "Close each linear ring by copying the first coordinate to the end.",
+        "studentExplanation": "Like drawing a fence line that does not reconnect to the first post.",
+        "voiceSummary": "GeoJSON polygon must close first and last point.",
+        "technicalMessage": "MGO-GEO-POLY-001: !isClosedLinearRing in validateGeoWithinPolygon."
+      },
+      "MGO-JS-101": {
+        "title": "Server script reads fields with “this”",
+        "description": "The snippet uses this to read document fields on the server, which is hard to audit and costly.",
+        "suggestion": "Prefer query operators, aggregation, or $expr instead of server-side JavaScript.",
+        "studentExplanation": "Like using a magic notebook that rewrites itself—harder for others to review safely.",
+        "voiceSummary": "Mongo server JS uses this. Prefer operators or $expr.",
+        "technicalMessage": "MGO-JS-101: MongoJsParser WORD_THIS in stripped JS."
+      },
+      "MGO-JS-102": {
+        "title": "Dangerous call in server-side JavaScript",
+        "description": "Patterns such as eval, require, or Function appear in MongoDB-side JavaScript.",
+        "suggestion": "Remove these calls; they can enable abuse or unexpected behavior.",
+        "studentExplanation": "Like handing a stranger a master remote for your house—revoke risky calls.",
+        "voiceSummary": "Dangerous JS call in Mongo snippet. Remove eval or similar.",
+        "technicalMessage": "MGO-JS-102: MongoJsParser dangerous() for eval/require/Function."
+      },
+      "MGO-OID-001": {
+        "title": "ObjectId compared as plain text",
+        "description": "Comparing _id to a 24-character hex string without wrapping ObjectId will never match BSON ObjectIds.",
+        "suggestion": "Use ObjectId(\"...\") or the correct BSON type your driver expects.",
+        "studentExplanation": "Like comparing a locker number written on paper to the metal chip inside the key—different shapes.",
+        "voiceSummary": "Wrap hex _id strings with ObjectId.",
+        "technicalMessage": "MGO-OID-001: scanObjectIdStringComparisons string hex next to _id field."
+      },
+      "MGO-PUSH-001": {
+        "title": "Push several values without $each",
+        "description": "Pushing multiple array elements at once should use the $each helper for clarity and efficiency.",
+        "suggestion": "Wrap values as { $each: [ ... ] } inside $push or $addToSet.",
+        "studentExplanation": "Like loading several plates on one tray tag—stack them using the tray’s divider.",
+        "voiceSummary": "Use $each for multi-value $push or $addToSet.",
+        "technicalMessage": "MGO-PUSH-001: validatePushStyleArrays multi elements without $each modifier."
+      },
+      "MGO-PULL-001": {
+        "title": "Pull rule is empty",
+        "description": "An empty $pull filter can remove every matching element from an array unintentionally.",
+        "suggestion": "Add explicit predicates to $pull or confirm you truly want to clear matching entries.",
+        "studentExplanation": "Like “remove every sticker” with no rule about which sticker—everything may go.",
+        "voiceSummary": "Empty $pull condition is risky. Add predicates.",
+        "technicalMessage": "MGO-PULL-001: validatePull inner object empty."
+      },
+      "MGO-TEXT-LANG-001": {
+        "title": "Text search language not recognized",
+        "description": "The $language value is not in MongoDB’s supported text language list.",
+        "suggestion": "Pick a supported language code or omit $language to use the index default.",
+        "studentExplanation": "Like choosing spell-check for a language your dictionary does not ship with.",
+        "voiceSummary": "Unsupported $language for text search.",
+        "technicalMessage": "MGO-TEXT-LANG-001: validateTextLanguage lang not in KNOWN_TEXT_LANGUAGES."
+      },
+      "PNL-PARSE-ERROR": {
+        "title": "Painless script could not be parsed",
+        "description": "The Elasticsearch Painless snippet has a syntax issue near the reported position.",
+        "suggestion": "Check braces, semicolons, def usage, and comments around the error location.",
+        "studentExplanation": "Like a formula in a spreadsheet with one extra parenthesis—the sheet stops calculating.",
+        "voiceSummary": "Painless lex or parse error.",
+        "technicalMessage": "PNL-PARSE-ERROR: PainlessLexer.LexException or PainlessParser.ParseException."
+      },
+      "RDS-TX-005": {
+        "title": "Transaction left open at end of script",
+        "description": "A MULTI block never receives EXEC or DISCARD before the script ends.",
+        "suggestion": "Always close MULTI with EXEC to apply or DISCARD to cancel before finishing the script.",
+        "studentExplanation": "Like leaving a checkout lane mid-ring without paying or voiding—the register stays stuck.",
+        "voiceSummary": "Script ends inside MULTI. Send EXEC or DISCARD.",
+        "technicalMessage": "RDS-TX-005: inMulti true at end of analyzeCrossScriptOnly / RedisAnalyzer cross-script."
+      }
+    }
+  },
+  "history": {
+    "title": "Query History",
+    "subtitle": "Every analysis you run while signed in is saved here — like a Grammarly for queries.",
+    "searchPlaceholder": "Search in history…",
+    "clearAll": "Clear all",
+    "filterAll": "All",
+    "filterValid": "Valid",
+    "filterInvalid": "Invalid",
+    "filterFavorites": "Favorites",
+    "badgeValid": "VALID",
+    "badgeInvalid": "INVALID",
+    "badgeNativeValid": "Native: valid",
+    "badgeNativeInvalid": "Native: invalid",
+    "badgeAiValid": "AI: valid",
+    "badgeAiInvalid": "AI: invalid",
+    "nativeValidityTitle": "Result from the native QWERYS analyzer",
+    "aiValidityTitle": "Result after AI second pass (complement)",
+    "favorite": "Add to favorites",
+    "unfavorite": "Remove from favorites",
+    "reanalyze": "Re-analyze",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "confirmDeleteMessage": "Delete this entry from your history?",
+    "confirmClearTitle": "Clear history",
+    "confirmClearMessage": "Delete all entries from your history? This cannot be undone.",
+    "loading": "Loading history…",
+    "empty": "No entries yet. Analyze a query while signed in to build your history.",
+    "selectEntry": "Select an entry to view the full query and analysis.",
+    "detailTitle": "Analysis detail",
+    "fullQuery": "Full query",
+    "errorsSection": "Errors",
+    "optimizationsSection": "Optimizations",
+    "aiComplementSection": "AI perspective (complement)",
+    "aiProvider": "AI source",
+    "aiNativeReviews": "Native analysis review",
+    "aiWarnings": "AI warnings",
+    "aiOptimizations": "AI optimization suggestions",
+    "noParsedResult": "Could not parse stored result JSON.",
+    "analysisTime": "Analysis time: {{ms}} ms",
+    "warningsCount": "{{count}} warning(s)",
+    "optimizationsCount": "{{count}} optimization(s)",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageOf": "Page {{current}} of {{total}}",
+    "toolbarAria": "History search and actions",
+    "filtersAria": "History filters",
+    "listAria": "History entries",
+    "detailAria": "Selected entry detail",
+    "paginationAria": "History pagination",
+    "entryAria": "History entry: {{query}}",
+    "back": "Back",
+    "backToList": "Back to history",
+    "errors": {
+      "authRequired": "Sign in to view and manage your query history.",
+      "generic": "Could not load history. Try again.",
+      "clearFailed": "Could not clear history. Try again."
+    }
+  },
+  "placeholders": {
+    "analyzer": "Query Analyzer — coming soon",
+    "migration": "Code Migration",
+    "schema": "Schema Explorer — coming soon",
+    "history": "History",
+    "ai": "AI Suggestions",
+    "settings": "Settings"
+  },
+  "auth": {
+    "tagline": "One system. Any query. Any user.",
+    "tabs": {
+      "login": "Sign In",
+      "register": "Create Account"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    },
+    "placeholders": {
+      "name": "Your name",
+      "email": "you@email.com",
+      "password": "••••••••",
+      "confirmPassword": "Repeat your password"
+    },
+    "buttons": {
+      "login": "Sign In",
+      "register": "Create Account",
+      "guest": "Continue as Guest"
+    },
+    "divider": "or",
+    "loading": "Loading...",
+    "error": {
+      "invalidCredentials": "Incorrect email or password. Please try again.",
+      "emailNotFound": "No account found with this email address",
+      "registerFailed": "Could not create account. Please try again later.",
+      "emailAlreadyRegistered": "This email already has an account. Use Sign In with the same password.",
+      "backendUnavailable": "Could not reach the server. Make sure the backend is running (port 8080) and try again.",
+      "emailInvalid": "Enter a valid email address.",
+      "passwordRequired": "Password is required.",
+      "passwordMin": "Password must be at least 6 characters.",
+      "nameRequired": "Name is required.",
+      "passwordMismatch": "Passwords do not match."
+    }
+  },
+  "onboarding": {
+    "title": "Customize your experience",
+    "subtitleGuest": "This customization is temporary. Create an account to save it forever.",
+    "subtitleNew": "Choose how you want QWERYS to adapt to you.",
+    "langLabel": "Select language",
+    "themeToggle": "Toggle theme",
+    "modesLabel": "Accessibility modes",
+    "start": "Get Started",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "modes": {
+      "blind": {
+        "label": "Blind Mode",
+        "desc": "Optimized for screen reader navigation"
+      },
+      "lowVision": {
+        "label": "Low Vision",
+        "desc": "Large text and high contrast"
+      },
+      "dyslexia": {
+        "label": "Dyslexia",
+        "desc": "Adapted font and spacing"
+      },
+      "deaf": {
+        "label": "Deaf",
+        "desc": "No audio alerts, more visual context"
+      },
+      "adhd": {
+        "label": "ADHD",
+        "desc": "Distraction-free, focused interface"
+      },
+      "student": {
+        "label": "Student",
+        "desc": "Detailed explanations and guides"
+      },
+      "expert": {
+        "label": "Expert",
+        "desc": "Compact mode, no extra hints"
+      }
+    }
+  },
+  "schema": {
+    "title": "Schema explorer",
+    "subtitle": "Connect to your engine, list tables or collections, and inspect columns in one place.",
+    "host": "Host",
+    "port": "Port",
+    "database": "Database",
+    "filePath": "Database file path (.db)",
+    "username": "Username",
+    "password": "Password",
+    "keyspace": "Keyspace",
+    "index": "Index",
+    "dbNumber": "Database (0-15)",
+    "region": "AWS Region",
+    "accessKeyId": "Access Key ID",
+    "secretAccessKey": "Secret Access Key",
+    "authOptionalHint": "Authentication is optional for this engine.",
+    "dynamodbPortHint": "8000 = DynamoDB Local. 443 = real AWS (HTTPS).",
+    "dynamodbRegionHint": "AWS region (e.g. us-east-1). If empty, the server uses AWS_REGION.",
+    "dynamodbConnectionHint": "AWS: regional host (e.g. dynamodb.us-east-1.amazonaws.com) and port 443. Local: localhost and port 8000.",
+    "dbType": "Database type",
+    "timeout": "Connection timeout (seconds)",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "connecting": "Connecting…",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "connectionError": "Connection error",
+    "connectionErrorDetail": "Could not establish a connection. Check host, port, credentials, and database name, or try again later.",
+    "connectionSuccess": "Connected successfully.",
+    "tablesLoadError": "Could not load the table or collection list.",
+    "columnsLoadError": "Could not load column details.",
+    "engines": {
+      "mysql": "MySQL",
+      "postgresql": "PostgreSQL",
+      "sqlite": "SQLite",
+      "sqlserver": "SQL Server",
+      "oracle": "Oracle",
+      "mongodb": "MongoDB",
+      "redis": "Redis",
+      "cassandra": "Cassandra",
+      "dynamodb": "DynamoDB",
+      "elasticsearch": "Elasticsearch"
+    },
+    "tables": "Tables / collections",
+    "columns": "Columns",
+    "columnName": "Name",
+    "dataType": "Type",
+    "nullable": "Nullable",
+    "primaryKey": "PK",
+    "noTableSelected": "Pick a table or collection from the list.",
+    "noColumns": "No columns to display.",
+    "noTables": "Connected successfully, but no tables or collections were returned.",
+    "awsNote": "DynamoDB often relies on environment credentials and region (for example AWS env vars). Fill in whatever resource identifier your deployment expects.",
+    "yes": "Yes",
+    "no": "No",
+    "back": "Back",
+    "backToList": "Back to table list"
+  },
+  "migration": {
+    "title": "Code migration",
+    "subtitle": "Convert code between programming languages using QWERYS' nine migration strategies.",
+    "source": "Source",
+    "target": "Target",
+    "sourceLanguage": "Source language",
+    "targetLanguage": "Target language",
+    "migrate": "Migrate →",
+    "converting": "Converting…",
+    "copy": "Copy code",
+    "download": "Download",
+    "copied": "Code copied to clipboard.",
+    "copyFailed": "Could not copy. Try selecting the text manually.",
+    "migratedPlaceholder": "Migrated code will appear here…",
+    "warningsTitle": "Warnings",
+    "manualTitle": "Manual steps",
+    "sourceEditorLabel": "Source code editor. Type or paste code to migrate.",
+    "targetEditorLabel": "Migrated code editor, read-only.",
+    "resultReady": "Migration completed to {{language}}.",
+    "languages": {
+      "cpp": "C++",
+      "python": "Python",
+      "java": "Java",
+      "typescript": "TypeScript"
+    },
+    "errors": {
+      "conversionFailed": "Migration could not be completed."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "accessibility": {
+      "title": "Accessibility Modes",
+      "blind": {
+        "label": "Blind Mode",
+        "desc": "Activates screen reader and keyboard navigation"
+      },
+      "lowVision": {
+        "label": "Low Vision",
+        "desc": "XXL font, high contrast, large buttons"
+      },
+      "dyslexia": {
+        "label": "Dyslexia",
+        "desc": "OpenDyslexic font, increased spacing, collapsible blocks"
+      },
+      "deaf": {
+        "label": "Deaf",
+        "desc": "Removes audio, adds captions to animations"
+      },
+      "adhd": {
+        "label": "ADHD",
+        "desc": "Simplified interface, step-by-step mode, no distractions"
+      },
+      "student": {
+        "label": "Student",
+        "desc": "Detailed explanations, examples, educational tooltips"
+      },
+      "expert": {
+        "label": "Expert",
+        "desc": "Visible AST tree, technical metrics, advanced shortcuts"
+      },
+      "highContrast": {
+        "label": "High Contrast",
+        "desc": "Pure black background, white text, white borders — maximum readability"
+      }
+    },
+    "device": {
+      "title": "Device",
+      "mobile": "Mobile",
+      "tablet": "Tablet",
+      "laptop": "Laptop",
+      "desktop": "Desktop",
+      "detect": "Detect automatically"
+    },
+    "language": {
+      "title": "Language",
+      "es": "Español",
+      "en": "English"
+    },
+    "account": {
+      "title": "My Account",
+      "changePassword": "Change password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "savePassword": "Save password",
+      "changeEmail": "Change email address",
+      "newEmail": "New email address",
+      "saveEmail": "Save email",
+      "deleteAccount": "Delete account",
+      "deleteWarning": "This action is permanent and irreversible. All your data will be deleted.",
+      "deleteButton": "Delete my account",
+      "deleteConfirm": "Are you sure? This action cannot be undone.",
+      "confirmYes": "Yes, delete my account",
+      "confirmNo": "Cancel",
+      "sessionRequired": "Your session is invalid. Please sign in again.",
+      "passwordMismatch": "New passwords do not match",
+      "passwordMinLength": "Minimum 6 characters",
+      "passwordUpdated": "Password updated successfully",
+      "passwordChangeFailed": "Could not change password",
+      "emailUpdated": "Email updated successfully",
+      "emailChangeFailed": "Could not change email",
+      "deleteFailed": "Could not delete account"
+    },
+    "engines": {
+      "title": "Database Engines",
+      "predefined_hint": "Default engines:",
+      "base": "Base engine",
+      "name_label": "Engine name",
+      "name_placeholder": "e.g.: MyDatabase",
+      "base_label": "Similar base engine",
+      "add_button": "+ Add engine",
+      "remove": "Remove engine",
+      "guest_sync_hint": "Custom engines are stored on this device. Sign in (not as a guest) to sync them across devices and expose them via the analyzer API.",
+      "saved": "Engines saved to your account.",
+      "error": "Could not sync to your account. Your local engines are kept on this browser.",
+      "ai_hint": "Custom engines use AI (with GROQ_API_KEY) or an approximate analysis using the base engine you choose.",
+      "ai_hint_active": "AI is active: custom engines are analyzed with Groq; the base engine is reference only.",
+      "reference_hint": "The similar base engine only guides the AI; the final analysis targets your custom engine.",
+      "sql_like_reference_hint": "If your engine uses SQL-like queries (Couchbase N1QL, CQL, SQL++…), MySQL or PostgreSQL are usually better references than MongoDB or Redis."
+    }
+  },
+  "student": {
+    "whatIsThis": "What does this mean?",
+    "correctedExample": "Corrected example",
+    "practicesScore": "Good practices",
+    "practicesScoreStatement": "Good practices (statement {{index}})",
+    "keywordsDetected": "Keywords in your query",
+    "tooltipSyntax": "Basic syntax",
+    "tooltipExample": "Example",
+    "tooltips": {
+      "SELECT": {
+        "purpose": "Retrieves columns from one or more tables.",
+        "syntax": "SELECT col1, col2 FROM table",
+        "example": "SELECT id, name FROM users WHERE active = true"
+      },
+      "FROM": {
+        "purpose": "Specifies which table(s) data comes from.",
+        "syntax": "SELECT ... FROM table [alias]",
+        "example": "SELECT * FROM orders o JOIN customers c ON o.customer_id = c.id"
+      },
+      "WHERE": {
+        "purpose": "Filters rows that match a condition.",
+        "syntax": "WHERE condition",
+        "example": "SELECT * FROM users WHERE age >= 18 AND country = 'US'"
+      },
+      "DELETE": {
+        "purpose": "Removes rows from a table.",
+        "syntax": "DELETE FROM table WHERE condition",
+        "example": "DELETE FROM sessions WHERE expires_at < NOW()"
+      },
+      "DELETE_FROM": {
+        "purpose": "Deletes rows from the named table.",
+        "syntax": "DELETE FROM table WHERE condition",
+        "example": "DELETE FROM logs WHERE created_at < '2024-01-01'"
+      },
+      "UPDATE": {
+        "purpose": "Changes column values in existing rows.",
+        "syntax": "UPDATE table SET col = value WHERE condition",
+        "example": "UPDATE users SET active = false WHERE last_login < '2025-01-01'"
+      },
+      "JOIN": {
+        "purpose": "Combines rows from related tables.",
+        "syntax": "FROM a JOIN b ON a.id = b.a_id",
+        "example": "SELECT u.name, o.total FROM users u JOIN orders o ON u.id = o.user_id"
+      },
+      "LIMIT": {
+        "purpose": "Caps how many rows the query returns.",
+        "syntax": "LIMIT n [OFFSET m]",
+        "example": "SELECT * FROM products ORDER BY price DESC LIMIT 20"
+      }
+    },
+    "keywords": {
+      "GROUP_BY": "Groups rows with equal values",
+      "ORDER_BY": "Sorts the results",
+      "LEFT_JOIN": "Combines tables keeping all rows from the left",
+      "RIGHT_JOIN": "Combines tables keeping all rows from the right",
+      "INNER_JOIN": "Combines only matching rows from both tables",
+      "FULL_JOIN": "Combines all rows from both tables",
+      "INSERT_INTO": "Inserts new rows into a table",
+      "DELETE_FROM": "Deletes rows from a table",
+      "SELECT": "Selects columns from a table",
+      "FROM": "Specifies the table to read data from",
+      "WHERE": "Filters results by a condition",
+      "JOIN": "Combines rows from two or more tables",
+      "HAVING": "Filters groups (like WHERE but for GROUP BY)",
+      "LIMIT": "Limits the number of rows returned",
+      "OFFSET": "Skips the first rows of the result",
+      "INSERT": "Inserts new rows into a table",
+      "UPDATE": "Updates existing rows",
+      "DELETE": "Deletes rows from a table",
+      "CREATE": "Creates a new table or object",
+      "DROP": "Permanently removes a table or object",
+      "ALTER": "Changes table structure",
+      "DISTINCT": "Removes duplicate rows",
+      "UNION": "Combines results of two queries",
+      "EXCEPT": "Returns rows from the first query not in the second",
+      "INTERSECT": "Returns rows common to both queries"
+    },
+    "explanations": {
+      "OPT-001": {
+        "what": "You are selecting ALL columns from the table",
+        "why": "Like ordering a whole book when you only need one chapter — the database does extra work",
+        "correctedExample": "SELECT id, name, email FROM users WHERE active = true"
+      },
+      "OPT-002": {
+        "what": "This query may not use any index",
+        "why": "Without an index, the database checks every row one by one, like searching a book without an index at the back",
+        "correctedExample": "CREATE INDEX idx_user_email ON users(email)"
+      },
+      "OPT-003": {
+        "what": "This pattern may run an extra query per result",
+        "why": "With 100 users you might run 101 queries instead of 1 — very slow",
+        "correctedExample": "Use JOIN to fetch everything in a single query"
+      }
+    }
+  },
+  "expert": {
+    "astTitle": "AST tree",
+    "astEmpty": "Analyze a query to see the syntax tree.",
+    "astEmptyStatement": "This statement has no tree (syntax error or engine without AST).",
+    "astNotAvailable": "This engine does not expose a SQL AST. Available for SQL engines and DynamoDB PartiQL.",
+    "astMultiHint": "Pick which statement to show in the AST panel.",
+    "selectStatement": "Statement for AST tree",
+    "statementLabel": "Statement {{index}}",
+    "metricsScopeStatement": "Metrics for statement {{index}}",
+    "metricsNotAvailable": "Lexer/parser metrics do not apply to this engine (use SQL engines or DynamoDB PartiQL).",
+    "astToggle": "Expand or collapse node",
+    "metricsTitle": "Technical metrics",
+    "tokenCount": "Total tokens",
+    "astDepth": "AST depth",
+    "lexingTime": "Lexing time",
+    "parsingTime": "Parsing time",
+    "semanticTime": "Semantic analysis time",
+    "rulesEvaluated": "Optimization rules evaluated",
+    "aiSupportedAst": "AI-supported AST (native parser could not build the tree)"
+  },
+  "tts": {
+    "readAloud": "Read aloud",
+    "stop": "Stop reading",
+    "notSupported": "Your browser does not support text-to-speech",
+    "readingNow": "Reading…",
+    "blindErrorsFirstOne": "Your query has one error. The error is: {{message}}",
+    "blindErrorsFirstOther": "Your query has {{count}} errors. The first error is: {{message}}",
+    "blindValidOptimizationsOne": "Your query is valid. There is one optimization suggestion.",
+    "blindValidOptimizationsOther": "Your query is valid. There are {{count}} optimization suggestions.",
+    "blindWarningsOnlyOne": "Your query is valid with one warning.",
+    "blindWarningsOnlyOther": "Your query is valid with {{count}} warnings.",
+    "blindAnalysisDone": "Analysis complete.",
+    "blindMultiDoneOne": "Multi-statement analysis complete: one statement.",
+    "blindMultiDoneOther": "Multi-statement analysis complete: {{count}} statements.",
+    "statementHeading": "Statement {{index}}.",
+    "timingMs": "Analysis time {{ms}} milliseconds.",
+    "multiScriptIntroOne": "Multi-statement analysis: one statement. Total time {{ms}} milliseconds.",
+    "multiScriptIntroOther": "Multi-statement analysis: {{count}} statements. Total time {{ms}} milliseconds.",
+    "scriptHealthHint": "Script health {{pct}} percent.",
+    "lineOnly": "Line {{line}}",
+    "lineCol": "Line {{line}}, column {{col}}"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "mainNav": "Main menu"
+  },
+  "editor": {
+    "ariaLabel": "SQL and NoSQL code editor. Type your query here.",
+    "hint": "Press Ctrl+Enter to analyze. Ctrl+K to clear. Ctrl+Shift+M for voice dictation."
+  },
+  "ai": {
+    "title": "AI Suggestions",
+    "subtitle": "Generate, complete, and build queries with AI. Works with or without an API key (rule-based fallback).",
+    "guestTitle": "AI Suggestions — Registered users only",
+    "guestDesc": "Create an account to unlock QWERYS's AI engine.",
+    "feature1": "Generate SQL queries by describing what you need",
+    "feature2": "Autocomplete partial queries with AI",
+    "feature3": "Build queries with a guided form",
+    "feature4": "Detect SQL injection patterns in your history",
+    "createAccount": "Create account",
+    "login": "I already have an account",
+    "unavailableBanner": "Cloud AI is not configured. Rule-based suggestions are used until GROQ_API_KEY is set on the server.",
+    "retryStatus": "Check again",
+    "databaseType": "Database engine",
+    "schemaHint": "{{count}} tables from Schema Explorer available as context.",
+    "schemaEmptyHint": "Connect Schema Explorer so AI can use your real table names.",
+    "schemaConnectionTitle": "Connected database (Schema Explorer)",
+    "schemaConnectionDetail": "{{engine}} · {{host}}:{{port}} · {{database}} · user {{user}}",
+    "schemaConnectionLink": "Open explorer",
+    "expertMeta": "Provider: {{provider}} · {{ms}} ms · {{live}}",
+    "liveAi": "live AI",
+    "fallback": "local rules",
+    "tabsLabel": "AI suggestion sections",
+    "tabs": {
+      "generate": "Generate query",
+      "autocomplete": "Autocomplete",
+      "builder": "Builder",
+      "security": "Security"
+    },
+    "student": {
+      "generate": "Describe what you need in plain language and AI will write the SQL for you.",
+      "autocomplete": "Type the start of your query and AI will complete it using known tables.",
+      "builder": "Pick operation, table, and columns to get a SQL template ready to analyze.",
+      "security": "Scan with fast rules first. Optionally turn on AI to get a deeper explanation per finding."
+    },
+    "naturalLabel": "Natural language description",
+    "naturalPlaceholder": "E.g. All users who placed an order in the last 30 days",
+    "generateBtn": "Generate with AI",
+    "generating": "Generating...",
+    "partialLabel": "Start of your query",
+    "partialPlaceholder": "SELECT u.name FROM users u WHERE",
+    "completeBtn": "Complete",
+    "useQueryBtn": "Use this query in the analyzer",
+    "operation": "Operation",
+    "tableName": "Table name",
+    "columns": "Columns (comma-separated)",
+    "columnsPlaceholder": "id, name, email or * for all",
+    "where": "WHERE condition (optional)",
+    "buildBtn": "Build query",
+    "analyzeBtn": "Analyze this query",
+    "copy": "Copy",
+    "copied": "Copied to clipboard",
+    "copyFailed": "Could not copy",
+    "resultEditorLabel": "Generated query",
+    "genericError": "AI request could not be completed.",
+    "explainBtn": "Explain with AI",
+    "explaining": "Asking AI...",
+    "improveMigrationBtn": "Improve with AI",
+    "improving": "Improving...",
+    "migrationImproved": "Migrated code updated with AI.",
+    "security": {
+      "loginRequired": "Sign in to scan your query history.",
+      "scanBtn": "Scan recent history",
+      "aiToggle": "Enrich findings with AI (optional)",
+      "aiToggleHint": "Configure Groq API key on the server for deeper explanations. Rule-based scanning still works without AI.",
+      "explainBtn": "Explain this risk with AI",
+      "none": "No risk patterns found in recent queries.",
+      "loadError": "Could not load history.",
+      "risks": {
+        "concat": "String concatenation in the query: high SQL injection risk.",
+        "dynamicExec": "Dynamic execution detected: the query may be altered at runtime.",
+        "drop": "DROP detected: irreversible destructive operation.",
+        "mongoWhere": "MongoDB $where usage: may execute server-side JavaScript.",
+        "redisEval": "Redis EVAL with embedded script: command injection risk.",
+        "esScript": "Inline Elasticsearch scripts: review permissions and input validation."
+      },
+      "fixes": {
+        "concat": "Use prepared parameters (? or :name) instead of joining strings with +.",
+        "dynamicExec": "Avoid dynamic EXEC; use parameterized queries or fixed procedures.",
+        "drop": "Confirm environment, back up data, and restrict permissions before DROP.",
+        "mongoWhere": "Avoid $where; use safe query operators ($eq, $in, etc.).",
+        "redisEval": "Prefer parameterized commands or Lua with ARGV instead of concatenating input.",
+        "esScript": "Restrict scripts, validate inputs, and use reviewed templates."
+      },
+      "rules": {
+        "concat": "SEC-INJ-001: string concatenation pattern",
+        "dynamicExec": "SEC-INJ-002: dynamic EXEC / sp_executesql",
+        "drop": "SEC-DEST-001: DROP without safeguards",
+        "mongoWhere": "SEC-NOSQL-001: MongoDB $where",
+        "redisEval": "SEC-NOSQL-002: Redis EVAL embedded script",
+        "esScript": "SEC-NOSQL-003: Elasticsearch inline script"
+      }
+    }
+  },
+  "shortcuts": {
+    "title": "Keyboard shortcuts",
+    "intro": "Shortcuts available across the app. Press F1 anytime to open this list.",
+    "colKey": "Shortcut",
+    "colAction": "Action",
+    "analyze": "Analyze query",
+    "clear": "Clear editor",
+    "toggleVoice": "Toggle voice dictation",
+    "help": "Show this help",
+    "close": "Close panel or dialog",
+    "closeDialog": "Close",
+    "navAnalyzer": "Go to Analyzer",
+    "navMigration": "Go to Migration",
+    "navSchema": "Go to Schema Explorer",
+    "keys": {
+      "analyze": "Ctrl + Enter",
+      "clear": "Ctrl + K",
+      "toggleVoice": "Ctrl + Shift + M",
+      "help": "F1",
+      "close": "Escape",
+      "navAnalyzer": "Alt + Shift + 1",
+      "navMigration": "Alt + Shift + 2",
+      "navSchema": "Alt + Shift + 3"
+    }
+  },
+  "common": {
+    "close": "Close"
+  },
+  "export": {
+    "json": "Export JSON",
+    "copy": "Copy report",
+    "copied": "Copied to clipboard!",
+    "section": "Export results",
+    "jsonAriaLabel": "Download analysis result as JSON file",
+    "copyAriaLabel": "Copy analysis summary to clipboard",
+    "report": {
+      "header": "Query analyzed on {{date}}.",
+      "status": "Status: {{status}}.",
+      "valid": "VALID",
+      "invalid": "INVALID",
+      "counts": "Errors: {{errors}}. Optimizations: {{optimizations}}.",
+      "errorsSection": "DETECTED ERRORS:",
+      "optsSection": "SUGGESTED OPTIMIZATIONS:",
+      "errorLine": "  - [{{code}}] {{message}}",
+      "optLine": "  - {{description}}",
+      "none": "  None",
+      "multiSummary": "Multi-statement script: {{count}} statements. Total time: {{ms}} ms.",
+      "statementLine": "Statement {{index}}: {{status}}. Errors: {{errors}}. Optimizations: {{optimizations}}."
+    }
+  },
+  "diff": {
+    "title": "Query Comparator",
+    "original": "Original query",
+    "optimized": "Optimized query",
+    "generating": "Generating optimized version with AI...",
+    "aiUnavailable": "AI engine is not available. Here is the improvement suggestion:",
+    "suggestion": "Suggestion",
+    "similarity": "Similarity",
+    "useOptimized": "Use optimized query",
+    "openTooltip": "View differences",
+    "openAriaLabel": "Open diff comparator for this optimization"
+  },
+  "stt": {
+    "startDictation": "Dictate query by voice",
+    "stopDictation": "Stop dictation",
+    "listening": "Listening...",
+    "notSupported": "Your browser does not support voice dictation. Try Chrome or Edge.",
+    "errorNoSpeech": "No speech detected. Please try again.",
+    "errorAudioCapture": "Could not access the microphone.",
+    "errorNotAllowed": "Microphone permission denied. Go to browser settings to enable it.",
+    "errorUnknown": "Voice recognition error."
+  }
+}

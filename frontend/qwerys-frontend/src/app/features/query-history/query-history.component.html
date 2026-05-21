@@ -1,0 +1,339 @@
+<div class="history-page" role="main">
+  <header class="history-header">
+    <h1 id="history-page-title" class="history-title">{{ 'history.title' | translate }}</h1>
+    <p class="history-subtitle">{{ 'history.subtitle' | translate }}</p>
+  </header>
+
+  @if (errorKey) {
+    <div class="history-banner history-banner--error" role="alert">
+      <mat-icon aria-hidden="true">error_outline</mat-icon>
+      <span>{{ errorKey | translate }}</span>
+    </div>
+  }
+
+  <div class="history-toolbar" role="region" [attr.aria-label]="'history.toolbarAria' | translate">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>{{ 'history.searchPlaceholder' | translate }}</mat-label>
+      <input
+        matInput
+        type="search"
+        [ngModel]="searchKeyword"
+        (ngModelChange)="onSearchInput($event)"
+        [attr.aria-label]="'history.searchPlaceholder' | translate"
+        autocomplete="off" />
+      <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+    </mat-form-field>
+
+    <button
+      mat-stroked-button
+      type="button"
+      class="clear-all-btn"
+      (click)="requestClearAll()"
+      [disabled]="!filteredEntries.length || isLoading"
+      [attr.aria-label]="'history.clearAll' | translate">
+      <mat-icon aria-hidden="true">delete_sweep</mat-icon>
+      {{ 'history.clearAll' | translate }}
+    </button>
+  </div>
+
+  <div class="filter-tabs" role="tablist" [attr.aria-label]="'history.filtersAria' | translate">
+    @for (tab of [
+      { id: 'all', label: 'history.filterAll' },
+      { id: 'valid', label: 'history.filterValid' },
+      { id: 'invalid', label: 'history.filterInvalid' },
+      { id: 'favorites', label: 'history.filterFavorites' }
+    ]; track tab.id) {
+      <button
+        type="button"
+        role="tab"
+        class="filter-tab"
+        [class.active]="filter === tab.id"
+        [attr.aria-selected]="filter === tab.id"
+        (click)="setFilter($any(tab.id))">
+        {{ tab.label | translate }}
+      </button>
+    }
+  </div>
+
+  @if (confirmClearAll) {
+    <div class="confirm-panel" role="alertdialog" [attr.aria-label]="'history.confirmClearTitle' | translate">
+      <p>{{ 'history.confirmClearMessage' | translate }}</p>
+      <div class="confirm-actions">
+        <button mat-button type="button" (click)="cancelDelete()">{{ 'history.cancel' | translate }}</button>
+        <button mat-flat-button color="warn" type="button" (click)="confirmClearHistory()">
+          {{ 'history.confirm' | translate }}
+        </button>
+      </div>
+    </div>
+  }
+
+  <div class="history-layout" [class.mobile-history]="isMobile">
+    <section
+      class="history-list-panel"
+      [hidden]="isMobile && selectedEntry"
+      [attr.aria-label]="'history.listAria' | translate">
+      @if (isLoading) {
+        <div class="loading-row" aria-live="polite">
+          <mat-spinner diameter="36" />
+          <span>{{ 'history.loading' | translate }}</span>
+        </div>
+      } @else if (!filteredEntries.length) {
+        <p class="empty-state">{{ 'history.empty' | translate }}</p>
+      } @else {
+        <ul class="entry-list" role="list">
+          @for (entry of filteredEntries; track entry.id) {
+            <li>
+              <article
+                class="entry-card"
+                [class.selected]="selectedEntry?.id === entry.id"
+                (click)="selectEntry(entry)"
+                (keydown.enter)="selectEntry(entry)"
+                tabindex="0"
+                role="button"
+                [attr.aria-label]="'history.entryAria' | translate: { query: truncateQuery(entry.query, 40) }">
+                <div class="entry-card-header">
+                  <code class="entry-query-preview">{{ truncateQuery(entry.query) }}</code>
+                  <span class="db-chip">{{ dbLabel(entry.databaseType) }}</span>
+                  <span
+                    class="validity-badge"
+                    [class.badge-valid]="entry.valid"
+                    [class.badge-invalid]="!entry.valid"
+                    [attr.title]="'history.nativeValidityTitle' | translate">
+                    {{ nativeValidLabel(entry) | translate }}
+                  </span>
+                  @if (hasAiReview(entry)) {
+                    <span
+                      class="validity-badge ai-badge"
+                      [class.badge-valid]="entry.aiAssistedValid"
+                      [class.badge-invalid]="!entry.aiAssistedValid"
+                      [attr.title]="'history.aiValidityTitle' | translate">
+                      {{ aiValidLabel(entry) | translate }}
+                    </span>
+                  }
+                </div>
+                <div class="entry-meta">
+                  <span>{{ formatDate(entry.analyzedAt) }}</span>
+                  @if (entry.warningCount > 0) {
+                    <span>{{ 'history.warningsCount' | translate: { count: entry.warningCount } }}</span>
+                  }
+                  @if (entry.optimizationCount > 0) {
+                    <span>{{ 'history.optimizationsCount' | translate: { count: entry.optimizationCount } }}</span>
+                  }
+                </div>
+                <div class="entry-actions">
+                  <button
+                    type="button"
+                    class="icon-btn favorite-btn"
+                    [class.active]="entry.favorite"
+                    (click)="toggleFavorite(entry, $event)"
+                    [attr.aria-label]="(entry.favorite ? 'history.unfavorite' : 'history.favorite') | translate"
+                    [attr.aria-pressed]="entry.favorite">
+                    <mat-icon aria-hidden="true">{{ entry.favorite ? 'star' : 'star_border' }}</mat-icon>
+                  </button>
+                  <button
+                    type="button"
+                    class="icon-btn"
+                    (click)="reanalyze(entry, $event)"
+                    [attr.aria-label]="'history.reanalyze' | translate">
+                    <mat-icon aria-hidden="true">replay</mat-icon>
+                    <span class="action-label">{{ 'history.reanalyze' | translate }}</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="icon-btn danger"
+                    (click)="requestDelete(entry, $event)"
+                    [attr.aria-label]="'history.delete' | translate">
+                    <mat-icon aria-hidden="true">delete</mat-icon>
+                  </button>
+                </div>
+                @if (confirmDeleteId === entry.id) {
+                  <div class="confirm-inline" role="alertdialog">
+                    <span>{{ 'history.confirmDeleteMessage' | translate }}</span>
+                    <button mat-button type="button" (click)="cancelDelete(); $event.stopPropagation()">
+                      {{ 'history.cancel' | translate }}
+                    </button>
+                    <button
+                      mat-flat-button
+                      color="warn"
+                      type="button"
+                      (click)="confirmDeleteEntry(); $event.stopPropagation()">
+                      {{ 'history.confirm' | translate }}
+                    </button>
+                  </div>
+                }
+              </article>
+            </li>
+          }
+        </ul>
+
+        @if (filter === 'all' && !searchKeyword.trim() && totalPages > 1) {
+          <nav class="pagination" [attr.aria-label]="'history.paginationAria' | translate">
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="prevPage()"
+              [disabled]="currentPage === 0">
+              {{ 'history.prevPage' | translate }}
+            </button>
+            <span class="page-indicator">
+              {{ 'history.pageOf' | translate: { current: currentPage + 1, total: totalPages } }}
+            </span>
+            <button
+              mat-stroked-button
+              type="button"
+              (click)="nextPage()"
+              [disabled]="currentPage >= totalPages - 1">
+              {{ 'history.nextPage' | translate }}
+            </button>
+          </nav>
+        }
+      }
+    </section>
+
+    <section
+      class="history-detail-panel"
+      [class.history-detail-panel--empty]="!selectedEntry"
+      [hidden]="isMobile && !selectedEntry"
+      [attr.aria-label]="'history.detailAria' | translate"
+      appCollapsibleSection
+      sectionId="history-detail">
+      @if (selectedEntry) {
+        @if (isMobile) {
+          <button
+            mat-button
+            type="button"
+            class="history-back-btn"
+            (click)="backToHistoryList()"
+            [attr.aria-label]="'history.backToList' | translate">
+            <mat-icon aria-hidden="true">arrow_back</mat-icon>
+            {{ 'history.back' | translate }}
+          </button>
+        }
+        <h2 class="detail-title">{{ 'history.detailTitle' | translate }}</h2>
+        <pre class="detail-query" [attr.aria-label]="'history.fullQuery' | translate">{{ selectedEntry.query }}</pre>
+
+        @if (selectedResult) {
+          <div class="detail-summary">
+            <span
+              class="validity-badge"
+              [class.badge-valid]="selectedEntry.valid"
+              [class.badge-invalid]="!selectedEntry.valid">
+              {{ nativeValidLabel(selectedEntry) | translate }}
+            </span>
+            @if (hasAiReview(selectedEntry)) {
+              <span
+                class="validity-badge ai-badge"
+                [class.badge-valid]="selectedEntry.aiAssistedValid"
+                [class.badge-invalid]="!selectedEntry.aiAssistedValid">
+                {{ aiValidLabel(selectedEntry) | translate }}
+              </span>
+            }
+            <span>{{ 'history.analysisTime' | translate: { ms: selectedResult.analysisTimeMs } }}</span>
+          </div>
+
+          @if (selectedResult.errors?.length) {
+            <h3>{{ 'history.errorsSection' | translate }}</h3>
+            <ul class="detail-errors">
+              @for (err of selectedResult.errors; track err.code + err.message) {
+                <li>
+                  <strong>{{ err.code }}</strong>: {{ err.message }}
+                  @if (err.suggestion) {
+                    <p class="suggestion">{{ err.suggestion }}</p>
+                  }
+                </li>
+              }
+            </ul>
+          }
+
+          @if (selectedResult.optimizations?.length) {
+            <h3>{{ 'history.optimizationsSection' | translate }}</h3>
+            <ul class="detail-optimizations">
+              @for (opt of selectedResult.optimizations; track $index) {
+                <li>
+                  <strong>{{ opt.ruleId }}</strong> — {{ opt.description }}
+                  @if (opt.original && opt.optimized) {
+                    <pre class="detail-opt-frag">{{ opt.original }}</pre>
+                    <pre class="detail-opt-frag detail-opt-frag--improved">{{ opt.optimized }}</pre>
+                  }
+                </li>
+              }
+            </ul>
+          }
+
+          @if (selectedAiComplement) {
+            <h3>{{ 'history.aiComplementSection' | translate }}</h3>
+            @if (selectedAiComplement.pedagogy) {
+              <p class="detail-ai-pedagogy">{{ selectedAiComplement.pedagogy }}</p>
+            }
+            @if (selectedAiComplement.provider) {
+              <p class="detail-ai-meta">{{ 'history.aiProvider' | translate }}: {{ selectedAiComplement.provider }}</p>
+            }
+            @if (selectedAiComplement.nativeReviews.length) {
+              <h4>{{ 'history.aiNativeReviews' | translate }}</h4>
+              <ul class="detail-ai-reviews">
+                @for (r of selectedAiComplement.nativeReviews; track r.referenceId) {
+                  <li class="detail-ai-review-item">
+                    @if (r.comment) {
+                      <p class="detail-ai-review-comment">{{ r.comment }}</p>
+                    }
+                    <div class="detail-ai-review-meta">
+                      <span
+                        class="detail-ai-review-verdict verdict-{{ r.verdict | lowercase }}"
+                        [attr.title]="r.verdict === 'DISAGREE' ? ('analyzer.aiDisagreeHint' | translate) : null"
+                        [attr.aria-label]="r.verdict === 'DISAGREE' ? ('analyzer.aiDisagreeHint' | translate) : null">
+                        {{ r.verdict }}
+                      </span>
+                      <span class="detail-ai-review-id">{{ r.referenceId }}</span>
+                    </div>
+                    @if (r.verdict === 'DISAGREE') {
+                      <p class="detail-ai-disagree-hint">{{ 'analyzer.aiDisagreeHint' | translate }}</p>
+                    }
+                  </li>
+                }
+              </ul>
+            }
+            @if (selectedAiComplement.additionalWarnings.length) {
+              <h4>{{ 'history.aiWarnings' | translate }}</h4>
+              <ul class="detail-ai-warnings">
+                @for (w of selectedAiComplement.additionalWarnings; track w.code) {
+                  <li><strong>{{ w.code }}</strong>: {{ w.message }}</li>
+                }
+              </ul>
+            }
+            @if (selectedAiComplement.additionalOptimizations.length) {
+              <h4>{{ 'history.aiOptimizations' | translate }}</h4>
+              <ul class="detail-optimizations">
+                @for (opt of selectedAiComplement.additionalOptimizations; track $index) {
+                  <li>
+                    <strong>{{ opt.ruleId ?? 'AI-OPT' }}</strong> ({{ opt.impact }}) — {{ opt.description }}
+                    @if (opt.originalFragment && opt.optimizedFragment) {
+                      <pre class="detail-opt-frag">{{ opt.originalFragment }}</pre>
+                      <pre class="detail-opt-frag detail-opt-frag--improved">{{ opt.optimizedFragment }}</pre>
+                    }
+                  </li>
+                }
+              </ul>
+            }
+            @if (selectedAiComplement.optimizationNotes) {
+              <p class="detail-ai-notes">{{ selectedAiComplement.optimizationNotes }}</p>
+            }
+          }
+        } @else {
+          <p class="detail-fallback">{{ 'history.noParsedResult' | translate }}</p>
+        }
+
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          class="detail-reanalyze"
+          (click)="reanalyze(selectedEntry, $event)">
+          <mat-icon aria-hidden="true">replay</mat-icon>
+          {{ 'history.reanalyze' | translate }}
+        </button>
+      } @else {
+        <p class="detail-placeholder">{{ 'history.selectEntry' | translate }}</p>
+      }
+    </section>
+  </div>
+</div>

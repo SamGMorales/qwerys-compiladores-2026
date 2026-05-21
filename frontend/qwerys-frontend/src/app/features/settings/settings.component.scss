@@ -1,0 +1,642 @@
+// Tema app: styles.scss (--bg-primary, --bg-secondary, --text-primary, --text-secondary).
+// — Claro: tarjetas blancas bien separadas del fondo; filas internas en --bg-secondary (no “blanco sobre blanco”).
+// — Oscuro: aspecto más plano (como el original); solo bordes suaves + texto explícito; botones Material forzados a contraste.
+
+$outline: color-mix(in srgb, var(--text-primary) 16%, transparent);
+$outline-strong: color-mix(in srgb, var(--text-primary) 26%, transparent);
+$shadow-soft: 0 1px 2px color-mix(in srgb, var(--text-primary) 10%, transparent),
+  0 2px 10px color-mix(in srgb, var(--text-primary) 7%, transparent);
+$shadow-hover: 0 2px 8px color-mix(in srgb, var(--text-primary) 14%, transparent),
+  0 4px 16px color-mix(in srgb, var(--text-primary) 9%, transparent);
+
+$accent-fallback: #2563eb;
+
+.settings-page {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  color: var(--text-primary);
+}
+
+.settings-header {
+  margin-bottom: 1.75rem;
+}
+
+.settings-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+// ── Bloques base (compartido) ───────────────────────────────────────────────
+.settings-section {
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.25rem 1.5rem;
+  border-radius: 12px;
+  color: var(--text-primary);
+  border: 1px solid $outline;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.settings-section__title {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.settings-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toggle-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.65rem 0.85rem;
+  align-items: center;
+  padding: 0.65rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid $outline;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.toggle-row__emoji {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.toggle-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.toggle-row__label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.toggle-row__desc {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.toggle-row__control {
+  justify-self: end;
+}
+
+.device-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.detect-btn {
+  width: 100%;
+}
+
+.language-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.language-btn {
+  min-height: 3rem;
+  font-size: 1rem;
+  font-weight: 600;
+
+  span[aria-hidden='true'] {
+    margin-right: 0.35rem;
+  }
+}
+
+.settings-account-section .settings-section__title {
+  margin-bottom: 1rem;
+}
+
+.settings-account {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.settings-account-panel.mat-expansion-panel {
+  border-radius: 12px !important;
+  overflow: clip;
+  border: 1px solid $outline !important;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+.account-delete-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.msg-error {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--mat-sys-error, #c62828);
+}
+
+.account-delete-warning {
+  margin-top: 0;
+}
+
+.msg-success {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--mat-sys-primary, #{$accent-fallback});
+}
+
+.settings-hint {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.settings-muted {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.settings-engines-expansion {
+  margin-top: 0.75rem;
+  border-radius: 12px !important;
+  overflow: clip;
+  color: var(--text-primary);
+  border: 1px solid $outline !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.engine-chip-list {
+  margin-bottom: 1.25rem;
+}
+
+.section-hint,
+.ai-hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.custom-engine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.custom-engine-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  color: var(--text-primary);
+  border: 1px solid $outline;
+}
+
+.custom-engine-remove {
+  margin-left: auto;
+}
+
+.base-hint {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.add-engine-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: start;
+  margin-bottom: 0.85rem;
+}
+
+.add-engine-form__field {
+  width: 100%;
+}
+
+.add-engine-submit {
+  margin-top: 0.35rem;
+  white-space: nowrap;
+}
+
+.account-sync-hint {
+  margin: 0.25rem 0 0.85rem !important;
+  color: var(--text-secondary);
+}
+
+.save-feedback {
+  margin: 0;
+  font-size: 0.875rem;
+
+  &--ok {
+    color: var(--mat-sys-primary, #{$accent-fallback});
+  }
+
+  &--err {
+    color: var(--mat-sys-error, #c62828);
+  }
+}
+
+// ═══ Modo CLARO: relieve + contraste tarjeta / fondo ═════════════════════════
+:host-context(body:not(.dark-theme)) {
+  .settings-section {
+    background: var(--bg-primary);
+    box-shadow: $shadow-soft;
+
+    &:hover {
+      box-shadow: $shadow-hover;
+      border-color: $outline-strong;
+    }
+  }
+
+  .toggle-row {
+    background: var(--bg-secondary);
+    &:hover {
+      border-color: $outline-strong;
+      background: color-mix(in srgb, var(--bg-secondary) 88%, var(--text-primary) 4%);
+    }
+  }
+
+  .custom-engine-row {
+    background: var(--bg-secondary);
+    &:hover {
+      border-color: $outline-strong;
+    }
+  }
+
+  .settings-engines-expansion {
+    background: var(--bg-primary) !important;
+    box-shadow: $shadow-soft !important;
+
+    &:hover {
+      box-shadow: $shadow-hover !important;
+      border-color: $outline-strong !important;
+    }
+  }
+}
+
+// ═══ Modo OSCURO: plano (menos “caja blanca”), texto siempre legible ═════════
+:host-context(body.dark-theme) {
+  .settings-section {
+    background: transparent;
+    box-shadow: none;
+    border-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
+
+    &:hover {
+      background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+      border-color: color-mix(in srgb, var(--text-primary) 20%, transparent);
+    }
+  }
+
+  .toggle-row {
+    background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+    border-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
+    &:hover {
+      background: color-mix(in srgb, var(--text-primary) 10%, transparent);
+    }
+  }
+
+  .custom-engine-row {
+    background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+    border-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  }
+
+  .settings-engines-expansion {
+    /* Bloque inferior: superficie legible (no transparente plano) */
+    background: color-mix(in srgb, var(--text-primary) 11%, var(--bg-secondary)) !important;
+    box-shadow: 0 2px 18px color-mix(in srgb, #000 55%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--text-primary) 14%, transparent) inset !important;
+    border: 1px solid color-mix(in srgb, var(--text-primary) 32%, transparent) !important;
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--text-primary) 45%, transparent) !important;
+      background: color-mix(in srgb, var(--text-primary) 13%, var(--bg-secondary)) !important;
+      box-shadow: 0 4px 24px color-mix(in srgb, #000 50%, transparent) !important;
+    }
+  }
+}
+
+/* Radio “Dispositivo”: etiquetas Material a menudo quedan gris oscuro sobre gris */
+:host-context(body.dark-theme) ::ng-deep .settings-section .mat-mdc-radio-button .mdc-label {
+  color: var(--text-primary) !important;
+}
+
+/* ═══ Oscuro: panel Motores — acordeón, hints, form fields, chips ═══════════ */
+:host-context(body.dark-theme) ::ng-deep .settings-engines-expansion {
+  .mat-expansion-panel-header {
+    color: var(--text-primary) !important;
+
+    &:hover,
+    &:focus {
+      background: color-mix(in srgb, var(--text-primary) 6%, transparent) !important;
+    }
+  }
+
+  .mat-expansion-panel-header.mat-expanded {
+    background: color-mix(in srgb, var(--text-primary) 5%, transparent) !important;
+  }
+
+  .mat-expansion-panel-header .mat-content {
+    color: var(--text-primary) !important;
+  }
+
+  .mat-expansion-panel-header-title,
+  mat-panel-title,
+  mat-panel-title.mat-expansion-panel-header-title {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+  }
+
+  .mat-expansion-indicator svg {
+    fill: var(--text-primary) !important;
+  }
+
+  .mat-expansion-panel-body {
+    color: var(--text-primary);
+    border-top: 1px solid color-mix(in srgb, var(--text-primary) 18%, transparent);
+    padding-top: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .section-hint,
+  .account-sync-hint {
+    color: color-mix(in srgb, var(--text-secondary) 45%, var(--text-primary)) !important;
+  }
+
+  .ai-hint {
+    color: color-mix(in srgb, var(--text-secondary) 35%, var(--text-primary)) !important;
+  }
+
+  /* Outline text fields + select */
+  .mat-mdc-form-field {
+    --mat-form-field-outlined-label-text-color: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary));
+    --mat-form-field-outlined-hover-label-text-color: var(--text-primary);
+    --mat-mdc-outlined-text-field-outline-color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+    --mat-mdc-outlined-text-field-focus-outline-color: var(--mat-sys-primary, #60a5fa);
+    --mat-mdc-outlined-text-field-hover-outline-color: color-mix(in srgb, var(--text-primary) 55%, transparent);
+    --mat-mdc-outlined-text-field-input-text-color: var(--text-primary);
+    --mat-mdc-outlined-text-field-caret-color: var(--text-primary);
+    --mat-select-enabled-arrow-color: var(--text-primary);
+    --mat-select-disabled-arrow-color: var(--text-secondary);
+    /* Redondez vía token MDC (evita desincronizar el notch con el borde) */
+    --mat-mdc-outlined-text-field-container-shape: 8px;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background-color: color-mix(in srgb, var(--text-primary) 7%, var(--bg-secondary)) !important;
+  }
+
+  .mat-mdc-input-element {
+    color: var(--text-primary) !important;
+  }
+
+  .mat-mdc-input-element::placeholder {
+    color: color-mix(in srgb, var(--text-secondary) 25%, var(--text-primary)) !important;
+    opacity: 1 !important;
+  }
+
+  .mat-mdc-select-value,
+  .mat-mdc-select-min-line {
+    color: var(--text-primary) !important;
+  }
+
+  .mat-mdc-select-arrow svg {
+    fill: var(--text-primary) !important;
+  }
+
+  /* Chips en este bloque: más relieve */
+  .engine-chip-list mat-chip.engine-chip {
+    background-color: color-mix(in srgb, var(--text-primary) 14%, var(--bg-secondary)) !important;
+    border: 1px solid color-mix(in srgb, var(--text-primary) 42%, transparent) !important;
+    box-shadow: 0 1px 3px color-mix(in srgb, #000 45%, transparent);
+
+    .mdc-evolution-chip__text-label,
+    .mat-mdc-chip-action-label {
+      color: var(--text-primary) !important;
+    }
+  }
+}
+
+/* Oscuro + claro: paneles “Mi cuenta” (misma legibilidad que Motores) */
+:host-context(body.dark-theme) ::ng-deep .settings-account-section {
+  .settings-account-panel.mat-expansion-panel {
+    background: color-mix(in srgb, var(--text-primary) 11%, var(--bg-secondary)) !important;
+    border-color: color-mix(in srgb, var(--text-primary) 32%, transparent) !important;
+    box-shadow: 0 2px 12px color-mix(in srgb, #000 40%, transparent);
+  }
+
+  .settings-account-panel .mat-expansion-panel-header {
+    color: var(--text-primary) !important;
+  }
+
+  .settings-account-panel .mat-expansion-panel-header .mat-content,
+  .settings-account-panel mat-panel-title {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+  }
+
+  .settings-account-panel .mat-expansion-indicator svg {
+    fill: var(--text-primary) !important;
+  }
+
+  .settings-account-panel .mat-expansion-panel-body {
+    color: var(--text-primary);
+    border-top: 1px solid color-mix(in srgb, var(--text-primary) 18%, transparent);
+  }
+
+  .account-form .mat-mdc-form-field {
+    --mat-form-field-container-text-color: var(--text-primary);
+    --mat-form-field-outlined-label-text-color: color-mix(in srgb, var(--text-secondary) 28%, var(--text-primary));
+    --mat-form-field-outlined-hover-label-text-color: var(--text-primary);
+    --mat-form-field-outlined-focus-label-text-color: var(--text-primary);
+    /* MDC tokens (Angular Material 17): sin esto la etiqueta suele quedar “negra” sobre fondo oscuro */
+    --mdc-outlined-text-field-input-text-color: var(--text-primary);
+    --mdc-outlined-text-field-label-text-color: color-mix(in srgb, var(--text-secondary) 28%, var(--text-primary));
+    --mdc-outlined-text-field-hover-label-text-color: var(--text-primary);
+    --mdc-outlined-text-field-focus-label-text-color: var(--text-primary);
+    --mdc-outlined-text-field-caret-color: var(--text-primary);
+    --mat-mdc-outlined-text-field-outline-color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+    --mat-mdc-outlined-text-field-focus-outline-color: var(--mat-sys-primary, #60a5fa);
+    --mat-mdc-outlined-text-field-hover-outline-color: color-mix(in srgb, var(--text-primary) 55%, transparent);
+    --mat-mdc-outlined-text-field-input-text-color: var(--text-primary);
+    --mat-mdc-outlined-text-field-caret-color: var(--text-primary);
+    --mat-mdc-outlined-text-field-container-shape: 8px;
+  }
+
+  .account-form .mat-mdc-text-field-wrapper {
+    background-color: color-mix(in srgb, var(--text-primary) 7%, var(--bg-secondary)) !important;
+  }
+
+  .account-form .mat-mdc-input-element {
+    color: var(--text-primary) !important;
+    caret-color: var(--text-primary) !important;
+
+    &::placeholder {
+      color: color-mix(in srgb, var(--text-secondary) 42%, var(--text-primary)) !important;
+      opacity: 1 !important;
+    }
+  }
+
+  /* Etiquetas flotantes / estado vacío: fuerza contraste sobre notch oscuro */
+  .account-form .mat-mdc-form-field-label-wrapper .mat-mdc-form-field-label,
+  .account-form .mat-mdc-floating-label,
+  .account-form .mdc-floating-label {
+    color: color-mix(in srgb, var(--text-secondary) 22%, var(--text-primary)) !important;
+  }
+
+  .account-form .mat-mdc-form-field.mat-focused:not(.mat-form-field-invalid) .mat-mdc-floating-label,
+  .account-form .mat-mdc-form-field.mat-focused:not(.mat-form-field-invalid) .mdc-floating-label,
+  .account-form .mat-mdc-form-field.mat-form-field-should-float .mat-mdc-floating-label {
+    color: var(--text-primary) !important;
+  }
+
+  /* Cabeceras del acordeón: algunos temas dejan el título con color “on-light” */
+  .settings-account-panel.mat-expansion-panel .mat-expansion-panel-header-title,
+  .settings-account-panel.mat-expansion-panel .mat-expansion-panel-header-description {
+    color: var(--text-primary) !important;
+  }
+
+  .settings-account-panel.mat-expansion-panel .mat-expansion-panel-header.mat-expanded:focus,
+  .settings-account-panel.mat-expansion-panel .mat-expansion-panel-header.mat-expanded:hover {
+    background: color-mix(in srgb, var(--text-primary) 8%, transparent) !important;
+  }
+}
+
+// Botón outlined “Detectar automáticamente”: evitar etiqueta invisible (Material + tema)
+:host ::ng-deep button.detect-btn.mat-mdc-outlined-button {
+  color: var(--text-primary) !important;
+  border-color: $outline-strong !important;
+  background-color: color-mix(in srgb, var(--text-primary) 6%, var(--bg-primary)) !important;
+
+  .mdc-button__label,
+  .mat-mdc-button-persistent-ripple + span {
+    color: var(--text-primary) !important;
+  }
+}
+
+// Botón “+ Agregar motor”: primary visible en oscuro; disabled legible
+:host ::ng-deep button.add-engine-submit.mat-mdc-unelevated-button:not(:disabled) {
+  background-color: var(--mat-sys-primary, #{$accent-fallback}) !important;
+  color: #fff !important;
+}
+
+:host ::ng-deep button.add-engine-submit.mat-mdc-unelevated-button:disabled {
+  opacity: 1 !important;
+  color: var(--text-secondary) !important;
+  background-color: color-mix(in srgb, var(--text-primary) 14%, var(--bg-primary)) !important;
+  border: 1px solid $outline !important;
+}
+
+/* Oscuro: CTA “+ Agregar” más luminoso (primary del tema a veces casi negro) */
+:host-context(body.dark-theme) ::ng-deep button.add-engine-submit.mat-mdc-unelevated-button:not(:disabled) {
+  background: linear-gradient(180deg, #7dd3fc, #38bdf8) !important;
+  color: #0f172a !important;
+  font-weight: 600;
+  box-shadow: 0 2px 10px color-mix(in srgb, #000 50%, transparent);
+}
+
+:host-context(body.dark-theme) ::ng-deep button.add-engine-submit.mat-mdc-unelevated-button:not(:disabled):hover {
+  filter: brightness(1.06);
+}
+
+/* Chips solo lectura: contraste en ambos temas */
+:host ::ng-deep .engine-chip-list mat-chip.engine-chip {
+  opacity: 1;
+  background-color: color-mix(in srgb, var(--text-primary) 10%, var(--bg-primary)) !important;
+  border: 1px solid $outline !important;
+
+  .mdc-evolution-chip__text-label,
+  .mat-mdc-chip-action-label {
+    color: var(--text-primary) !important;
+  }
+}
+
+:host ::ng-deep .settings-engines-expansion {
+  .mat-expansion-panel-header .mat-content {
+    color: var(--text-primary);
+  }
+
+  .mat-expansion-panel-body {
+    color: var(--text-primary);
+  }
+}
+
+:host-context(body.mode-high-contrast) {
+  .settings-section,
+  .settings-engines-expansion {
+    border-width: 2px !important;
+    border-color: var(--text-primary) !important;
+    box-shadow: none !important;
+  }
+
+  .toggle-row,
+  .custom-engine-row {
+    border-width: 2px;
+    border-color: var(--text-primary);
+  }
+}
+
+@media (max-width: 719px) {
+  .add-engine-form {
+    grid-template-columns: 1fr;
+  }
+
+  .add-engine-submit {
+    margin-top: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 599px) {
+  .toggle-row {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .toggle-row__control {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+
+  .language-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-engine-row .custom-engine-remove {
+    margin-left: 0;
+  }
+}

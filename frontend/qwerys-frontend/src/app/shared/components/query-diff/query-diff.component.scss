@@ -1,0 +1,123 @@
+:host {
+  display: block;
+  color: var(--text-primary, var(--mat-sys-on-surface, #1e293b));
+}
+
+.diff-ai-banner {
+  margin: 0 0 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: var(--mat-sys-error-container, color-mix(in srgb, var(--text-primary) 8%, transparent));
+  color: var(--text-primary, var(--mat-sys-on-error-container, #1e293b));
+  border: 1px solid var(--border-subtle, var(--mat-sys-outline-variant, #cbd5e1));
+  font-size: 0.9rem;
+
+  &--hint {
+    margin-top: -0.35rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary, var(--mat-sys-on-surface-variant, #64748b));
+    background: transparent;
+    border: none;
+    padding: 0 1rem 0.5rem;
+  }
+}
+
+.diff-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  color: var(--text-secondary, var(--mat-sys-on-surface-variant, #64748b));
+}
+
+.diff-content {
+  min-width: min(85vw, 1000px);
+  padding-top: 0.5rem;
+}
+
+.diff-unavailable {
+  color: var(--text-secondary, var(--mat-sys-on-surface-variant, #64748b));
+}
+
+.diff-suggestion-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--bg-secondary, var(--mat-sys-surface-variant, #f1f5f9));
+  border: 1px solid var(--border-subtle, var(--mat-sys-outline-variant, #e2e8f0));
+  color: var(--text-primary, var(--mat-sys-on-surface, #1e293b));
+
+  strong {
+    color: var(--text-primary, var(--mat-sys-on-surface, #1e293b));
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    white-space: pre-wrap;
+    color: var(--text-primary, var(--mat-sys-on-surface, #1e293b));
+  }
+}
+
+.diff-editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.diff-labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary, var(--mat-sys-on-surface, #1e293b));
+}
+
+.diff-monaco {
+  display: block;
+  height: 350px;
+  width: 100%;
+  border: 1px solid var(--border-subtle, var(--mat-sys-outline-variant, #e2e8f0));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .diff-monaco .editor-container,
+:host ::ng-deep .diff-monaco .monaco-diff-editor {
+  height: 100% !important;
+}
+
+.diff-similarity {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary, var(--mat-sys-primary, #2563eb));
+}
+
+.diff-actions {
+  .mat-mdc-button {
+    color: var(--text-primary, var(--mat-sys-on-surface, #1e293b));
+  }
+}
+
+@media (max-width: 768px) {
+  .diff-content {
+    min-width: 0;
+    padding: 0.5rem;
+  }
+
+  .diff-labels {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .diff-monaco {
+    height: min(50vh, 280px);
+    min-height: 200px;
+  }
+
+  .diff-actions {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}

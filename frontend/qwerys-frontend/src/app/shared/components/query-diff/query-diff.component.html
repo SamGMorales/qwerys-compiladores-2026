@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ 'diff.title' | translate }}</h2>
+
+<mat-dialog-content class="diff-content">
+  @if (loading()) {
+    <div class="diff-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>{{ 'diff.generating' | translate }}</p>
+    </div>
+  } @else if (hasDiffView()) {
+    <div class="diff-editor-wrapper">
+      <div class="diff-labels">
+        <span>{{ 'diff.original' | translate }}</span>
+        <span>{{ 'diff.optimized' | translate }}</span>
+      </div>
+      <ngx-monaco-diff-editor
+        class="diff-monaco"
+        [options]="diffOptions"
+        [originalModel]="originalModel"
+        [modifiedModel]="modifiedModel">
+      </ngx-monaco-diff-editor>
+      <div class="diff-similarity" aria-live="polite">
+        {{ 'diff.similarity' | translate }}: {{ similarity() }}%
+      </div>
+    </div>
+  } @else {
+    <div class="diff-unavailable">
+      <p>{{ 'diff.aiUnavailable' | translate }}</p>
+      <div class="diff-suggestion-box">
+        <strong>{{ 'diff.suggestion' | translate }}:</strong>
+        <p>{{ data.suggestionText }}</p>
+      </div>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="diff-actions">
+  <button mat-button type="button" (click)="dialogRef.close()">
+    {{ 'common.close' | translate }}
+  </button>
+  @if (!loading() && canUseOptimized()) {
+    <button mat-flat-button color="primary" type="button" (click)="useOptimized()">
+      {{ 'diff.useOptimized' | translate }}
+    </button>
+  }
+</mat-dialog-actions>

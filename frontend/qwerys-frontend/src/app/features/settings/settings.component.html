@@ -1,0 +1,368 @@
+<div class="settings-page">
+  <header class="settings-header">
+    <h1 class="settings-title">{{ 'settings.title' | translate }}</h1>
+  </header>
+
+  @if (profile$ | async; as profile) {
+    <section
+      class="settings-section"
+      aria-labelledby="settings-accessibility-heading">
+      <h2 id="settings-accessibility-heading" class="settings-section__title">
+        {{ 'settings.accessibility.title' | translate }}
+      </h2>
+
+      <ul class="settings-list" role="list">
+        @for (mode of accessibilityModes; track mode.key) {
+          <li class="toggle-row">
+            <span class="toggle-row__emoji" aria-hidden="true">{{ mode.emoji }}</span>
+            <div class="toggle-row__text">
+              <span class="toggle-row__label" [id]="'mode-label-' + mode.key">
+                {{ mode.labelKey | translate }}
+              </span>
+              <span class="toggle-row__desc" [attr.id]="'mode-desc-' + mode.key">
+                {{ mode.descKey | translate }}
+              </span>
+            </div>
+            <mat-slide-toggle
+              class="toggle-row__control"
+              [checked]="profile[mode.key]"
+              (change)="onModeToggle(mode.key, $event.checked)"
+              [attr.aria-labelledby]="'mode-label-' + mode.key"
+              [attr.aria-describedby]="'mode-desc-' + mode.key">
+            </mat-slide-toggle>
+          </li>
+        }
+
+        @if (false) {
+          <!-- PENDIENTE: perfeccionar antes de mostrar al usuario — Modo Ciego -->
+          <li class="toggle-row">
+            <span class="toggle-row__emoji" aria-hidden="true">👁️</span>
+            <div class="toggle-row__text">
+              <span class="toggle-row__label" id="mode-label-blindMode">
+                {{ 'settings.accessibility.blind.label' | translate }}
+              </span>
+              <span class="toggle-row__desc" id="mode-desc-blindMode">
+                {{ 'settings.accessibility.blind.desc' | translate }}
+              </span>
+            </div>
+            <mat-slide-toggle
+              class="toggle-row__control"
+              [checked]="profile!.blindMode"
+              (change)="onModeToggle('blindMode', $event.checked)"
+              aria-labelledby="mode-label-blindMode"
+              aria-describedby="mode-desc-blindMode">
+            </mat-slide-toggle>
+          </li>
+          <!-- PENDIENTE: perfeccionar antes de mostrar al usuario — Modo Sordo -->
+          <li class="toggle-row">
+            <span class="toggle-row__emoji" aria-hidden="true">🔇</span>
+            <div class="toggle-row__text">
+              <span class="toggle-row__label" id="mode-label-deafMode">
+                {{ 'settings.accessibility.deaf.label' | translate }}
+              </span>
+              <span class="toggle-row__desc" id="mode-desc-deafMode">
+                {{ 'settings.accessibility.deaf.desc' | translate }}
+              </span>
+            </div>
+            <mat-slide-toggle
+              class="toggle-row__control"
+              [checked]="profile!.deafMode"
+              (change)="onModeToggle('deafMode', $event.checked)"
+              aria-labelledby="mode-label-deafMode"
+              aria-describedby="mode-desc-deafMode">
+            </mat-slide-toggle>
+          </li>
+          <!-- PENDIENTE: perfeccionar antes de mostrar al usuario — Modo TDAH / Paso a Paso -->
+          <li class="toggle-row">
+            <span class="toggle-row__emoji" aria-hidden="true">🧩</span>
+            <div class="toggle-row__text">
+              <span class="toggle-row__label" id="mode-label-adhdMode">
+                {{ 'settings.accessibility.adhd.label' | translate }}
+              </span>
+              <span class="toggle-row__desc" id="mode-desc-adhdMode">
+                {{ 'settings.accessibility.adhd.desc' | translate }}
+              </span>
+            </div>
+            <mat-slide-toggle
+              class="toggle-row__control"
+              [checked]="profile!.adhdMode"
+              (change)="onModeToggle('adhdMode', $event.checked)"
+              aria-labelledby="mode-label-adhdMode"
+              aria-describedby="mode-desc-adhdMode">
+            </mat-slide-toggle>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="settings-section" aria-labelledby="settings-device-heading">
+      <h2 id="settings-device-heading" class="settings-section__title">
+        {{ 'settings.device.title' | translate }}
+      </h2>
+
+      <mat-radio-group
+        class="device-radio-group"
+        [ngModel]="profile.deviceType"
+        (ngModelChange)="onDeviceChange($event)"
+        [attr.aria-label]="'settings.device.title' | translate">
+        @for (opt of deviceTypes; track opt.value) {
+          <mat-radio-button [value]="opt.value">
+            {{ opt.labelKey | translate }}
+          </mat-radio-button>
+        }
+      </mat-radio-group>
+
+      <button
+        mat-stroked-button
+        type="button"
+        class="detect-btn"
+        (click)="detectDevice()">
+        {{ 'settings.device.detect' | translate }}
+      </button>
+    </section>
+
+    <section class="settings-section" aria-labelledby="settings-language-heading">
+      <h2 id="settings-language-heading" class="settings-section__title">
+        {{ 'settings.language.title' | translate }}
+      </h2>
+
+      <div
+        class="language-actions"
+        role="group"
+        [attr.aria-label]="'settings.language.title' | translate">
+        <button
+          mat-flat-button
+          type="button"
+          class="language-btn language-btn--es"
+          [color]="profile.language === 'es' ? 'primary' : undefined"
+          (click)="setLanguage('es')">
+          <span aria-hidden="true">🇪🇸</span>
+          {{ 'settings.language.es' | translate }}
+        </button>
+        <button
+          mat-flat-button
+          type="button"
+          class="language-btn language-btn--en"
+          [color]="profile.language === 'en' ? 'primary' : undefined"
+          (click)="setLanguage('en')">
+          <span aria-hidden="true">🇺🇸</span>
+          {{ 'settings.language.en' | translate }}
+        </button>
+      </div>
+    </section>
+  }
+
+  @if (canSyncEnginesToAccount) {
+    <section
+      class="settings-section settings-account-section"
+      aria-labelledby="settings-account-heading">
+      <h2 id="settings-account-heading" class="settings-section__title">
+        {{ 'settings.account.title' | translate }}
+      </h2>
+
+      <div class="settings-account" role="presentation">
+        <!-- A: Cambiar contraseña -->
+        <mat-expansion-panel class="settings-account-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span aria-hidden="true">🔑</span> {{ 'settings.account.changePassword' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="account-form">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'settings.account.currentPassword' | translate }}</mat-label>
+              <input matInput type="password" name="accountCurrentPwd" [(ngModel)]="currentPwd" autocomplete="current-password" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'settings.account.newPassword' | translate }}</mat-label>
+              <input matInput type="password" name="accountNewPwd" [(ngModel)]="newPwd" autocomplete="new-password" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'settings.account.confirmPassword' | translate }}</mat-label>
+              <input matInput type="password" name="accountConfirmPwd" [(ngModel)]="confirmPwd" autocomplete="new-password" />
+            </mat-form-field>
+            @if (pwdError) {
+              <p class="msg-error" role="alert">{{ pwdError }}</p>
+            }
+            @if (pwdSuccess) {
+              <p class="msg-success" role="status">{{ pwdSuccess }}</p>
+            }
+            <button mat-raised-button color="primary" type="button" (click)="changePassword()">
+              {{ 'settings.account.savePassword' | translate }}
+            </button>
+          </div>
+        </mat-expansion-panel>
+
+        <!-- B: Cambiar email -->
+        <mat-expansion-panel class="settings-account-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span aria-hidden="true">📧</span> {{ 'settings.account.changeEmail' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="account-form">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'settings.account.newEmail' | translate }}</mat-label>
+              <input matInput type="email" name="accountNewEmail" [(ngModel)]="newEmail" autocomplete="email" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'settings.account.currentPassword' | translate }}</mat-label>
+              <input matInput type="password" name="accountEmailPwd" [(ngModel)]="emailPwd" autocomplete="current-password" />
+            </mat-form-field>
+            @if (emailError) {
+              <p class="msg-error" role="alert">{{ emailError }}</p>
+            }
+            @if (emailSuccess) {
+              <p class="msg-success" role="status">{{ emailSuccess }}</p>
+            }
+            <button mat-raised-button color="primary" type="button" (click)="changeEmail()">
+              {{ 'settings.account.saveEmail' | translate }}
+            </button>
+          </div>
+        </mat-expansion-panel>
+
+        <!-- C: Eliminar cuenta -->
+        <mat-expansion-panel class="settings-account-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span aria-hidden="true">🗑️</span> {{ 'settings.account.deleteAccount' | translate }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="account-form">
+            <p class="msg-error account-delete-warning">{{ 'settings.account.deleteWarning' | translate }}</p>
+            @if (!showDeleteConfirm) {
+              <button mat-raised-button color="warn" type="button" (click)="showDeleteConfirm = true">
+                {{ 'settings.account.deleteButton' | translate }}
+              </button>
+            }
+            @if (showDeleteConfirm) {
+              <p><strong>{{ 'settings.account.deleteConfirm' | translate }}</strong></p>
+              <div class="account-delete-actions">
+                <button mat-raised-button color="warn" type="button" (click)="deleteAccount()">
+                  {{ 'settings.account.confirmYes' | translate }}
+                </button>
+                <button mat-button type="button" (click)="showDeleteConfirm = false">
+                  {{ 'settings.account.confirmNo' | translate }}
+                </button>
+              </div>
+            }
+            @if (deleteError) {
+              <p class="msg-error" role="alert">{{ deleteError }}</p>
+            }
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </section>
+  }
+
+  <mat-expansion-panel class="settings-engines-expansion">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ 'settings.engines.title' | translate }}</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p class="section-hint">{{ 'settings.engines.predefined_hint' | translate }}</p>
+    <mat-chip-set class="engine-chip-list">
+      @for (e of predefinedEnginesReadonly; track e) {
+        <mat-chip disabled class="engine-chip">{{ e }}</mat-chip>
+      }
+    </mat-chip-set>
+
+    @if (customDatabases.length > 0) {
+      <div class="custom-engine-list">
+        @for (row of customEnginesWithIndex; track row.engine.name + '::' + row.engine.base) {
+          <div class="custom-engine-row">
+            <span><span aria-hidden="true">⚙️</span> {{ row.engine.name }}</span>
+            <span class="base-hint">
+              ({{ 'settings.engines.base' | translate }}: {{ row.engine.base }})
+            </span>
+            <button
+              mat-icon-button
+              type="button"
+              color="warn"
+              class="custom-engine-remove"
+              [attr.aria-label]="'settings.engines.remove' | translate"
+              (click)="removeCustomEngine(row.index)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="add-engine-form">
+      <mat-form-field
+        appearance="outline"
+        class="add-engine-form__field"
+        floatLabel="always">
+        <mat-label>{{ 'settings.engines.name_label' | translate }}</mat-label>
+        <input
+          matInput
+          name="newEngineName"
+          [(ngModel)]="newEngineName"
+          [placeholder]="'settings.engines.name_placeholder' | translate"
+          autocomplete="off" />
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="outline"
+        class="add-engine-form__field"
+        floatLabel="always">
+        <mat-label>{{ 'settings.engines.base_label' | translate }}</mat-label>
+        <mat-select name="newEngineBase" [(ngModel)]="newEngineBase">
+          <mat-option value="mysql">{{ 'schema.engines.mysql' | translate }}</mat-option>
+          <mat-option value="postgresql">{{ 'schema.engines.postgresql' | translate }}</mat-option>
+          <mat-option value="sqlite">{{ 'schema.engines.sqlite' | translate }}</mat-option>
+          <mat-option value="sqlserver">{{ 'schema.engines.sqlserver' | translate }}</mat-option>
+          <mat-option value="oracle">{{ 'schema.engines.oracle' | translate }}</mat-option>
+          <mat-option value="mongodb">{{ 'schema.engines.mongodb' | translate }}</mat-option>
+          <mat-option value="redis">{{ 'schema.engines.redis' | translate }}</mat-option>
+          <mat-option value="cassandra">{{ 'schema.engines.cassandra' | translate }}</mat-option>
+          <mat-option value="dynamodb">{{ 'schema.engines.dynamodb' | translate }}</mat-option>
+          <mat-option value="elasticsearch">{{ 'schema.engines.elasticsearch' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="add-engine-submit"
+        (click)="addCustomEngine()"
+        [disabled]="!newEngineName.trim()">
+        {{ 'settings.engines.add_button' | translate }}
+      </button>
+    </div>
+
+    <p class="section-hint engines-reference-hint">
+      {{ 'settings.engines.reference_hint' | translate }}
+    </p>
+    @if (newEngineBase === 'mongodb' || newEngineBase === 'redis') {
+      <p class="section-hint engines-reference-warn" role="note">
+        {{ 'settings.engines.sql_like_reference_hint' | translate }}
+      </p>
+    }
+
+    @if (!canSyncEnginesToAccount) {
+      <p class="account-sync-hint settings-muted">{{ 'settings.engines.guest_sync_hint' | translate }}</p>
+    }
+
+    @if (backendEnginesSyncState === 'ok') {
+      <p class="save-feedback save-feedback--ok" role="status">
+        {{ 'settings.engines.saved' | translate }}
+      </p>
+    }
+    @if (backendEnginesSyncState === 'error') {
+      <p class="save-feedback save-feedback--err" role="alert">
+        {{ 'settings.engines.error' | translate }}
+      </p>
+    }
+
+    <p class="ai-hint">
+      @if (aiConfigured) {
+        ⚠️ {{ 'settings.engines.ai_hint_active' | translate }}
+      } @else {
+        ⚠️ {{ 'settings.engines.ai_hint' | translate }}
+      }
+    </p>
+  </mat-expansion-panel>
+</div>

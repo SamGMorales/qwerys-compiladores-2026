@@ -1,0 +1,259 @@
+<div class="schema-page">
+  <header class="schema-header">
+    <h1 class="schema-title">{{ 'schema.title' | translate }}</h1>
+    <p class="schema-subtitle">{{ 'schema.subtitle' | translate }}</p>
+  </header>
+
+  <section class="schema-card connection-card" qwerysCollapsible>
+    <div class="status-row" aria-live="polite">
+      @if (connectionStatus === 'connecting') {
+        <mat-spinner diameter="22"></mat-spinner>
+        <span>{{ 'schema.connecting' | translate }}</span>
+      } @else if (connectionStatus === 'connected') {
+        <mat-icon class="status-dot status-dot--ok">circle</mat-icon>
+        <span>{{ 'schema.connected' | translate }}</span>
+      } @else if (connectionStatus === 'error') {
+        <mat-icon class="status-dot status-dot--err">circle</mat-icon>
+        <span>{{ 'schema.connectionError' | translate }}</span>
+      } @else {
+        <mat-icon class="status-dot status-dot--idle">circle</mat-icon>
+        <span>{{ 'schema.disconnected' | translate }}</span>
+      }
+    </div>
+
+    @if (connectionStatus === 'error') {
+      <p class="connection-msg inline-error" role="alert">
+        {{ 'schema.connectionErrorDetail' | translate }}
+      </p>
+    }
+
+    @if (connectionStatus === 'connected') {
+      <p class="connection-msg">{{ 'schema.connectionSuccess' | translate }}</p>
+    }
+
+    <div class="form-grid">
+      <mat-form-field appearance="outline" class="span-2">
+        <mat-label>{{ 'schema.dbType' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="config.dbType"
+          name="dbType"
+          (ngModelChange)="onEngineChange()">
+          @for (engine of engines; track engine) {
+            <mat-option [value]="engine">{{
+              ('schema.engines.' + engine) | translate
+            }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      @if (showHostPort) {
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'schema.host' | translate }}</mat-label>
+          <input matInput name="host" [(ngModel)]="config.host" autocomplete="off" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'schema.port' | translate }}</mat-label>
+          <input
+            matInput
+            type="number"
+            name="port"
+            [(ngModel)]="config.port"
+            autocomplete="off" />
+          @if (isDynamoDb) {
+            <mat-hint>{{ 'schema.dynamodbPortHint' | translate }}</mat-hint>
+          }
+        </mat-form-field>
+
+        @if (isDynamoDb) {
+          <p class="schema-engine-hint span-2">
+            {{ 'schema.dynamodbConnectionHint' | translate }}
+          </p>
+        }
+      }
+
+      <mat-form-field appearance="outline" class="span-2">
+        <mat-label>{{ schemaDatabaseFieldKey | translate }}</mat-label>
+        <input
+          matInput
+          name="database"
+          [(ngModel)]="config.database"
+          autocomplete="off" />
+        @if (isDynamoDb) {
+          <mat-hint>{{ 'schema.dynamodbRegionHint' | translate }}</mat-hint>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ schemaUsernameLabel | translate }}</mat-label>
+        <input
+          matInput
+          name="username"
+          [(ngModel)]="config.username"
+          autocomplete="username"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ schemaPasswordLabel | translate }}</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="config.password"
+          autocomplete="current-password"
+        />
+      </mat-form-field>
+
+      @if (schemaAuthOptional) {
+        <p class="schema-auth-optional-hint span-2">
+          {{ 'schema.authOptionalHint' | translate }}
+        </p>
+      }
+
+      <mat-form-field appearance="outline" class="span-2">
+        <mat-label>{{ 'schema.timeout' | translate }}</mat-label>
+        <input
+          matInput
+          type="number"
+          name="timeout"
+          [(ngModel)]="config.connectionTimeoutSeconds"
+          min="1"
+          autocomplete="off"
+        />
+      </mat-form-field>
+    </div>
+
+    @if (isDynamoDb) {
+      <p class="aws-note">{{ 'schema.awsNote' | translate }}</p>
+    }
+
+    <div class="actions-row">
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="onConnect()"
+        [disabled]="connectionStatus === 'connecting'"
+        [attr.aria-label]="'schema.connect' | translate">
+        {{ 'schema.connect' | translate }}
+      </button>
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="onDisconnect()"
+        [disabled]="connectionStatus !== 'connected'"
+        [attr.aria-label]="'schema.disconnect' | translate">
+        {{ 'schema.disconnect' | translate }}
+      </button>
+    </div>
+
+    @if (tablesLoadFailed) {
+      <div class="inline-error" role="alert">
+        {{ 'schema.tablesLoadError' | translate }}
+      </div>
+    }
+  </section>
+
+  @if (connectionStatus === 'connected') {
+    @if (tableNames.length === 0) {
+      <p class="empty-hint empty-hint--block">{{ 'schema.noTables' | translate }}</p>
+    } @else {
+    <div class="schema-split" [class.schema-split--mobile]="isMobile">
+      @if (!isMobile || !showTableDetail) {
+      <section class="schema-card list-panel tables-list-panel" qwerysCollapsible>
+        <h2 class="panel-heading">{{ 'schema.tables' | translate }}</h2>
+        <mat-action-list
+          class="table-nav"
+          role="tree"
+          [attr.aria-label]="'schema.tables' | translate"
+          (keydown)="onTableListKeydown($event)">
+          @for (name of tableNames; track name) {
+            <button
+              mat-list-item
+              type="button"
+              role="treeitem"
+              [attr.aria-selected]="selectedTable === name"
+              [attr.data-table-index]="$index"
+              (click)="onSelectTable(name)"
+              [class.table-nav__item--selected]="selectedTable === name">
+              <span matListItemTitle>{{ name }}</span>
+            </button>
+          }
+        </mat-action-list>
+      </section>
+      }
+
+      @if (!isMobile || showTableDetail) {
+      <section class="schema-card detail-panel table-detail-panel" qwerysCollapsible>
+        @if (isMobile) {
+          <button
+            mat-button
+            type="button"
+            class="schema-back-btn"
+            (click)="backToList()"
+            [attr.aria-label]="'schema.backToList' | translate">
+            <mat-icon aria-hidden="true">arrow_back</mat-icon>
+            {{ 'schema.back' | translate }}
+          </button>
+        }
+        <h2 class="panel-heading">{{ 'schema.columns' | translate }}</h2>
+
+        @if (loadingSchema) {
+          <div class="centered-spinner">
+            <mat-spinner diameter="32"></mat-spinner>
+          </div>
+        } @else if (columnDescribeFailed) {
+          <p class="inline-error" role="alert">
+            {{ 'schema.columnsLoadError' | translate }}
+          </p>
+        } @else if (!selectedTable) {
+          <p class="empty-hint">{{ 'schema.noTableSelected' | translate }}</p>
+        } @else if (!selectedTableSchema || selectedTableSchema.columns.length === 0) {
+          <p class="empty-hint">{{ 'schema.noColumns' | translate }}</p>
+        } @else {
+          <div class="table-wrap mat-elevation-z1">
+            <table mat-table [dataSource]="selectedTableSchema!.columns" class="col-table">
+              <ng-container matColumnDef="columnName">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'schema.columnName' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.columnName }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="dataType">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'schema.dataType' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.dataType }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="nullable">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'schema.nullable' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ (row.nullable ? 'schema.yes' : 'schema.no') | translate }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="primaryKey">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'schema.primaryKey' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  {{ (row.primaryKey ? 'schema.yes' : 'schema.no') | translate }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        }
+      </section>
+      }
+    </div>
+    }
+  }
+</div>

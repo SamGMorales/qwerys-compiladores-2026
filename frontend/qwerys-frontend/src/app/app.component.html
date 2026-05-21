@@ -1,0 +1,154 @@
+<a class="skip-link" href="#main-content" [attr.aria-label]="'a11y.skipToContent' | translate">
+  {{ 'a11y.skipToContent' | translate }}
+</a>
+
+<mat-sidenav-container class="app-container" [hasBackdrop]="isMobile">
+
+  <!-- ── SIDENAV ─────────────────────────────────────────────── -->
+  @if (!isPublicRoute) {
+    <mat-sidenav
+      #sidenav
+      class="app-sidenav"
+      [mode]="sidenavMode"
+      [(opened)]="sidenavOpened"
+      fixedInViewport="true"
+      role="navigation"
+      [attr.aria-label]="'a11y.mainNav' | translate"
+    >
+      <!-- Logo -->
+      <div class="sidenav-logo" [class.logo-small]="isMobile">
+        <span class="logo-text">QWERYS</span>
+        <span class="logo-badge">DB</span>
+      </div>
+
+      <mat-divider class="sidenav-divider" />
+
+      <!-- Navegación -->
+      <mat-nav-list class="sidenav-nav">
+        @for (item of navItems; track item.route) {
+          <a
+            mat-list-item
+            [routerLink]="item.route"
+            routerLinkActive="nav-active"
+            #rla="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: false }"
+            class="nav-item"
+            [class]="item.colorClass ?? ''"
+            [attr.aria-label]="item.label | translate"
+            [attr.aria-current]="rla.isActive ? 'page' : null"
+            [matTooltip]="isMobile ? '' : ''"
+          >
+            <mat-icon matListItemIcon class="nav-icon">{{ item.icon }}</mat-icon>
+            <span matListItemTitle class="nav-label">{{ item.label | translate }}</span>
+          </a>
+        }
+      </mat-nav-list>
+
+      <!-- Footer del sidenav -->
+      <div class="sidenav-footer">
+        @if (isGuestSession()) {
+          <div class="register-banner" (click)="goToRegister()">
+            <mat-icon class="banner-icon">person_add</mat-icon>
+            <div class="banner-text">
+              <span class="banner-title">{{ 'nav.guestBanner.title' | translate }}</span>
+              <span class="banner-cta">{{ 'nav.guestBanner.cta' | translate }}</span>
+            </div>
+          </div>
+        }
+        <button
+          mat-button
+          class="logout-btn"
+          type="button"
+          (click)="logout()"
+          [attr.aria-label]="isGuestSession() ? ('nav.endSession' | translate) : ('nav.logout' | translate)"
+        >
+          <mat-icon>{{ isGuestSession() ? 'exit_to_app' : 'logout' }}</mat-icon>
+          <span>{{ isGuestSession() ? ('nav.endSession' | translate) : ('nav.logout' | translate) }}</span>
+        </button>
+        <span class="sidenav-version">v3.0.0</span>
+      </div>
+    </mat-sidenav>
+  }
+
+  <!-- ── CONTENIDO PRINCIPAL ────────────────────────────────── -->
+  <mat-sidenav-content class="app-content">
+
+    <!-- Toolbar -->
+    <mat-toolbar color="primary" class="app-toolbar">
+
+      <!-- Botón hamburguesa (todas las vistas: desktop, tablet, móvil) -->
+      @if (!isPublicRoute) {
+        <button
+          mat-icon-button
+          class="menu-toggle"
+          (click)="toggleSidenav()"
+          [attr.aria-label]="'toolbar.menuToggle' | translate"
+          [attr.aria-expanded]="sidenavOpened"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+
+      <!-- Título -->
+      <span class="toolbar-title" [class.logo-small]="isMobile">{{ 'toolbar.title' | translate }}</span>
+
+      <span class="toolbar-spacer"></span>
+
+      <!-- Selector de idioma -->
+      <button
+        mat-button
+        class="lang-toggle"
+        (click)="toggleLanguage()"
+        [attr.aria-label]="'toolbar.changeLanguage' | translate"
+        [matTooltip]="'toolbar.changeLanguage' | translate"
+      >
+        <span class="lang-current">{{ currentLanguage === 'es' ? 'ES' : 'EN' }}</span>
+        <mat-icon class="lang-icon">language</mat-icon>
+        <span class="lang-next">{{ currentLanguage === 'es' ? 'EN' : 'ES' }}</span>
+      </button>
+
+      <!-- Toggle Modo Oscuro / Claro -->
+      <button
+        mat-icon-button
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        [matTooltip]="(isDark$ | async) ? ('toolbar.changeThemeToLight' | translate) : ('toolbar.changeThemeToDark' | translate)"
+        [attr.aria-label]="(isDark$ | async) ? ('toolbar.changeThemeToLight' | translate) : ('toolbar.changeThemeToDark' | translate)"
+      >
+        <mat-icon>{{ (isDark$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+
+      <!-- Instalar PWA — solo en navegadores con beforeinstallprompt (no iOS Safari) -->
+      @if (pwaService.canInstall | async) {
+        <button
+          mat-icon-button
+          type="button"
+          (click)="pwaService.installApp()"
+          [matTooltip]="'pwa.install' | translate"
+          [attr.aria-label]="'pwa.install' | translate"
+        >
+          <mat-icon>install_mobile</mat-icon>
+        </button>
+      }
+
+      <!-- Configuración de accesibilidad -->
+      <button
+        mat-icon-button
+        routerLink="/settings"
+        [attr.aria-label]="'toolbar.accessibility' | translate"
+        [matTooltip]="'toolbar.accessibility' | translate"
+        class="accessibility-btn"
+      >
+        <mat-icon>accessibility_new</mat-icon>
+      </button>
+
+    </mat-toolbar>
+
+    <!-- Área de contenido enrutado -->
+    <main id="main-content" class="main-content" role="main" tabindex="-1">
+      <router-outlet />
+    </main>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

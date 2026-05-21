@@ -1,0 +1,11 @@
+# No incluir secretos ni artefactos locales en la imagen
+target/
+.git/
+.mvn/wrapper/maven-wrapper.jar
+
+application.properties
+application-local.properties
+application-dev.properties
+secrets.properties
+.env
+*.env

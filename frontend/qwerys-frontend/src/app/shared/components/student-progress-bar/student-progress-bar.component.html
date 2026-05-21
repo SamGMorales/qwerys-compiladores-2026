@@ -1,0 +1,13 @@
+<div
+  class="student-progress"
+  role="progressbar"
+  [attr.aria-valuenow]="progress"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  [attr.aria-label]="displayLabel">
+  <span>{{ displayLabel }}</span>
+  <div class="student-progress__bar">
+    <div class="student-progress__fill" [style.width.%]="progress"></div>
+  </div>
+  <span>{{ progress }}%</span>
+</div>

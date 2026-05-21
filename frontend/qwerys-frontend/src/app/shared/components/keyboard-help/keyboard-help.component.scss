@@ -1,0 +1,110 @@
+$clr-primary: #2563eb;
+$clr-primary-soft: rgba(37, 99, 235, 0.12);
+
+:host {
+  display: block;
+  color: var(--text-primary, #1e293b);
+}
+
+.keyboard-help__intro {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary, #64748b);
+}
+
+.shortcuts-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.92rem;
+
+  thead th {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary, #64748b);
+    border-bottom: 2px solid var(--border-subtle, #e2e8f0);
+    background: var(--bg-secondary, #f8fafc);
+  }
+
+  tbody tr {
+    transition: background-color 0.15s ease;
+
+    &:hover td {
+      background: var(--bg-secondary, #f8fafc);
+    }
+  }
+
+  tbody td {
+    padding: 0.65rem 0.75rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+    color: var(--text-primary, #1e293b);
+  }
+
+  tbody td:first-child {
+    width: 42%;
+  }
+
+  kbd {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.28rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid rgba($clr-primary, 0.35);
+    background: $clr-primary-soft;
+    color: $clr-primary;
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.06);
+  }
+}
+
+:host ::ng-deep {
+  .mat-mdc-dialog-title {
+    margin: 0;
+    padding-bottom: 0.35rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary, #1e293b);
+  }
+
+  .mat-mdc-dialog-content {
+    padding-top: 0.5rem !important;
+    color: var(--text-primary, #1e293b);
+  }
+
+  .mat-mdc-dialog-actions {
+    padding-top: 0.75rem !important;
+    border-top: 1px solid var(--border-subtle, #e2e8f0);
+
+    .mat-mdc-button {
+      color: $clr-primary;
+      font-weight: 600;
+    }
+  }
+}
+
+:host-context(body.dark-theme) {
+  .shortcuts-table kbd {
+    background: rgba(96, 165, 250, 0.15);
+    border-color: rgba(96, 165, 250, 0.45);
+    color: #93c5fd;
+    box-shadow: none;
+  }
+}
+
+:host-context(body.mode-high-contrast) {
+  .shortcuts-table kbd {
+    background: #000 !important;
+    color: #ff0 !important;
+    border: 2px solid #fff !important;
+  }
+}

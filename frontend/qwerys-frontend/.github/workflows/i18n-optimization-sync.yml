@@ -1,0 +1,28 @@
+# Ensures analyzer.optimizations entries exist for every backend OPT-* OptimizationRule id.
+name: i18n optimization sync
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  optimization-i18n:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+      - name: Checkout frontend
+        uses: actions/checkout@v4
+
+      - name: Clone backend (same GitHub owner, repo qwerys-backend)
+        run: |
+          git clone --depth 1 "https://github.com/${{ github.repository_owner }}/qwerys-backend.git" "${{ github.workspace }}/../qwerys-backend-src"
+
+      - name: Verify optimization i18n (es.json / en.json)
+        env:
+          BACKEND_OPTIMIZATION_DIR: ${{ github.workspace }}/../qwerys-backend-src/src/main/java/com/qwerys/qwerys_backend/optimization
+        run: node scripts/check-optimization-i18n.mjs

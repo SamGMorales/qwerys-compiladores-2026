@@ -1,0 +1,17 @@
+@if (explanation; as edu) {
+  <div class="student-explanation" role="note">
+    <div class="student-explanation__what">
+      <span aria-hidden="true">📚</span>
+      <strong>{{ 'student.whatIsThis' | translate }}</strong>: {{ edu.what }}
+    </div>
+    @if (edu.why && edu.why.trim() !== edu.what.trim()) {
+      <div class="student-explanation__why">{{ edu.why }}</div>
+    }
+    @if (edu.correctedExample) {
+      <div class="student-explanation__example">
+        <span>{{ 'student.correctedExample' | translate }}:</span>
+        <code>{{ edu.correctedExample }}</code>
+      </div>
+    }
+  </div>
+}

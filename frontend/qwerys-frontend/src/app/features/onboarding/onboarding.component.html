@@ -1,0 +1,92 @@
+<div class="onboarding-page" [class.dark]="(isDark$ | async)">
+  <div class="onboarding-container">
+
+    <!-- Header -->
+    <header class="onboarding-header">
+      <span class="onboarding-logo">QWERYS</span>
+      <h1 class="onboarding-title">{{ 'onboarding.title' | translate }}</h1>
+      <p class="onboarding-subtitle">{{ subtitleKey() | translate }}</p>
+    </header>
+
+    <!-- Controls row: language + theme -->
+    <div class="onboarding-controls">
+      <div class="lang-selector" role="group" [attr.aria-label]="'onboarding.langLabel' | translate">
+        <button
+          [class.active]="currentLang() === 'es'"
+          (click)="setLanguage('es')"
+          [attr.aria-pressed]="currentLang() === 'es'">
+          ES
+        </button>
+        <span class="lang-sep">|</span>
+        <button
+          [class.active]="currentLang() === 'en'"
+          (click)="setLanguage('en')"
+          [attr.aria-pressed]="currentLang() === 'en'">
+          EN
+        </button>
+      </div>
+
+      <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="'onboarding.themeToggle' | translate">
+        <span *ngIf="!(isDark$ | async)">☀️ {{ 'onboarding.theme.light' | translate }}</span>
+        <span *ngIf="(isDark$ | async)">🌙 {{ 'onboarding.theme.dark' | translate }}</span>
+      </button>
+    </div>
+
+    <!-- Mode cards grid -->
+    <section class="modes-grid" [attr.aria-label]="'onboarding.modesLabel' | translate">
+      <button
+        *ngFor="let card of modeCards"
+        class="mode-card"
+        [class.selected]="isSelected(card.key)"
+        (click)="toggleMode(card.key)"
+        [attr.aria-pressed]="isSelected(card.key)"
+        [attr.aria-label]="card.labelKey | translate">
+        <span class="mode-icon">{{ card.icon }}</span>
+        <span class="mode-name">{{ card.labelKey | translate }}</span>
+        <span class="mode-desc">{{ card.descKey | translate }}</span>
+      </button>
+
+      @if (false) {
+        <!-- PENDIENTE: perfeccionar antes de mostrar al usuario — Modo Ciego -->
+        <button
+          class="mode-card"
+          [class.selected]="isSelected('blindMode')"
+          (click)="toggleMode('blindMode')"
+          [attr.aria-pressed]="isSelected('blindMode')"
+          [attr.aria-label]="'onboarding.modes.blind.label' | translate">
+          <span class="mode-icon">🦯</span>
+          <span class="mode-name">{{ 'onboarding.modes.blind.label' | translate }}</span>
+          <span class="mode-desc">{{ 'onboarding.modes.blind.desc' | translate }}</span>
+        </button>
+        <!-- PENDIENTE: perfeccionar antes de mostrar al usuario — Modo Sordo -->
+        <button
+          class="mode-card"
+          [class.selected]="isSelected('deafMode')"
+          (click)="toggleMode('deafMode')"
+          [attr.aria-pressed]="isSelected('deafMode')"
+          [attr.aria-label]="'onboarding.modes.deaf.label' | translate">
+          <span class="mode-icon">🤟</span>
+          <span class="mode-name">{{ 'onboarding.modes.deaf.label' | translate }}</span>
+          <span class="mode-desc">{{ 'onboarding.modes.deaf.desc' | translate }}</span>
+        </button>
+        <!-- PENDIENTE: perfeccionar antes de mostrar al usuario — Modo TDAH / Paso a Paso -->
+        <button
+          class="mode-card"
+          [class.selected]="isSelected('adhdMode')"
+          (click)="toggleMode('adhdMode')"
+          [attr.aria-pressed]="isSelected('adhdMode')"
+          [attr.aria-label]="'onboarding.modes.adhd.label' | translate">
+          <span class="mode-icon">⚡</span>
+          <span class="mode-name">{{ 'onboarding.modes.adhd.label' | translate }}</span>
+          <span class="mode-desc">{{ 'onboarding.modes.adhd.desc' | translate }}</span>
+        </button>
+      }
+    </section>
+
+    <!-- CTA -->
+    <button class="btn-start" (click)="onStart()">
+      {{ 'onboarding.start' | translate }}
+    </button>
+
+  </div>
+</div>

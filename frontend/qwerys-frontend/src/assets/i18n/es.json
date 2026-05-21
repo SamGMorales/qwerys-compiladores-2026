@@ -1,0 +1,2845 @@
+{
+  "nav": {
+    "analyzer": "Analizador de Queries",
+    "migration": "Migración de Código",
+    "schema": "Explorador de Esquemas",
+    "history": "Historial",
+    "ai": "Sugerencias IA",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión",
+    "endSession": "Terminar sesión",
+    "guestBanner": {
+      "title": "¿Te gusta QWERYS?",
+      "cta": "Crea una cuenta gratis →"
+    },
+    "menu": "Abrir menú de navegación"
+  },
+  "toolbar": {
+    "title": "QWERYS",
+    "changeThemeToDark": "Cambiar a modo oscuro",
+    "changeThemeToLight": "Cambiar a modo claro",
+    "changeLanguage": "Cambiar idioma",
+    "accessibility": "Accesibilidad",
+    "menuToggle": "Abrir o cerrar menú"
+  },
+  "pwa": {
+    "install": "Instalar QWERYS como app",
+    "installed": "App instalada correctamente"
+  },
+  "engines": {
+    "predefined": "Predefinidos",
+    "custom": "Mis motores"
+  },
+  "analyzer": {
+    "title": "Analizador de Queries",
+    "subtitle": "Escribe tu query, elige el motor de base de datos y analízalo.",
+    "dbTypeLabel": "Motor de base de datos",
+    "schemaValidation": "Validar contra BD real",
+    "schemaValidationHint": "Conecta tu BD para detectar tablas y columnas inexistentes",
+    "explorerImportPrompt": "En el Explorador tienes {{engine}} · {{host}}:{{port}} · {{database}} ({{user}}). ¿Usar estos datos para validar?",
+    "explorerImportYes": "Sí, usar",
+    "explorerImportNo": "No, otra BD",
+    "schemaConnectFailed": "No se pudo conectar a la base de datos. Revisa la ruta, host, puerto y credenciales.",
+    "aiComplementTitle": "Perspectiva IA (complementaria)",
+    "aiComplementScriptTitle": "Perspectiva IA — script completo",
+    "aiComplementSubtitle": "Análisis independiente que complementa y corrige al motor nativo cuando hace falta.",
+    "aiComplementLoading": "Generando análisis complementario…",
+    "aiComplementRefresh": "Actualizar análisis IA",
+    "aiComplementProvider": "Fuente: {{provider}}",
+    "aiOptimizationNotesTitle": "Notas IA sobre optimizaciones nativas",
+    "aiNativeReviewTitle": "Revisión del análisis nativo",
+    "aiDisagreeHint": "La IA discrepa con el análisis nativo en este contexto.",
+    "aiAdditionalErrorsTitle": "Errores detectados por IA",
+    "aiAdditionalWarningsTitle": "Advertencias detectadas por IA",
+    "aiOptimizationsTitle": "Sugerencias de optimización (IA)",
+    "aiOptimizationsSubtitle": "Hallazgos propios de la IA, con código actual y propuesta mejorada.",
+    "aiCorrectedExample": "Ejemplo corregido (IA)",
+    "validAiReviewed": "VÁLIDO · revisado IA",
+    "validWithAiFindings": "VÁLIDO · hallazgos IA",
+    "validWithWarningsAndAi": "VÁLIDO CON ADVERTENCIAS · hallazgos IA",
+    "optionalImprovements": "Mejoras opcionales disponibles",
+    "optionalImprovementsCount": "{{count}} mejora(s) opcional(es) sugerida(s)",
+    "aiWarningFallback": "Advertencia detectada por la IA; revisa el punto antes de ejecutar en producción.",
+    "groupSql": "SQL",
+    "groupNosql": "NoSQL",
+    "queryLabel": "Query",
+    "queryPlaceholder": "SELECT * FROM usuarios WHERE ...",
+    "analyzeBtn": "Analizar Query",
+    "clearBtn": "Limpiar",
+    "analyzing": "Analizando...",
+    "historySaved": "Análisis guardado en tu historial.",
+    "historySavedAction": "Ver historial",
+    "healthBtn": "Verificar conexión",
+    "connectionSuccess": "¡Conexión exitosa!",
+    "healthOk": "El backend está funcionando correctamente.",
+    "panelEditor": "Editor de Query",
+    "panelResult": "Resultado del análisis",
+    "valid": "VÁLIDO",
+    "invalid": "INVÁLIDO",
+    "validWithWarnings": "VÁLIDO CON ADVERTENCIAS",
+    "metadata": {
+      "aiCustom": "Análisis asistido por IA para el motor personalizado «{{engine}}».",
+      "approximate": "Análisis aproximado de «{{engine}}» usando reglas de {{base}}. Configure GROQ_API_KEY para IA completa.",
+      "referenceTitle": "Comparar con {{base}} (solo referencia)"
+    },
+    "issuesTitle": "Errores y Advertencias",
+    "optimizationsTitle": "Sugerencias de Optimización",
+    "errorsTitle": "Errores detectados",
+    "perfect": "¡Tu query está perfecta! ✅",
+    "noResult": "Escribe una query y presiona Analizar Query",
+    "placeholder": "Escribe una query y presiona Analizar Query",
+    "original": "Original",
+    "optimizedLabel": "Optimizado",
+    "collapsibleCollapse": "Colapsar sección",
+    "collapsibleExpand": "Expandir sección",
+    "collapsibleAriaCollapse": "Colapsar esta sección",
+    "collapsibleAriaExpand": "Expandir esta sección",
+    "stepNavAria": "Pasos guiados del análisis",
+    "stepWrite": "1. Escribe tu consulta",
+    "stepConfigure": "2. Elige el motor",
+    "stepAnalyze": "3. Analiza",
+    "stepResults": "4. Resultados",
+    "stepBack": "Atrás",
+    "stepNext": "Siguiente",
+    "statementToggle": "Sentencia {{index}}: expandir o contraer detalles",
+    "statements": "sentencias analizadas",
+    "multiExecutionTotal": "{{ms}} ms en total",
+    "scriptLevelTitle": "Script completo (entre sentencias)",
+    "scriptLevelSubtitle": "Reglas que solo tienen sentido mirando todas las sentencias juntas (transacciones, sesiones, lotes, etc.). Las tarjetas numeradas de abajo siguen siendo el análisis por sentencia.",
+    "scriptHealth": "Salud del script",
+    "scriptLevelAllClear": "No hay problemas entre sentencias a nivel de script completo.",
+    "impact": {
+      "high": "Alto impacto",
+      "medium": "Impacto medio",
+      "low": "Bajo impacto"
+    },
+    "result": {
+      "complexity": "Complejidad",
+      "optimized": "Query optimizada",
+      "suggestions": "Sugerencias",
+      "errors": "Errores",
+      "time": "Tiempo de análisis"
+    },
+    "optimizations": {
+      "OPT-001": {
+        "description": "SELECT * obtiene todas las columnas, incluyendo las que no necesitas. Especifica solo las columnas que necesitas para reducir I/O, consumo de memoria y transferencia de red, y para que el motor pueda usar índices de cobertura."
+      },
+      "OPT-002": {
+        "description": "La columna usada en WHERE podría no tener un índice. Sin un índice, el motor realiza un escaneo completo de la tabla en cada consulta. Considera crear un índice en la columna de filtro para mejorar el rendimiento."
+      },
+      "OPT-003": {
+        "description": "Esta consulta no tiene cláusula LIMIT/TOP y podría retornar un número ilimitado de filas. Agrega paginación para proteger contra uso excesivo de memoria y tiempos de respuesta lentos."
+      },
+      "OPT-004": {
+        "description": "La sintaxis de JOIN implícito (coma en FROM con condición en WHERE) es estilo SQL-89. Usa JOIN ... ON explícito para mayor legibilidad y para evitar productos cartesianos accidentales si alguien elimina la condición WHERE."
+      },
+      "OPT-005": {
+        "description": "Las subconsultas en WHERE se ejecutan una vez por cada fila del resultado externo. Considera reescribirlas como un JOIN para mejorar significativamente el rendimiento."
+      },
+      "OPT-006": {
+        "description": "En SQL, columna = NULL siempre evalúa a DESCONOCIDO, nunca a VERDADERO. Ninguna fila coincidirá jamás con esta condición — es un bug silencioso. Usa IS NULL o IS NOT NULL para comparar valores nulos correctamente."
+      },
+      "OPT-007": {
+        "description": "Aplicar una función sobre una columna en WHERE (ej: YEAR(fecha) = 2023) impide que el motor use el índice de esa columna. Reescribe la condición para que la función aplique al valor constante, o crea un índice funcional."
+      },
+      "OPT-008": {
+        "description": "Producto cartesiano detectado: múltiples tablas en FROM sin condición de JOIN entre ellas. El resultado multiplica TODAS las filas de la primera tabla con TODAS las de la segunda. Agrega una condición JOIN explícita."
+      },
+      "OPT-009": {
+        "description": "NOT IN con subconsultas que puedan retornar NULL produce resultados inesperados — toda la condición evalúa a FALSO. Usa NOT EXISTS o agrega IS NOT NULL en la subconsulta para garantizar resultados correctos."
+      },
+      "OPT-010": {
+        "description": "ORDER BY redundante o innecesario detectado. Verifica si el ordenamiento es realmente necesario para el resultado final, ya que agrega costo de procesamiento."
+      },
+      "OPT-011": {
+        "description": "El comodín inicial en LIKE '%valor' impide que el motor use el índice de la columna. El motor debe escanear toda la tabla. Considera usar búsqueda de texto completo (FULLTEXT INDEX) o reescribir la condición."
+      },
+      "OPT-PROC-001": {
+        "description": "Recorres filas con un cursor solo para actualizar o borrar una a una. Suele ser mucho más rápido hacer una sola sentencia UPDATE o DELETE que afecte al conjunto.",
+        "original": "Abrir cursor, bucle con FETCH a variables y ejecutar UPDATE o DELETE una vez por cada fila.",
+        "optimized": "Una sola sentencia UPDATE o DELETE sobre todas las filas que cumplan la condición (JOIN/WHERE/MERGE), en lugar de repetir por fila."
+      },
+      "OPT-PROC-002": {
+        "description": "Dentro del bucle ejecutas una consulta por cada vuelta para una fila distinta. Agrupa el trabajo: cargar lotes, tablas temporales o operaciones en conjunto según tu motor.",
+        "original": "En cada iteración del bucle corres un SELECT o FETCH para traer otra fila (por ejemplo por clave primaria).",
+        "optimized": "Agrupa datos: en Oracle valora cargas por lotes (p. ej. BULK COLLECT); en SQL Server tablas de valores o temporales; en PostgreSQL arrays o INSERT…SELECT masivo; en MySQL reduce viajes al servidor procesando por bloques."
+      },
+      "OPT-PROC-003": {
+        "description": "La misma consulta idéntica se repite en cada iteración sin que cambien los datos de entrada. Sácala fuera del bucle y reutiliza el resultado.",
+        "original": "La misma consulta literal se ejecuta dentro del bucle aunque los valores relevantes no cambian.",
+        "optimized": "Ejecuta esa consulta una sola vez antes del bucle y reutiliza el resultado dentro de él."
+      },
+      "OPT-PROC-004": {
+        "description": "Ejecutas SQL dinámico aunque el texto de la consulta es fijo. Usa SQL estático para que el motor pueda optimizar y el código sea más claro.",
+        "original": "SQL dinámico (EXECUTE, sp_executesql u otro) con un texto fijo que no depende de variables.",
+        "optimized": "Sustituye por SQL estático para que el motor pueda optimizar el plan y el código sea más fácil de leer."
+      },
+      "OPT-PROC-005": {
+        "description": "Confirmas o deshaces la transacción dentro del bucle. Eso multiplica el trabajo del motor y puede frenar mucho. Agrupa confirmaciones al final del lote cuando sea seguro.",
+        "original": "COMMIT o ROLLBACK dentro del cuerpo del bucle (confirmación en cada vuelta).",
+        "optimized": "Confirma o deshace al terminar un bloque de trabajo cuando sea seguro, no en cada iteración."
+      },
+      "OPT-PROC-006": {
+        "description": "Concatenas texto largo dentro del bucle sin acumular de forma eficiente. Usa el mecanismo de acumulación recomendado por tu motor para evitar coste extra.",
+        "original": "Se construye una cadena grande concatenando texto en cada vuelta del bucle.",
+        "optimized": "Acumula en memoria de forma eficiente según tu motor (buffer, lista de fragmentos, etc.) en lugar de crecer la cadena paso a paso."
+      },
+      "OPT-CURSOR-LOOP": {
+        "description": "Un bucle procedural que hace FETCH de un cursor y ejecuta UPDATE o DELETE en cada vuelta suele ser mucho más lento que una sola sentencia que actualice o borre todas las filas de golpe (salvo que necesites lógica distinta por fila).",
+        "original": "Bucle LOOP/WHILE/FOR con FETCH del cursor y UPDATE o DELETE dentro de cada iteración.",
+        "optimized": "Un solo UPDATE o DELETE (o MERGE) con las mismas condiciones usando JOIN o subconsultas equivalentes al cursor."
+      }
+    },
+    "issues": {
+      "SEM-001": "DELETE sin cláusula WHERE eliminará TODOS los registros de la tabla. Agrega WHERE para filtrar qué registros borrar.",
+      "SEM-002": "UPDATE sin cláusula WHERE modificará TODOS los registros de la tabla. Agrega WHERE para filtrar qué registros actualizar.",
+      "SE001": "Falta la lista de columnas después de SELECT.",
+      "SE002": "Falta el nombre de la tabla después de FROM.",
+      "SE003": "La condición WHERE está incompleta. Usa una expresión completa como: columna = valor",
+      "SE004": "SELECT * con JOIN puede devolver columnas duplicadas o inesperadas. Especifica las columnas que necesitas.",
+      "SE007": "Posible inyección SQL detectada. Usa consultas parametrizadas en vez de concatenación de strings.",
+      "SE008": "Columna duplicada en SELECT. Elimina la referencia duplicada.",
+      "SE009": "La columna de ORDER BY no está en la lista de SELECT.",
+      "SE010": "LIMIT sin ORDER BY puede devolver resultados inconsistentes. Agrega ORDER BY para paginación determinista.",
+      "PARSE-INCOMPLETE": "La query está incompleta. Revisa que la sintaxis esté cerrada correctamente.",
+      "PARSE-INCOMPLETE-LIKE": "LIKE requiere un valor de búsqueda entre comillas, por ejemplo: LIKE '%texto%'",
+      "SYN-001-SQL": {
+        "title": "Error de sintaxis SQL",
+        "description": "El analizador detectó un fallo de sintaxis en la posición indicada del texto.",
+        "suggestion": "Corrige la construcción señalada en el mensaje; revisa paréntesis, comas y palabras clave."
+      },
+      "SYN-001-PARTIQL": {
+        "title": "Error de sintaxis PartiQL (DynamoDB)",
+        "description": "La sentencia PartiQL no es válida en la posición indicada.",
+        "suggestion": "Revisa SELECT/INSERT/UPDATE/DELETE PartiQL y los literales admitidos por DynamoDB."
+      },
+      "ES-SYNTAX-001": {
+        "title": "JSON inválido — el query no puede ser analizado",
+        "description": "El query no es un JSON válido. El analizador no puede continuar.",
+        "suggestion": "Verifica la sintaxis JSON: llaves, corchetes, comas y comillas bien balanceados."
+      },
+      "SE-LIKE-ALL": "LIKE '%' coincide con TODOS los registros — equivale a eliminar el WHERE. Especifica un término de búsqueda real.",
+      "SE-LIKE-SHORT": "Término de búsqueda demasiado corto (1-2 caracteres). Podría devolver millones de filas. Usa al menos 3 caracteres.",
+      "SE-NULL-EQUALS": "Usa IS NULL o IS NOT NULL para comparar con NULL. Las comparaciones con = NULL siempre devuelven falso en SQL.",
+      "SE-BETWEEN-INV": "El rango BETWEEN está invertido. El primer valor debe ser menor que el segundo. Ej: BETWEEN 1 AND 100.",
+      "SE-DIV-ZERO": "División por cero detectada en la expresión. Esto causará un error en tiempo de ejecución.",
+      "SE-EMPTY-STR": "Comparación con string vacío ('') detectada. Verifica si es intencional o si falta el valor real.",
+      "SE-CARTESIAN": "Producto cartesiano detectado: múltiples tablas en FROM sin condición de JOIN. Esto multiplica todas las filas entre sí.",
+      "SE-TAUTOLOGY": "WHERE 1=1 no filtra nada — siempre es verdadero. Devuelve todos los registros.",
+      "SE-IMPOSSIBLE": "WHERE 1=0 o WHERE FALSE nunca devuelve filas. Esta query siempre retornará vacío.",
+      "SE-SELF-CMP": "Una columna se compara consigo misma. Esta condición siempre es verdadera y no filtra nada.",
+      "SE-BETWEEN-SINGLE": "BETWEEN con el mismo valor en ambos extremos equivale a un simple = . Usa = valor en su lugar.",
+      "SE-EMPTY-IN": "La lista IN () está vacía. Esta condición nunca es verdadera — la query retornará cero filas.",
+      "SE-CONTRADICTS": "La misma columna tiene dos valores distintos requeridos con AND. Esto es imposible — ninguna fila puede cumplir ambas condiciones al mismo tiempo.",
+      "SE-RANGE-IMPOSSIBLE": "El rango numérico es imposible: la condición exige que el valor sea mayor Y menor al mismo tiempo con valores que se contradicen.",
+      "SE-DANGER-SCOPE": "DELETE o UPDATE con WHERE 1=1 afectará TODOS los registros aunque tenga cláusula WHERE. Esto es tan peligroso como no tener WHERE.",
+      "SE-INSERT-NO-COLS": "INSERT sin lista de columnas explícita es frágil. Si la tabla cambia (columnas añadidas, eliminadas o reordenadas), este INSERT fallará silenciosamente. Usa: INSERT INTO tabla (col1, col2) VALUES (val1, val2).",
+      "SCH-001": "La tabla no existe en la base de datos conectada.",
+      "SCH-001-MONGODB": "La colección no existe en la base de datos conectada",
+      "SCH-001-CASSANDRA": "La tabla no existe en el keyspace conectado",
+      "SCH-001-ELASTICSEARCH": "El índice no existe en el cluster conectado",
+      "SCH-001-REDIS": "La clave no existe en la base de datos Redis conectada",
+      "SCH-001-DYNAMODB": "La tabla no existe en DynamoDB",
+      "SCH-002": "La columna no existe en la tabla referenciada.",
+      "SCH-003": "Tipos incompatibles entre columna y literal en una comparación.",
+      "AI-CUSTOM-APPROX": "Análisis aproximado del motor personalizado usando las reglas del motor base (sin Groq). Configure ai.api-key en el servidor para análisis asistido por IA.",
+      "MY001": "ON DUPLICATE KEY requiere un índice UNIQUE o PRIMARY KEY en la tabla. Sin él, el comportamiento es el de un INSERT normal.",
+      "MY002": "Columna no agregada en SELECT que no está en GROUP BY. MySQL 5.x lo permite con ONLY_FULL_GROUP_BY desactivado, pero MySQL 8+ lo rechaza. Agrega la columna al GROUP BY o usa una función de agregación.",
+      "MY003": "LIMIT sin ORDER BY devuelve filas en orden arbitrario. Agrega ORDER BY para resultados predecibles.",
+      "MY004": "La función PASSWORD() o ENCRYPT() fue eliminada en MySQL 8.0. Usa bcrypt u otro mecanismo de hash a nivel de aplicación.",
+      "MY005": "JSON_TABLE() requiere MySQL 8.0 o superior. Verifica la versión de tu servidor antes de usar esta función.",
+      "MY006": "La columna AUTO_INCREMENT debe estar definida como clave (PRIMARY KEY o UNIQUE INDEX). MySQL lo exige.",
+      "PG001": "ILIKE es insensible a mayúsculas pero puede hacer full table scan. Para tablas grandes, crea un índice GIN con pg_trgm: CREATE INDEX ON tabla USING gin(columna gin_trgm_ops).",
+      "PG002": "La cláusula RETURNING está vacía. Especifica al menos una columna: RETURNING id, updated_at.",
+      "PG003": "SERIAL/BIGSERIAL están obsoletos en PostgreSQL 14+. Usa columnas de identidad: columna INT GENERATED ALWAYS AS IDENTITY.",
+      "PG004": "Uso incorrecto de operador de array (@>, <@, &&). Deben aparecer entre dos expresiones de array.",
+      "PG005": "LATERAL debe referenciar una subconsulta o una función. Ejemplo: JOIN LATERAL (SELECT ...) AS t ON true.",
+      "PG006": "WITH RECURSIVE requiere UNION ALL entre el caso base y el recursivo.",
+      "LT001": "SQLite no soporta RIGHT JOIN ni FULL OUTER JOIN. Reescribe usando LEFT JOIN con el orden de tablas invertido.",
+      "LT002": "ALTER TABLE DROP COLUMN requiere SQLite 3.35+. ALTER TABLE RENAME COLUMN requiere SQLite 3.25+. En versiones anteriores, debes recrear la tabla.",
+      "LT003": "Las claves foráneas en SQLite están desactivadas por defecto. Ejecuta PRAGMA foreign_keys = ON al inicio de cada conexión.",
+      "LT004": "SQLite no tiene un tipo DATE/DATETIME nativo. Los valores se almacenan como TEXT, REAL o INTEGER. Usa las funciones date() / datetime() / strftime() para comparaciones.",
+      "LT005": "Las funciones de ventana (OVER) requieren SQLite 3.25 o superior. Verifica con SELECT sqlite_version().",
+      "LT006": "Una tabla WITHOUT ROWID requiere definir una PRIMARY KEY explícita.",
+      "SS001": "SELECT TOP sin ORDER BY devuelve filas arbitrarias. Agrega ORDER BY para resultados deterministas.",
+      "SS002": "WITH (NOLOCK) puede devolver lecturas sucias (datos no confirmados). Considera usar READ COMMITTED SNAPSHOT ISOLATION en su lugar.",
+      "SS003": "Tabla temporal creada con SELECT INTO #temp. Recuerda hacer DROP TABLE cuando termines, o la tabla persiste durante la conexión.",
+      "SS004": "Cursor detectado. Los cursores son mucho más lentos que las operaciones en set. Reescribe usando UPDATE/INSERT/DELETE con JOINs o funciones de ventana.",
+      "SS005": "Sintaxis de JOIN implícito detectada en WHERE. Usa JOIN ... ON explícito para mayor legibilidad.",
+      "SS006": "MERGE sin cláusula OUTPUT. Considera agregar OUTPUT para capturar las filas insertadas, actualizadas o eliminadas.",
+      "SS007": "@@IDENTITY puede devolver IDs generados por triggers, no solo del INSERT actual. Usa SCOPE_IDENTITY() para obtener el ID del ámbito actual.",
+      "SS008": "Los tipos text, ntext e image están obsoletos desde SQL Server 2005. Reemplaza con: text → varchar(MAX), ntext → nvarchar(MAX), image → varbinary(MAX).",
+      "ORA001": "Oracle requiere FROM DUAL para SELECT sin tabla real. Ejemplo: SELECT 1+1 FROM DUAL.",
+      "ORA002": "ROWNUM > n en WHERE siempre devuelve 0 filas. ROWNUM se asigna antes del ORDER BY. Envuelve la query en una subconsulta.",
+      "ORA003": "ROWNUM sin ORDER BY devuelve filas en orden impredecible. Envuelve la query: SELECT * FROM (SELECT * FROM tabla ORDER BY col) WHERE ROWNUM <= n.",
+      "ORA004": "NVL evalúa ambos argumentos aunque el primero no sea NULL. COALESCE hace short-circuit y es más eficiente cuando el segundo argumento es costoso.",
+      "ORA005": "DECODE es exclusivo de Oracle y no es portable. Reemplaza con CASE WHEN estándar.",
+      "ORA006": "En Oracle usa VARCHAR2 en lugar de VARCHAR. Oracle reserva el derecho de cambiar la semántica de VARCHAR en versiones futuras.",
+      "ORA007": "El tipo DATE de Oracle incluye hora y minutos (a diferencia del DATE estándar SQL). Para comparar solo fecha usa TRUNC(fecha_col).",
+      "ORA008": "CONNECT BY sin START WITH inicia desde TODAS las filas, causando degradación exponencial. Agrega START WITH con tu condición raíz.",
+      "ORA009": "Conversión implícita de tipo detectada entre CHAR/VARCHAR2 y NUMBER. Esto impide el uso de índices. Usa TO_NUMBER() o almacena los números como NUMBER.",
+      "DDL-001": "La vista selecciona todas las columnas de la tabla base. Si cambia la tabla, la vista puede romperse o mostrar columnas que no esperabas. Indica solo las columnas que necesitas en la definición de la vista.",
+      "DDL-002": "La definición del índice no deja claro sobre qué columnas debe trabajar. Sin columnas concretas el índice no tiene sentido para el motor. Revisa el CREATE INDEX y enumera las columnas correctas.",
+      "DDL-003": "Alteras la tabla renombrando o quitando una columna. Vistas, informes u otros objetos pueden seguir usando ese nombre y fallar después. Revisa qué depende de esa columna y actualízalo antes de aplicar el cambio.",
+      "DDL-004": "Eliminas una tabla sin la opción «si existe». Si el nombre no coincide, todo el script puede detenerse en mitad de un despliegue. Usa IF EXISTS para que el cambio sea más seguro y repetible.",
+      "DDL-005": "Eliminas una base de datos completa; es una operación destructiva e irreversible sin copia de seguridad. Confirma entorno, backup y que nadie usa esa base en producción antes de ejecutar.",
+      "DCL-001": "Concedes todos los permisos sobre el objeto. Suele ser más de lo necesario y aumenta el daño si alguien abusa de esa cuenta. Otorga solo SELECT, INSERT, UPDATE o DELETE según lo que cada persona realmente necesite.",
+      "DCL-002": "Quitas permisos a una cuenta muy privilegiada (por ejemplo un administrador). Podrías perder acceso de mantenimiento sin querer. Verifica el usuario y el impacto antes de aplicar la revocación.",
+      "TCL-001": "Abriste una transacción y no aparece un COMMIT ni un ROLLBACK al cerrar el flujo. Puede dejar bloqueos y cambios sin confirmar. Cierra con COMMIT para guardar o ROLLBACK para deshacer.",
+      "TCL-002": "Hay un ROLLBACK sin haber abierto antes una transacción (BEGIN o equivalente). El orden no encaja. Asegúrate de que cada transacción tenga inicio y fin claros.",
+      "TCL-003": "Reutilizas el mismo nombre para más de un punto de retorno dentro de la transacción. Es fácil volver al sitio equivocado en un error. Usa un nombre distinto para cada SAVEPOINT.",
+      "TCL-004": "El nivel de aislamiento permite leer cambios aún no confirmados por otros. Los resultados pueden ser inconsistentes o «sucios». Si necesitas lecturas estables, sube el nivel de aislamiento.",
+      "SCR-MULTI-001": {
+        "title": "Varias sentencias tienen errores bloqueantes",
+        "description": "Más de una sentencia de este script falla la validación. Corrígelas en orden; las posteriores pueden depender de que las anteriores sean válidas.",
+        "suggestion": "Despliega cada sentencia numerada, resuelve los errores de arriba a abajo y vuelve a analizar el script completo."
+      },
+      "PROC-001": "Declaraste una variable y no se usa en ninguna parte del bloque. Elimínala o úsala para limpiar el código y evitar confusiones.",
+      "PROC-002": "Usas un nombre que no está declarado en este ámbito. El motor no sabrá qué valor usar. Declara la variable antes o corrige el nombre.",
+      "PROC-003": "La misma variable se declara dos veces en el mismo ámbito. Quita la declaración duplicada o usa otro nombre.",
+      "PROC-004": "Asignas valor a algo que no está declarado como variable aquí. Declara la variable primero o revisa el nombre.",
+      "PROC-005": "El bloque está vacío y no hace nada útil. Elimínalo o añade la lógica que necesitas.",
+      "PROC-010": "La condición del IF siempre es cierta, así que las ramas no tienen sentido real. Simplifica el código o corrige la condición para que refleje lo que quieres decidir.",
+      "PROC-011": "El bucle WHILE tiene una condición que siempre se cumple; puede ejecutarse sin fin y bloquear la sesión. Cambia la condición o asegura una salida clara.",
+      "PROC-012": "El bucle no tiene una forma clara de salir cuando debe terminar. Añade una condición de salida (por ejemplo EXIT WHEN) para que no quede colgado.",
+      "PROC-013": "El rango del FOR parece ir de mayor a menor sin pasos hacia atrás admitidos. Revisa los límites para que el recorrido sea el que pretendías.",
+      "PROC-014": "El CASE no contempla qué hacer cuando ninguna rama coincide. Añade una rama ELSE o revisa que todas las situaciones estén cubiertas.",
+      "PROC-015": "El procedimiento se llama a sí mismo sin un caso base claro; puede desbordar la pila o ejecutarse sin parar. Define cuándo debe parar la recursión.",
+      "PROC-020": "Declaraste un cursor y nunca lo abres; no hará nada útil. Ábrelo donde corresponda o elimina la declaración si no lo necesitas.",
+      "PROC-021": "Abriste un cursor y no aparece un cierre. Puede consumir recursos en el servidor. Cierra siempre el cursor cuando termines.",
+      "PROC-022": "Intentas leer filas del cursor antes de abrirlo. Abre el cursor primero y luego haz FETCH.",
+      "PROC-023": "Intentas leer del cursor después de cerrarlo. Abre de nuevo si necesitas más datos o corrige el orden de OPEN, FETCH y CLOSE.",
+      "PROC-024": "Usas un cursor para obtener una sola fila; suele ser más simple una consulta que devuelva directamente ese valor. Valora SELECT INTO o equivalente según tu motor.",
+      "PROC-026": "Abres un cursor que no está declarado en este bloque. El motor no sabrá qué consulta ejecutar. Declara el cursor con DECLARE … CURSOR … antes del OPEN o corrige el nombre.",
+      "PROC-030": "Este bloque puede fallar en tiempo de ejecución y no tiene manejo de errores. Añade una forma de capturar y registrar fallos para que no queden silenciosos.",
+      "PROC-031": "Capturas cualquier error sin volver a lanzarlo ni registrar bien el problema. Los fallos quedan ocultos y cuesta depurar. Trata cada error concreto o al menos registra y re-lanza cuando corresponda.",
+      "PROC-032": "Lanzas un error sin mensaje o contexto suficiente. Quien mantenga el código no sabrá qué falló. Añade un mensaje claro y, si aplica, el código de error.",
+      "PROC-033": "El manejador de errores solo ignora el fallo o imprime algo trivial. El problema real desaparece. Registra el error y decide si debe propagarse o corregirse.",
+      "PROC-034": "La misma situación de error está manejada dos veces en el mismo bloque. Elimina el duplicado o unifica la lógica para que sea predecible.",
+      "PROC-SEM-001": "Asignas valor a una variable pero después no la lees en condiciones ni cálculos. O la quitas o úsala donde corresponda.",
+      "PROC-SEM-002": "Lees una variable que no recibió ningún valor después de declararla. Asígnala antes de usarla o revisa el flujo del programa.",
+      "PROC-SEM-003": "Es una función y hay un camino que llega al final sin devolver un resultado. Asegura un RETURN en todas las ramas o lanza un error controlado.",
+      "PROC-SEM-004": "Hay código después de una salida definitiva (RETURN o lanzar error); nunca se ejecutará. Elimínalo o mueve la lógica antes de la salida.",
+      "PROC-SEM-005": "Hay recursión sin un caso base que el analizador pueda reconocer. Define cuándo debe parar o sustituye por un bucle con límite claro.",
+      "PROC-SEM-006": "La condición del bucle no cambia dentro del cuerpo; el bucle podría no terminar nunca. Actualiza la variable de control o la condición en cada vuelta.",
+      "PROC-SEM-007": "Abres el cursor en una rama y lo cierras en otra según el camino; si no coincide el flujo, puede quedar abierto. Usa la misma ruta para abrir y cerrar o un bloque único al final.",
+      "PROC-SEM-008": "Comparas una variable consigo misma; la condición no filtra nada útil. Corrige la comparación para usar dos valores distintos.",
+      "PROC-SEM-009": "Lo que devuelves no encaja con el tipo que declara la función. Ajusta el tipo declarado o el valor devuelto para que coincidan.",
+      "PROC-SEM-010": "Modificas un parámetro de solo entrada. Suele confundir a quien llama al procedimiento. Usa una variable local para cambios internos.",
+      "OPT-PROC-001": "Recorres filas con un cursor solo para actualizar o borrar una a una. Suele ser mucho más rápido hacer una sola sentencia UPDATE o DELETE que afecte al conjunto.",
+      "OPT-PROC-002": "Dentro del bucle ejecutas una consulta por cada vuelta para una fila distinta. Agrupa el trabajo: cargar lotes, tablas temporales o operaciones en conjunto según tu motor.",
+      "OPT-PROC-003": "La misma consulta idéntica se repite en cada iteración sin que cambien los datos de entrada. Sácala fuera del bucle y reutiliza el resultado.",
+      "OPT-PROC-004": "Ejecutas SQL dinámico aunque el texto de la consulta es fijo. Usa SQL estático para que el motor pueda optimizar y el código sea más claro.",
+      "OPT-PROC-005": "Confirmas o deshaces la transacción dentro del bucle. Eso multiplica el trabajo del motor y puede frenar mucho. Agrupa confirmaciones al final del lote cuando sea seguro.",
+      "OPT-PROC-006": "Concatenas texto largo dentro del bucle sin acumular de forma eficiente. Usa el mecanismo de acumulación recomendado por tu motor para evitar coste extra.",
+      "PROC-ORA-001": "El procedimiento no indica si corre con los permisos del definidor o del usuario actual. Decide explícitamente qué opción encaja con seguridad y auditoría en tu organización.",
+      "PROC-ORA-002": "Seleccionas una fila directamente en variables sin preparar qué pasa si no hay filas o hay más de una. Añade manejo para «no hay datos» y «demasiadas filas».",
+      "PROC-ORA-003": "El tipo de una variable apunta a una tabla que no aparece en el esquema conocido. Verifica el nombre de la tabla y que el análisis tenga el esquema correcto.",
+      "PROC-ORA-004": "No conviene confirmar o deshacer la transacción dentro de un disparador; puede romper la transacción principal. Mueve COMMIT y ROLLBACK fuera del trigger.",
+      "PROC-ORA-005": "Marcas la transacción como autónoma pero el uso no queda claro. Revisa si realmente necesitas ese comportamiento o simplifica el diseño.",
+      "PROC-ORA-006": "Cargas muchas filas de golpe en una colección sin límite. En tablas grandes puede agotar memoria. Procesa por lotes con un tamaño razonable.",
+      "PROC-ORA-007": "Actualizas muchas filas en bloque sin guardar excepciones por fila: un solo fallo puede cancelar todo el lote. Valora permitir que fallen algunas filas y sigas con el resto cuando tu caso lo permita.",
+      "PROC-ORA-008": "Para recorrer el resultado de una consulta suele bastar un bucle implícito sobre la consulta en lugar de un cursor explícito. Valora la forma más simple que cubra tu necesidad.",
+      "PROC-SS-001": "En procedimientos de SQL Server suele recomendarse reducir mensajes extra de filas afectadas para menos ruido en cliente y red. Activa esa opción al inicio del procedimiento si aplica a tu entorno.",
+      "PROC-SS-002": "Abriste un bloque TRY sin la parte CATCH. Los errores no tienen manejo definido. Cierra siempre TRY con CATCH u otra estrategia válida.",
+      "PROC-SS-003": "Usas la forma antigua de lanzar errores de texto; en versiones recientes conviene el mecanismo actual recomendado por Microsoft para mensajes y severidad.",
+      "PROC-SS-004": "Abriste un cursor y no aparece la liberación final del recurso. Libera el cursor cuando termines para no dejar objetos colgando en la sesión.",
+      "PROC-SS-005": "Usas una variable tipo tabla en uniones muy grandes; puede ser limitante. Para conjuntos grandes valora una tabla temporal explícita.",
+      "PROC-SS-006": "El código salta con etiquetas tipo GOTO; dificulta leer y mantener el flujo. Reescribe con IF y bucles estructurados.",
+      "PROC-SS-007": "Copias un resultado con todas las columnas a una temporal anónima; si cambia la consulta fuente, tu temporal cambia de forma silenciosa. Lista solo las columnas que necesitas.",
+      "PROC-SS-008": "Lees el último valor generado de forma global; puede venir de otro disparador o ámbito. Usa la función que limita el resultado al ámbito actual de tu INSERT.",
+      "PROC-SS-009": "Pausas explícitas muy largas bloquean la conexión ocupada. Reduce la espera o mueve el trabajo a otro proceso.",
+      "PROC-SS-010": "Construyes SQL dinámico concatenando valores sin parámetros. Eso abre la puerta a inyección y errores. Usa parámetros enlazados en sp_executesql.",
+      "PROC-PG-001": "La función no declara explícitamente el lenguaje del cuerpo (por ejemplo PL/pgSQL). Sin eso el servidor puede rechazarla o interpretarla mal. Añade la cláusula LANGUAGE adecuada.",
+      "PROC-PG-002": "La función corre con privilegios elevados pero no fija la ruta de búsqueda de esquemas. Alguien podría redirigir objetos a otros esquemas. Fija search_path de forma segura en la definición.",
+      "PROC-PG-003": "Marcas la función como que no modifica datos pero el cuerpo sí escribe en tablas. Corrige la etiqueta de volatilidad o quita las escrituras.",
+      "PROC-PG-004": "La función debe devolver un conjunto de filas pero hay un camino sin valor de retorno. Asegura RETURN o RETURN QUERY en todas las ramas.",
+      "PROC-PG-005": "Es función de disparador y no devuelve la fila NEW o OLD que debe propagarse. Devuelve el registro correcto según el momento BEFORE o AFTER.",
+      "PROC-PG-006": "Usas notificaciones entre sesiones dentro de una transacción muy larga; los mensajes pueden llegar tarde o bloquear trabajo. Acorta la transacción o mueve las notificaciones.",
+      "PROC-PG-007": "Armas SQL dinámico juntando texto sin escapar valores; es una vía clásica de inyección. Usa comillas seguras o parámetros en EXECUTE.",
+      "PROC-PG-008": "Para SQL dinámico, enlazar valores con USING suele ser más seguro y claro que pegar texto. Preferencia USING cuando sea posible.",
+      "PROC-PG-009": "Pides información de diagnóstico de la última sentencia pero no la usas. Elimínalo o úsala para registro y control de errores.",
+      "PROC-PG-010": "Capturas cualquier excepción genérica sin volver a lanzar ni registrar bien. Los errores quedan tragados. Trata casos concretos o al menos registra y propaga.",
+      "PROC-MY-001": "El procedimiento no indica si es determinista para MySQL. La replicación y el optimizador pueden comportarse mal sin esa etiqueta. Declara DETERMINISTIC o NOT DETERMINISTIC según corresponda.",
+      "PROC-MY-002": "No indicaste si el procedimiento corre como definidor o como invocador. Por defecto suele ser definidor, lo que puede sorprender en permisos. Elige SQL SECURITY INVOKER o DEFINER conscientemente.",
+      "PROC-MY-003": "El cursor no tiene manejador para «no hay más filas»; el bucle puede no terminar bien. Añade un manejador para fin de cursor.",
+      "PROC-MY-004": "El manejador sale del bloque entero cuando quizá solo querías saltar un caso. Valora continuar en lugar de salir según el tipo de error.",
+      "PROC-MY-005": "Lanzas una señal de error sin código de estado estándar. El cliente no sabrá clasificar el fallo. Indica SQLSTATE y mensaje claros.",
+      "PROC-MY-006": "El disparador actualiza la misma tabla que lo dispara; MySQL no lo permite de forma recursiva así. Mueve la lógica o usa otra tabla.",
+      "PROC-MY-007": "La función declara que modifica datos cuando solo debería leer o no tocar tablas. Ajusta la característica SQL de la función para reflejar lo que hace.",
+      "PROC-MY-008": "El procedimiento tiene un parámetro de salida que nunca recibe valor antes de terminar. Asígnalo en todos los caminos o revisa la firma.",
+      "MGO-SYNTAX-001": {
+        "title": "Sintaxis MongoDB inválida",
+        "description": "La estructura de la consulta no es válida (documentos, corchetes de pipeline o paréntesis).",
+        "suggestion": "Usa db.coleccion.find({ campo: 'valor' }).limit(100) o insertOne/updateMany/aggregate(...)."
+      },
+      "MGO-CHAIN-001": {
+        "title": "Método encadenado no reconocido",
+        "description": "Tras find/aggregate aparece un .método() que el analizador no reconoce o está mal escrito.",
+        "suggestion": "Encadena métodos habituales: .limit(n), .skip(n), .sort({}), .project({}), .hint({}). Revisa el nombre del método."
+      },
+      "MGO-WRONG-ENGINE": {
+        "title": "Motor de base de datos incorrecto",
+        "description": "Este input no parece ser sintaxis MongoDB. Las consultas MongoDB deben comenzar con db.nombreColeccion.método(...)",
+        "suggestion": "Verifica el motor seleccionado o usa sintaxis MongoDB shell: db.usuarios.find({ campo: 'valor' })"
+      },
+      "RDS-WRONG-ENGINE": {
+        "title": "Sintaxis incorrecta para Redis",
+        "description": "Este query no parece ser un comando Redis.",
+        "suggestion": "Verifica el motor seleccionado o usa comandos Redis: SET clave valor, GET clave, HSET hash campo valor."
+      },
+      "CQL-WRONG-ENGINE": {
+        "title": "Sintaxis incorrecta para Cassandra",
+        "description": "Este query no parece ser CQL de Cassandra.",
+        "suggestion": "Usa sintaxis CQL: SELECT … FROM keyspace.tabla WHERE partition_key = ?"
+      },
+      "ES-WRONG-ENGINE": {
+        "title": "Sintaxis incorrecta para Elasticsearch",
+        "description": "Este query no parece ser JSON ni REST de Elasticsearch.",
+        "suggestion": "Usa JSON Query DSL ({ \"query\": { … } }) o REST: GET índice/_search"
+      },
+      "SQL-WRONG-ENGINE": {
+        "title": "Sintaxis incorrecta para SQL",
+        "description": "Este query no parece ser SQL para el motor relacional seleccionado.",
+        "suggestion": "Verifica el motor (MySQL, PostgreSQL, SQL Server, Oracle, SQLite) o pega sintaxis SQL válida."
+      },
+      "DDB-WRONG-ENGINE": {
+        "title": "Sintaxis incorrecta para DynamoDB",
+        "description": "Esta carga no parece PartiQL, expresiones SDK ni JSON de gestión de DynamoDB.",
+        "suggestion": "Usa PartiQL, expresiones SDK (SET/REMOVE/ADD) o JSON con TransactItems."
+      },
+      "UNKNOWN-ENGINE": {
+        "title": "Motor no reconocido",
+        "description": "El motor de base de datos seleccionado no está soportado por el analizador.",
+        "suggestion": "Seleccione un motor soportado en el selector."
+      },
+      "MGO-JS-001": {
+        "title": "Operador $where detectado — riesgo de seguridad",
+        "description": "$where ejecuta JavaScript en el servidor sobre cada documento, lo que abre vectores de inyección NoSQL y degrada el rendimiento.",
+        "suggestion": "Reemplaza $where por filtros nativos ($eq, $in, $gte, $lte) o por un pipeline de agregación."
+      },
+      "MGO-REGEX-001": {
+        "title": "Expresión regular sin índice",
+        "description": "Las búsquedas con $regex o literales /.../  generalmente no usan índices B-tree salvo patrones con prefijo fijo (^texto).",
+        "suggestion": "Considera un índice de texto, un campo normalizado para búsqueda, o restringe el conjunto de documentos antes con otros filtros."
+      },
+      "MGO-NOFILTER-001": {
+        "title": "Operación sin filtro",
+        "description": "find/update/delete sin filtro puede afectar TODOS los documentos de la colección.",
+        "suggestion": "Añade un criterio explícito o confirma que deseas procesar la colección completa."
+      },
+      "MGO-LOOKUP-001": {
+        "title": "$lookup incompleto",
+        "description": "$lookup requiere localField+foreignField, o la sintaxis con pipeline.",
+        "suggestion": "Usa: {$lookup:{from:'col',localField:'a',foreignField:'b',as:'res'}} o la sintaxis con pipeline subquery."
+      },
+      "MGO-UNWIND-001": {
+        "title": "$unwind: path debe empezar con $",
+        "description": "El campo de $unwind debe ser una referencia de campo que empieza con $.",
+        "suggestion": "Cambia a: {$unwind: '$nombreCampo'}"
+      },
+      "MGO-GROUP-001": {
+        "title": "$group sin campo _id",
+        "description": "$group requiere el campo _id para definir el criterio de agrupación.",
+        "suggestion": "Añade _id: null para agrupar todos los documentos, o _id: '$campo' para agrupar por campo."
+      },
+      "MGO-FACET-001": {
+        "title": "Stage no permitido dentro de $facet",
+        "description": "$out, $merge e $indexStats no pueden usarse dentro de subpipelines de $facet.",
+        "suggestion": "Mueve estos stages fuera del $facet o reestructura el pipeline."
+      },
+      "MGO-PIPELINE-001": {
+        "title": "Pipeline sin $match inicial",
+        "description": "Un pipeline con más de 5 stages que no comienza con $match puede procesar todos los documentos innecesariamente.",
+        "suggestion": "Añade {$match: { critero }} al inicio del pipeline para reducir el volumen de documentos procesados."
+      },
+      "MGO-GRAPH-001": {
+        "title": "$graphLookup con profundidad excesiva",
+        "description": "maxDepth mayor de 10 en $graphLookup puede causar problemas graves de rendimiento en grafos grandes.",
+        "suggestion": "Reduce maxDepth o añade restricción con restrictSearchWithMatch para limitar el espacio de búsqueda."
+      },
+      "MGO-TX-OUT-001": {
+        "title": "$out / $merge en transacción",
+        "description": "$out y $merge no pueden usarse dentro de transacciones MongoDB.",
+        "suggestion": "Ejecuta el stage fuera de la transacción o usa una colección temporal intermedia."
+      },
+      "MGO-TX-001": {
+        "title": "Transacción iniciada sin commit/abort visible",
+        "description": "Hay startTransaction() pero no se ve commitTransaction() ni abortTransaction() en el mismo script.",
+        "suggestion": "Asegura siempre commit en el camino feliz y abort o manejo explícito en errores; revisa callbacks async."
+      },
+      "MGO-TX-002": {
+        "title": "Operaciones con transacción manual",
+        "description": "Hay escrituras contra db.* con startTransaction manual y no se usa session.withTransaction().",
+        "suggestion": "withTransaction() reintenta ante errores transitorios y centraliza el rollback; migra el flujo al callback del driver."
+      },
+      "MGO-TX-003": {
+        "title": "Transacción muy larga",
+        "description": "maxCommitTimeMS, timeout u opciones similares sugieren una ventana mayor de ~60s que MongoDB suele abortar.",
+        "suggestion": "Acorta el trabajo por intento, mueve I/O largo fuera de la transacción y baja maxCommitTimeMS/timeout razonablemente."
+      },
+      "MGO-TX-004": {
+        "title": "Opciones de startTransaction inválidas",
+        "description": "startTransaction debe recibir un documento de opciones, no una cadena suelta ni un arreglo literal JSON.",
+        "suggestion": "Pasa un objeto: { readConcern: { level: 'local' }, maxCommitTimeMS: 9000 } según lo que necesites."
+      },
+      "MGO-CS-001": {
+        "title": "Change stream activo",
+        "description": "Se abre db.collection.watch(): el cursor sigue vivo hasta que lo cierres.",
+        "suggestion": "Usa try-with-resources, close explícito o el patrón del driver para no dejar cursores colgados."
+      },
+      "MGO-CS-002": {
+        "title": "watch() sin pipeline",
+        "description": "No hay lista de etapas [$match, ...] para filtrar eventos en el servidor.",
+        "suggestion": "Añade al inicio [$match: { ... }] para reducir tráfico y carga si no necesitas todos los cambios."
+      },
+      "MGO-CS-003": {
+        "title": "resumeAfter no válido",
+        "description": "resumeAfter debe ser el documento opaco del token de reanudación (incluye _id según el driver), no null ni {} vacío.",
+        "suggestion": "Guarda y reutiliza resumeToken / getResumeToken() de la iteración anterior; no construyas tokens a mano."
+      },
+      "MGO-CS-004": {
+        "title": "fullDocument: updateLookup en colecciones grandes",
+        "description": "updateLookup trae el documento completo en actualizaciones y puede ser muy costoso en colecciones grandes.",
+        "suggestion": "Considera defaultSchema, whenNeeded o filtra/proyecta antes si solo necesitas parte del documento."
+      },
+      "MGO-ARRAY-001": {
+        "title": "$elemMatch sin condición",
+        "description": "$elemMatch sin ninguna condición no tiene efecto útil.",
+        "suggestion": "Añade al menos una condición dentro de $elemMatch: {$elemMatch: {campo: valor}}"
+      },
+      "MGO-ARRAY-002": {
+        "title": "$push / $addToSet: usa $each para múltiples valores",
+        "description": "Para añadir múltiples valores a la vez es más eficiente usar $each.",
+        "suggestion": "Usa: {$push: {$each: [val1, val2]}} en lugar de múltiples $push individuales."
+      },
+      "MGO-ARRAY-003": {
+        "title": "$pull con condición vacía",
+        "description": "Una condición vacía {} en $pull eliminará todos los elementos del array.",
+        "suggestion": "Añade una condición específica o confirma que deseas vaciar el array."
+      },
+      "MGO-TEXT-001": {
+        "title": "Búsqueda de texto sin índice de texto",
+        "description": "$text requiere que exista un índice de texto en la colección para funcionar.",
+        "suggestion": "Crea el índice con: db.coleccion.createIndex({ campo: 'text' })"
+      },
+      "MGO-TEXT-002": {
+        "title": "Idioma no soportado en $text",
+        "description": "El valor de $language no es un idioma reconocido por MongoDB.",
+        "suggestion": "Consulta la documentación de MongoDB para ver los idiomas soportados, o elimina $language para usar el idioma por defecto."
+      },
+      "MGO-GEO-001": {
+        "title": "Query geoespacial sin índice geoespacial",
+        "description": "$near y $nearSphere requieren un índice 2dsphere o 2d en el campo de coordenadas.",
+        "suggestion": "Crea el índice con: db.coleccion.createIndex({ ubicacion: '2dsphere' })"
+      },
+      "MGO-GEO-002": {
+        "title": "Polígono GeoJSON no cerrado",
+        "description": "Los polígonos GeoJSON deben estar cerrados: el primer y último punto de coordenadas deben ser idénticos.",
+        "suggestion": "Asegúrate de que el último elemento del array de coordenadas sea igual al primero."
+      },
+      "MGO-GEO-003": {
+        "title": "$near sin $maxDistance",
+        "description": "Sin $maxDistance, $near puede devolver resultados de toda la colección, degradando el rendimiento.",
+        "suggestion": "Añade $maxDistance: metros para limitar el radio de búsqueda."
+      },
+      "MGO-JS-002": {
+        "title": "$function detectado — JavaScript en el servidor",
+        "description": "$function ejecuta JavaScript personalizado en el servidor, lo que puede causar problemas de rendimiento y seguridad.",
+        "suggestion": "Usa operadores de agregación nativos cuando sea posible en lugar de $function."
+      },
+      "MGO-JS-003": {
+        "title": "mapReduce está deprecado",
+        "description": "mapReduce está deprecado desde MongoDB 5.0 y puede ser eliminado en versiones futuras.",
+        "suggestion": "Migra a pipeline de agregación: $group, $project, $reduce y similares ofrecen la misma funcionalidad con mejor rendimiento."
+      },
+      "MGO-OBJECTID-001": {
+        "title": "Comparación de ObjectId como string",
+        "description": "Comparar un string hexadecimal de 24 caracteres directamente con _id siempre fallará, porque _id es de tipo ObjectId.",
+        "suggestion": "Usa el wrapper ObjectId: { _id: ObjectId('tu-id-aqui') }"
+      },
+      "RDS-SYNTAX-001": {
+        "title": "Consulta Redis vacía o inválida",
+        "description": "La consulta no tiene contenido o no se pudo interpretar su estructura.",
+        "suggestion": "Escribe un comando Redis válido, por ejemplo: SET mykey \"valor\" o GET mykey."
+      },
+      "RDS-INJ-001": {
+        "title": "Posible inyección de comandos detectada",
+        "description": "El comando contiene caracteres peligrosos (;, saltos de línea, $(), backticks) que pueden permitir inyección.",
+        "suggestion": "Evita concatenar entrada del usuario directamente en comandos. Usa clientes parametrizados o Lua con ARGV."
+      },
+      "RDS-CMD-001": {
+        "title": "Comando Redis no reconocido",
+        "description": "El comando ingresado no está en el catálogo de comandos soportados por el analizador.",
+        "suggestion": "Usa uno de los comandos catalogados: strings, hashes, lists, sets, sorted sets, admin, streams, geo, HLL, scripting, bitfield."
+      },
+      "RDS-HMSET-001": {
+        "title": "HMSET está deprecado — usa HSET",
+        "description": "HMSET fue deprecado en Redis 4.0 y puede ser eliminado en versiones futuras.",
+        "suggestion": "Reemplaza HMSET con HSET. Desde Redis 4.0, HSET acepta múltiples pares campo/valor directamente."
+      },
+      "RDS-KEYS-001": {
+        "title": "KEYS * bloquea el servidor",
+        "description": "KEYS * realiza un escaneo completo y bloqueante de todas las claves. Puede congelar Redis en producción.",
+        "suggestion": "Usa SCAN con cursor y MATCH para iterar claves sin bloquear el servidor, o mantén un conjunto índice."
+      },
+      "RDS-KEYS-002": {
+        "title": "KEYS con patrón — evítalo en producción",
+        "description": "KEYS escanea todo el keyspace aunque uses un patrón (p. ej. user:*). Puede degradar Redis bajo carga.",
+        "suggestion": "Sustituye KEYS patrón por SCAN cursor MATCH patrón COUNT n para iterar sin bloquear el servidor."
+      },
+      "RDS-FLUSH-001": {
+        "title": "Operación destructiva: elimina TODAS las claves",
+        "description": "FLUSHDB elimina todas las claves de la base de datos actual. FLUSHALL las elimina en todas las bases de datos.",
+        "suggestion": "Agrega CONFIRM como último argumento solo en entornos controlados, o elimina el comando completamente."
+      },
+      "RDS-SESS-001": {
+        "title": "Clave de sesión sin expiración — posible fuga de memoria",
+        "description": "Una clave con nombre 'session' o 'token' fue establecida sin tiempo de expiración.",
+        "suggestion": "Agrega EX/PX/EXAT/PXAT al SET o usa EXPIRE para que las claves de sesión/token sean eviccionadas automáticamente."
+      },
+      "RDS-ARGS-001": {
+        "title": "Número de argumentos incorrecto",
+        "description": "El comando recibió una cantidad de argumentos inválida según su firma oficial.",
+        "suggestion": "Revisa la firma del comando en la documentación oficial de Redis."
+      },
+      "RDS-TX-001": {
+        "title": "WATCH dentro de una transacción activa",
+        "description": "WATCH debe llamarse antes de MULTI, no dentro del bloque de transacción.",
+        "suggestion": "Llama WATCH en las claves antes de abrir MULTI, o usa UNWATCH antes de iniciar la transacción."
+      },
+      "RDS-TX-002": {
+        "title": "EXEC sin MULTI previo",
+        "description": "EXEC fue llamado sin haber abierto una transacción con MULTI.",
+        "suggestion": "Envía MULTI primero, encola los comandos y luego ejecuta EXEC."
+      },
+      "RDS-TX-003": {
+        "title": "DISCARD sin bloque MULTI activo",
+        "description": "DISCARD solo aplica después de MULTI y antes de que EXEC haya sido ejecutado.",
+        "suggestion": "Abre una transacción con MULTI antes de usar DISCARD."
+      },
+      "RDS-TX-004": {
+        "title": "Comandos bloqueantes dentro de MULTI/EXEC",
+        "description": "BLPOP/BRPOP/BRPOPLPUSH dentro de transacciones pueden causar comportamiento inesperado.",
+        "suggestion": "Evita BLPOP/BRPOP/BRPOPLPUSH dentro de MULTI/EXEC. Usa LPOP/RPOP o diseña la lógica fuera de la transacción."
+      },
+      "RDS-PUB-001": {
+        "title": "Mezcla de SUBSCRIBE y PSUBSCRIBE",
+        "description": "Usar SUBSCRIBE y PSUBSCRIBE en la misma conexión está permitido pero puede generar confusión en el mantenimiento.",
+        "suggestion": "Usa un solo estilo o documenta claramente qué canales son por patrón y cuáles son exactos."
+      },
+      "RDS-PUB-002": {
+        "title": "Nombre de canal vacío en PUBLISH",
+        "description": "Se intentó publicar en un canal con nombre vacío.",
+        "suggestion": "Usa un nombre de canal no vacío como argumento de PUBLISH."
+      },
+      "RDS-PUB-003": {
+        "title": "PUBSUB CHANNELS * puede ser lento",
+        "description": "Listar todos los canales con PUBSUB CHANNELS * puede ser lento en instancias Redis de alto tráfico.",
+        "suggestion": "Usa un patrón más específico o monitorea el conteo de canales en staging antes de ejecutar en producción."
+      },
+      "RDS-XStream-001": {
+        "title": "XREADGROUP requiere GROUP grupo consumidor",
+        "description": "XREADGROUP necesita los argumentos GROUP con nombre de grupo y nombre de consumidor.",
+        "suggestion": "Agrega GROUP migrupo miconsumidor después de las opciones y las claves de stream."
+      },
+      "RDS-XStream-002": {
+        "title": "El stream puede no existir — usa MKSTREAM",
+        "description": "XGROUP CREATE sobre un stream que no existe fallará sin MKSTREAM.",
+        "suggestion": "Agrega MKSTREAM al final de XGROUP CREATE para crear el stream automáticamente si no existe."
+      },
+      "RDS-XStream-003": {
+        "title": "XPENDING sin rango devuelve solo resumen",
+        "description": "Sin los parámetros start/end/count, XPENDING devuelve únicamente un resumen agregado.",
+        "suggestion": "Pasa start/end/count después de key y group para inspeccionar entradas pendientes específicas."
+      },
+      "RDS-XStream-004": {
+        "title": "XADD MAXLEN sin ~ usa truncado exacto (lento)",
+        "description": "El truncado exacto con MAXLEN = es mucho más costoso que el truncado aproximado con ~.",
+        "suggestion": "Usa MAXLEN ~ N para truncado aproximado a menos que necesites una longitud estrictamente exacta."
+      },
+      "RDS-XStream-010": {
+        "title": "XADD requiere clave, ID y al menos un par campo-valor",
+        "description": "XADD necesita: clave de stream, ID (* para auto) y al menos un par campo/valor.",
+        "suggestion": "Formato correcto: XADD key * campo valor [campo valor ...] (con MAXLEN/~ opcionales)."
+      },
+      "RDS-GEO-001": {
+        "title": "GEORADIUS está deprecado desde Redis 6.2",
+        "description": "GEORADIUS y GEORADIUSBYMEMBER fueron reemplazados por GEOSEARCH a partir de Redis 6.2.",
+        "suggestion": "Reescribe usando GEOSEARCH/GEOSEARCHSTORE con las opciones FROMMEMBER/FROMLONLAT."
+      },
+      "RDS-GEO-002": {
+        "title": "Latitud fuera del rango válido para GEOADD",
+        "description": "La latitud debe estar entre -85.05112878 y 85.05112878 para ser representable en el sistema geoespacial de Redis.",
+        "suggestion": "Verifica el orden (longitud, latitud, nombre) y los rangos válidos en GEOADD."
+      },
+      "RDS-GEO-003": {
+        "title": "Longitud fuera del rango válido para GEOADD",
+        "description": "La longitud debe estar entre -180 y 180.",
+        "suggestion": "GEOADD espera longitud antes que latitud para cada punto: GEOADD key lon lat member."
+      },
+      "RDS-GEO-004": {
+        "title": "Unidad de distancia inválida en GEODIST",
+        "description": "La unidad especificada no es válida para GEODIST.",
+        "suggestion": "Usa una de las unidades válidas como último argumento: m, km, mi o ft."
+      },
+      "RDS-HLL-001": {
+        "title": "PFCOUNT con muchas claves — considera PFMERGE primero",
+        "description": "PFCOUNT con más de 10 claves realiza una fusión cross-slot costosa en entornos Redis Cluster.",
+        "suggestion": "Usa PFMERGE para fusionar en una sola clave y luego PFCOUNT una vez."
+      },
+      "RDS-HLL-002": {
+        "title": "Clave destino de PFMERGE también es fuente",
+        "description": "PFMERGE tiene la misma clave como destino y fuente. Es válido pero puede ser confuso.",
+        "suggestion": "Verifica que fusionar una clave HyperLogLog consigo misma sea intencional."
+      },
+      "RDS-Script-001": {
+        "title": "SCRIPT FLUSH elimina todos los scripts en caché",
+        "description": "SCRIPT FLUSH borra todos los scripts Lua del caché del servidor Redis. No ejecutar en producción sin precaución.",
+        "suggestion": "Usa solo en entornos dev/staging o durante mantenimiento controlado."
+      },
+      "RDS-Script-002": {
+        "title": "Script largo — considera EVALSHA con SCRIPT LOAD",
+        "description": "Los scripts largos se reenvían completos en cada llamada a EVAL. EVALSHA evita retransmitir el script.",
+        "suggestion": "Carga el script una vez con SCRIPT LOAD y luego usa EVALSHA con el digest SHA1 resultante."
+      },
+      "RDS-Script-003": {
+        "title": "Accede a claves Redis a través del array KEYS en scripts",
+        "description": "Los scripts Lua que acceden a claves sin usar KEYS[] pueden no funcionar correctamente en Redis Cluster.",
+        "suggestion": "Reemplaza los argumentos de clave literales con KEYS[1], KEYS[2], ... según el valor de numkeys."
+      },
+      "RDS-BIT-001": {
+        "title": "El offset del bitfield debe ser no negativo",
+        "description": "GET/SET/INCRBY dentro de BITFIELD no admiten offsets negativos.",
+        "suggestion": "Usa offsets no negativos (enteros ≥ 0) para GET/SET/INCRBY en BITFIELD."
+      },
+      "RDS-BIT-002": {
+        "title": "BITCOUNT sobre clave inexistente devuelve 0",
+        "description": "Esto no es un error — Redis trata una clave inexistente como un bitmap de ceros.",
+        "suggestion": "No se requiere ningún cambio. El comportamiento es correcto y esperado."
+      },
+      "RDS-BIT-003": {
+        "title": "BITOP NOT requiere exactamente una clave fuente",
+        "description": "BITOP NOT solo acepta una clave fuente, no múltiples.",
+        "suggestion": "Usa el formato: BITOP NOT claveDestino claveFuente"
+      },
+      "CQL-FILTER-001": {
+        "title": "ALLOW FILTERING detectado — riesgo de full scan",
+        "description": "ALLOW FILTERING fuerza a Cassandra a escanear todas las particiones del clúster para resolver la query. En tablas grandes esto causa timeouts y degradación severa del rendimiento.",
+        "suggestion": "Agrega la partition key al WHERE para restringir el escaneo. Si necesitas filtrar por esta columna frecuentemente, considera una tabla de consulta dedicada."
+      },
+      "CQL-FULLSCAN-001": {
+        "title": "SELECT sin WHERE — full scan del clúster",
+        "description": "Un SELECT sin cláusula WHERE lee todas las particiones del clúster, lo que es extremadamente costoso en Cassandra y puede causar timeouts en tablas con millones de filas.",
+        "suggestion": "Agrega una cláusula WHERE con la partition key para restringir el escaneo al mínimo necesario."
+      },
+      "CQL-NOWHERE-001": {
+        "title": "UPDATE sin WHERE — afecta particiones indeterminadas",
+        "description": "Un UPDATE sin cláusula WHERE en Cassandra puede afectar filas no deseadas y la mayoría de los drivers rechazarán esta operación.",
+        "suggestion": "Especifica la partition key en WHERE para apuntar exactamente a las filas que deseas actualizar."
+      },
+      "CQL-NOWHERE-002": {
+        "title": "DELETE sin WHERE — eliminación masiva no controlada",
+        "description": "Un DELETE sin cláusula WHERE puede eliminar filas no deseadas. Es una operación peligrosa en clústeres de producción.",
+        "suggestion": "Especifica la partition key en WHERE para apuntar exactamente a las filas que deseas eliminar."
+      },
+      "CQL-JOIN-001": {
+        "title": "JOIN no soportado en Cassandra",
+        "description": "Cassandra no soporta operaciones JOIN entre tablas. El modelo de datos está diseñado para queries por tabla única optimizadas por partition key.",
+        "suggestion": "Denormaliza el modelo de datos o realiza queries separadas y combina los resultados del lado del cliente."
+      },
+      "CQL-ORDERBY-001": {
+        "title": "ORDER BY solo válido en clustering columns",
+        "description": "ORDER BY en CQL solo es válido para columnas de clustering key, y solo puede ordenar en el sentido opuesto al definido en la tabla. Un ORDER BY en otras columnas fallará en tiempo de ejecución.",
+        "suggestion": "Asegúrate de que la columna en ORDER BY sea una clustering column. Si necesitas otro orden, considera una tabla de consulta con diferente clustering order."
+      },
+      "CQL-TTL-001": {
+        "title": "TTL muy corto (menos de 60 segundos)",
+        "description": "El TTL especificado es menor a 60 segundos, lo que puede causar expiración inesperada de datos en producción.",
+        "suggestion": "Usa TTL >= 60 segundos o elimina el TTL si los datos deben ser persistentes."
+      },
+      "CQL-EMPTY": {
+        "title": "Consulta CQL vacía",
+        "description": "No se proporcionó ningún contenido CQL para analizar.",
+        "suggestion": "Escribe una consulta CQL válida, por ejemplo: SELECT * FROM tabla WHERE id = ? o INSERT INTO tabla (col) VALUES (?)."
+      },
+      "CQL-LEX": {
+        "title": "Error léxico en la consulta CQL",
+        "description": "El analizador encontró un carácter o secuencia que no pudo interpretar como token CQL válido.",
+        "suggestion": "Revisa la sintaxis del query y corrige el error señalado para continuar."
+      },
+      "CQL-SYN-001": {
+        "title": "Error de sintaxis en CQL",
+        "description": "La consulta CQL no es válida en la línea o columna indicada.",
+        "suggestion": "Revisa la sintaxis CQL y corrige el error señalado; revisa comillas, tipos y palabras clave."
+      },
+      "CQL-STRUCT-START": {
+        "title": "La consulta CQL no comienza con un comando válido",
+        "description": "Una sentencia CQL debe comenzar con SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, BATCH u otro comando válido.",
+        "suggestion": "Inicia la sentencia con un comando CQL válido: SELECT, INSERT INTO, UPDATE, DELETE FROM, etc."
+      },
+      "CQL-STRUCT-SELECT": {
+        "title": "SELECT sin cláusula FROM",
+        "description": "Toda sentencia SELECT en CQL debe especificar la tabla de origen con FROM.",
+        "suggestion": "Usa SELECT columnas FROM keyspace.tabla WHERE condición."
+      },
+      "CQL-STRUCT-INSERT": {
+        "title": "INSERT sin INTO",
+        "description": "La sintaxis de INSERT en CQL requiere la palabra clave INTO seguida del nombre de la tabla.",
+        "suggestion": "Usa el formato: INSERT INTO tabla [(columnas)] VALUES (...) [USING TTL n]."
+      },
+      "CQL-STRUCT-INSERT-VALUES": {
+        "title": "INSERT sin cláusula VALUES",
+        "description": "Una sentencia INSERT debe incluir VALUES (...) con los datos a insertar.",
+        "suggestion": "Proporciona una cláusula VALUES o usa INSERT JSON si tu driver lo soporta."
+      },
+      "CQL-STRUCT-UPDATE": {
+        "title": "UPDATE sin cláusula SET",
+        "description": "Toda sentencia UPDATE en CQL debe especificar las columnas a modificar con SET.",
+        "suggestion": "Usa el formato: UPDATE tabla [USING TTL n] SET col = valor [, ...] WHERE condición."
+      },
+      "CQL-STRUCT-DELETE": {
+        "title": "DELETE sin cláusula FROM",
+        "description": "La sentencia DELETE en CQL debe especificar la tabla origen con FROM.",
+        "suggestion": "Usa el formato: DELETE [columnas] FROM tabla WHERE condición."
+      },
+      "CQL-STRUCT-CREATE-TABLE": {
+        "title": "Estructura de CREATE TABLE incompleta o inválida",
+        "description": "La sentencia CREATE TABLE no sigue la estructura mínima requerida por CQL. Falta el nombre de la tabla o la lista de definición de columnas.",
+        "suggestion": "Usa: CREATE TABLE [IF NOT EXISTS] tabla (columna tipo [PRIMARY KEY], ..., PRIMARY KEY ((pk), ck))."
+      },
+      "CQL-BATCH-001": {
+        "title": "BATCH no termina con APPLY BATCH",
+        "description": "Un bloque BATCH debe cerrarse obligatoriamente con APPLY BATCH. Sin este cierre la sentencia es inválida y será rechazada por Cassandra.",
+        "suggestion": "Agrega APPLY BATCH; al final del bloque para completar la transacción por lotes."
+      },
+      "CQL-BATCH-002": {
+        "title": "BATCH COUNTER contiene sentencias no-contador",
+        "description": "Un BATCH marcado como COUNTER solo puede contener actualizaciones de columnas counter. INSERT, DELETE y updates regulares no están permitidos dentro de este tipo de batch.",
+        "suggestion": "Mueve las sentencias INSERT/DELETE/UPDATE regulares fuera del BATCH COUNTER, o cambia el tipo de batch."
+      },
+      "CQL-BATCH-003": {
+        "title": "BATCH UNLOGGED abarca múltiples tablas",
+        "description": "Los BATCH no registrados que abarcan varias tablas pierden la atomicidad. Solo el mismo token de partición garantiza atomicidad en Cassandra.",
+        "suggestion": "Limita el BATCH UNLOGGED a una sola tabla/partición, o usa sentencias separadas para mayor claridad."
+      },
+      "CQL-BATCH-004": {
+        "title": "BATCH demasiado grande — anti-patrón en Cassandra",
+        "description": "Los BATCH grandes aumentan la presión en memoria del coordinador y pueden causar timeouts. Son un anti-patrón conocido en Cassandra.",
+        "suggestion": "Divide el trabajo en lotes más pequeños o usa escrituras asíncronas con límites de concurrencia en el driver."
+      },
+      "CQL-BATCH-005": {
+        "title": "BATCH de rendimiento — prefiere UNLOGGED",
+        "description": "Cuando todos los INSERT apuntan a la misma partición, BATCH puede usarse para rendimiento. UNLOGGED es la opción más eficiente en este caso.",
+        "suggestion": "Usa BEGIN UNLOGGED BATCH cuando todas las operaciones apunten a la misma partición."
+      },
+      "CQL-COL-001": {
+        "title": "Append de lista vacía sin efecto",
+        "description": "Agregar una lista vacía [] a una columna list no produce ningún cambio en los datos almacenados. La operación es redundante.",
+        "suggestion": "Elimina la operación redundante o proporciona elementos en la lista antes de hacer append."
+      },
+      "CQL-COL-002": {
+        "title": "Merge de mapa vacío sin efecto",
+        "description": "Fusionar un mapa vacío {} con una columna map no produce ningún cambio en los datos almacenados. La operación es redundante.",
+        "suggestion": "Elimina la operación redundante o proporciona entradas en el mapa antes de hacer merge."
+      },
+      "CQL-COL-003": {
+        "title": "No se puede eliminar celda de columna de clave primaria",
+        "description": "En Cassandra no es posible eliminar entradas individuales de map cuando la clave referenciada es una columna de clave primaria.",
+        "suggestion": "Para eliminar la fila completa usa DELETE FROM tabla WHERE partition_key = ?."
+      },
+      "CQL-COL-004": {
+        "title": "Índice de lista negativo",
+        "description": "El índice de acceso a una lista en CQL debe ser un entero no negativo. Los índices negativos no son válidos en Cassandra.",
+        "suggestion": "Usa un índice de lista válido (>= 0) en la expresión de corchetes."
+      },
+      "CQL-LIST-001": {
+        "title": "Mutaciones frecuentes en listas son costosas",
+        "description": "Las operaciones de mutación en columnas list (append, prepend, por índice) son internamente costosas en Cassandra porque requieren leer antes de escribir.",
+        "suggestion": "Prefiere SET o MAP como tipo de colección, o modela la relación uno-a-muchos con columnas de clustering."
+      },
+      "CQL-LWT-001": {
+        "title": "Lightweight Transaction (LWT) — usa protocolo Paxos",
+        "description": "INSERT ... IF NOT EXISTS y UPDATE ... IF condition usan el protocolo de consenso Paxos, que tiene una latencia significativamente mayor que las escrituras regulares.",
+        "suggestion": "Usa LWT solo cuando necesites semántica linealizable. Para casos sin conflictos, prefiere INSERT regular."
+      },
+      "CQL-LWT-002": {
+        "title": "Condición IF en columna de clave primaria",
+        "description": "Las condiciones de LWT (IF condition) no pueden referenciar columnas de partition key ni clustering columns. Solo pueden aplicarse a columnas regulares.",
+        "suggestion": "Mueve las condiciones a columnas regulares únicamente. Las columnas PK van en la cláusula WHERE."
+      },
+      "CQL-LWT-003": {
+        "title": "LWT dentro de BATCH — misma partición únicamente",
+        "description": "Las Lightweight Transactions dentro de un BATCH están permitidas solo cuando todos los statements apuntan a la misma partición. BATCH LWT cross-partition no está soportado.",
+        "suggestion": "Asegúrate de que todos los statements del BATCH LWT compartan la misma partition key."
+      },
+      "CQL-LWT-004": {
+        "title": "BATCH con LWT de múltiples particiones",
+        "description": "Cassandra no soporta BATCH que combinen Lightweight Transactions de diferentes particiones. Esto generará un error en tiempo de ejecución.",
+        "suggestion": "Separa los LWT por partición o revisa el diseño para agrupar datos en la misma partición."
+      },
+      "CQL-LWT-005": {
+        "title": "Columnas en condición IF no reconocidas",
+        "description": "Las columnas referenciadas en la condición IF no corresponden a las columnas definidas en el CREATE TABLE detectado en este script.",
+        "suggestion": "Verifica que los nombres de columnas en IF coincidan exactamente con la definición de la tabla."
+      },
+      "CQL-MV-001": {
+        "title": "Vista materializada sin clave primaria completa",
+        "description": "Una Materialized View debe incluir todas las columnas de clave primaria de la tabla base. Si falta alguna, Cassandra rechazará la sentencia.",
+        "suggestion": "Incluye todas las columnas partition key y clustering key de la tabla base en la PRIMARY KEY de la vista."
+      },
+      "CQL-MV-002": {
+        "title": "Vista materializada: WHERE sin IS NOT NULL en columnas PK",
+        "description": "El WHERE de una Materialized View debe incluir IS NOT NULL para todas las columnas de clave primaria. Las filas con PK null no pueden replicarse en vistas.",
+        "suggestion": "Agrega AND columna IS NOT NULL en el WHERE para cada columna de partition/clustering key de la tabla base."
+      },
+      "CQL-MV-003": {
+        "title": "Demasiadas Materialized Views por tabla",
+        "description": "Tener más de 3 Materialized Views sobre la misma tabla base multiplica el overhead de escritura en Cassandra, ya que cada escritura debe replicarse en todas las vistas.",
+        "suggestion": "Reduce el número de vistas o denormaliza los datos explícitamente en tablas de consulta separadas."
+      },
+      "CQL-UDT-001": {
+        "title": "UDT en colección sin wrapper FROZEN",
+        "description": "En Cassandra los User-Defined Types usados dentro de colecciones (LIST, SET, MAP) deben estar envueltos con FROZEN<TypeName>. Sin FROZEN el servidor rechazará la sentencia.",
+        "suggestion": "Usa FROZEN<NombreDelTipo> dentro del tipo de colección: LIST<FROZEN<mi_tipo>> o MAP<text, FROZEN<mi_tipo>>."
+      },
+      "CQL-UDT-002": {
+        "title": "Operación no soportada en UDT",
+        "description": "Cassandra solo permite agregar campos a un User-Defined Type con ALTER TYPE ... ADD. Renombrar o eliminar campos no está soportado y requiere recrear las tablas dependientes.",
+        "suggestion": "Crea un nuevo UDT con la estructura deseada y migra los datos, o recrea las tablas que dependen de este tipo."
+      },
+      "CQL-TTL-002": {
+        "title": "TTL de 0 elimina la expiración del dato",
+        "description": "Un TTL de 0 no borra el dato — elimina el TTL existente y hace el dato permanente. Este comportamiento es frecuentemente confundido con eliminación.",
+        "suggestion": "Omite USING TTL si quieres que el dato sea permanente, o usa DELETE si quieres eliminarlo."
+      },
+      "CQL-TTL-003": {
+        "title": "TTL negativo no es válido",
+        "description": "El valor de TTL debe ser un entero positivo que representa el tiempo de vida en segundos. Un TTL negativo es inválido y será rechazado por Cassandra.",
+        "suggestion": "Proporciona un TTL positivo en segundos, por ejemplo: USING TTL 86400 para 24 horas."
+      },
+      "CQL-TTL-004": {
+        "title": "TTL() no disponible en columnas de clave primaria",
+        "description": "La función TTL() solo puede aplicarse a columnas regulares. Las columnas de partition key y clustering key no tienen TTL individual.",
+        "suggestion": "Usa TTL(columna_regular) seleccionando solo columnas que no sean parte de la clave primaria."
+      },
+      "CQL-TTL-005": {
+        "title": "TTL() requiere un nombre de columna específico",
+        "description": "TTL(*) no es sintaxis válida en Cassandra. La función TTL() requiere el nombre de una columna específica, no un wildcard.",
+        "suggestion": "Usa TTL(nombre_columna) con una columna regular concreta: SELECT TTL(descripcion) FROM tabla WHERE id = ?."
+      },
+      "CQL-WT-001": {
+        "title": "WRITETIME no disponible en columnas de clave primaria",
+        "description": "La función WRITETIME() solo puede aplicarse a columnas regulares. Las columnas de partition key y clustering key no tienen timestamp de escritura individual.",
+        "suggestion": "Selecciona WRITETIME(columna_regular) con una columna que no sea parte de la clave primaria."
+      },
+      "CQL-WT-002": {
+        "title": "WRITETIME() requiere un nombre de columna específico",
+        "description": "WRITETIME(*) no es sintaxis válida en Cassandra. La función WRITETIME() requiere el nombre de una columna concreta, no un wildcard.",
+        "suggestion": "Usa WRITETIME(nombre_columna) con una columna regular: SELECT WRITETIME(email) FROM usuarios WHERE id = ?."
+      },
+      "CQL-IDX-001": {
+        "title": "Índice secundario en partition key es redundante",
+        "description": "Las columnas de partition key ya están indexadas de forma nativa en Cassandra. Crear un índice secundario sobre ellas es redundante y no mejora el rendimiento.",
+        "suggestion": "Elimina el índice secundario sobre la partition key. Las queries por partition key ya son eficientes sin índice adicional."
+      },
+      "CQL-IDX-002": {
+        "title": "Índice secundario sin nombre",
+        "description": "Los índices sin nombre reciben nombres autogenerados por Cassandra. Esto dificulta la administración y el mantenimiento a largo plazo.",
+        "suggestion": "Asigna un nombre descriptivo al índice: CREATE INDEX nombre_descriptivo ON tabla (columna)."
+      },
+      "CQL-IDX-003": {
+        "title": "Índice secundario en columna de alta cardinalidad",
+        "description": "Los índices secundarios en Cassandra son ineficientes para columnas con muchos valores únicos (alta cardinalidad) como emails o UUIDs. Cada nodo debe ser consultado en full scan.",
+        "suggestion": "Considera denormalización con tablas de consulta, o usa SASI/SAI (Storage-Attached Index) si tu versión de Cassandra lo soporta."
+      },
+      "CQL-IDX-004": {
+        "title": "CREATE CUSTOM INDEX sin clase USING",
+        "description": "Un CREATE CUSTOM INDEX requiere especificar la implementación con USING 'clase.del.indice'. Sin esta cláusula la sentencia está incompleta.",
+        "suggestion": "Especifica la clase del índice adjunto: CREATE CUSTOM INDEX ON tabla(columna) USING 'org.apache.cassandra.index.sasi.SASIIndex'."
+      },
+      "CQL-DCL-001": {
+        "title": "Operación de permisos DCL detectada",
+        "description": "Las sentencias GRANT, REVOKE o CREATE/DROP USER/ROLE afectan la seguridad del clúster. Aplicar permisos incorrectos puede bloquear acceso o crear vulnerabilidades.",
+        "suggestion": "Aplica el principio de menor privilegio. Verifica el alcance del rol y keyspace/tabla antes de ejecutar en producción."
+      },
+      "DDB-JOIN": {
+        "title": "DynamoDB PartiQL no admite JOIN",
+        "description": "PartiQL en DynamoDB no permite combinar tablas con JOIN. Cada sentencia debe operar sobre una sola tabla.",
+        "suggestion": "Usa una tabla por sentencia, consulta ítems relacionados con peticiones separadas o diseña claves PK/SK y GSI acordes al patrón de acceso."
+      },
+      "DDB-GROUP": {
+        "title": "DynamoDB PartiQL no admite GROUP BY",
+        "description": "No existe GROUP BY en PartiQL de DynamoDB; la agregación debe hacerse fuera del motor o con datos preagregados.",
+        "suggestion": "Preagrega en la aplicación, usa un GSI con totales preparados u otra herramienta de análisis."
+      },
+      "DDB-HAVING": {
+        "title": "DynamoDB PartiQL no admite HAVING",
+        "description": "HAVING no está soportado en PartiQL de DynamoDB porque no hay GROUP BY ni agregaciones SQL clásicas en ese contexto.",
+        "suggestion": "Filtra antes de agregar fuera de DynamoDB o rediseña el patrón de acceso."
+      },
+      "DDB-WHERE-SELECT": {
+        "title": "SELECT sin WHERE — escaneo de tabla costoso",
+        "description": "En DynamoDB una lectura sin condición de clave de partición suele implicar escaneo amplio (Scan), caro en RCU y latencia.",
+        "suggestion": "Añade igualdad (u operador de clave admitido) sobre la partition key en WHERE para acotar la lectura."
+      },
+      "DDB-SELECT-STAR": {
+        "title": "Evita SELECT * en DynamoDB",
+        "description": "Leer todos los atributos consume más capacidad de lectura de la necesaria.",
+        "suggestion": "Lista solo las columnas o atributos necesarios (proyección) para reducir el coste en RCU."
+      },
+      "DDB-ORDER": {
+        "title": "ORDER BY solo es eficiente sobre la sort key en una partición",
+        "description": "En Query, el orden coherente con la clave de ordenación aplica dentro de una misma partition key; en otros casos puede forzar patrones inesperados o costosos.",
+        "suggestion": "Asegúrate de que ORDER BY use la sort key dentro de una sola partition key o elimínalo si no aplica tu modelo."
+      },
+      "DDB-UPDATE-NO-WHERE": {
+        "title": "UPDATE sin WHERE — falta la clave de partición",
+        "description": "En DynamoDB PartiQL el UPDATE debe identificar ítems mediante condiciones de clave; sin WHERE la operación no es válida en la práctica.",
+        "suggestion": "Añade WHERE con partition key (y sort key si la tabla la define)."
+      },
+      "DDB-DELETE-NO-WHERE": {
+        "title": "DELETE sin WHERE — falta la clave de partición",
+        "description": "Eliminar sin especificar la clave de partición no define qué ítems borrar de forma segura en DynamoDB.",
+        "suggestion": "Añade WHERE con partition key (y sort key cuando sea obligatorio)."
+      },
+      "DDB-PK-NEG": {
+        "title": "Condición de desigualdad o NOT IN sobre clave de partición",
+        "description": "DynamoDB no soporta operadores distintos de igualdad en la partition key como parte de una condición de clave eficiente.",
+        "suggestion": "Si la columna es la PK, usa igualdad u operadores admitidos; si no es la PK, confirma el esquema. Para NOT IN sobre atributo de clave, valora filtros o rediseño."
+      },
+      "DDB-LIKE-LEAD": {
+        "title": "Comodín inicial en LIKE — riesgo de escaneo",
+        "description": "Un patrón LIKE que empieza por '%' no puede usar un índice de prefijo y tiende a escanear muchos datos.",
+        "suggestion": "Evita '%' al inicio; ancla el prefijo o usa begins_with / consultas por prefijo según el SDK."
+      },
+      "DDB-EXPR-EMPTY": {
+        "title": "Expresión DynamoDB vacía",
+        "description": "No se proporcionó texto para analizar (FilterExpression, KeyConditionExpression, etc.).",
+        "suggestion": "Envía una cadena de expresión no vacía."
+      },
+      "DDB-EXPR-LEX": {
+        "title": "Error léxico en la expresión DynamoDB",
+        "description": "El analizador encontró un carácter o token inválido en la sintaxis de expresión del SDK.",
+        "suggestion": "Corrige la sintaxis cerca de la posición indicada en el mensaje del servidor (o en el detalle devuelto)."
+      },
+      "DDB-EXPR-PARSE": {
+        "title": "Error de análisis en la expresión DynamoDB",
+        "description": "La expresión no pudo parsearse como árbol válido (paréntesis, operadores o argumentos mal formados).",
+        "suggestion": "Revisa paréntesis, operadores y argumentos de llamadas a funciones."
+      },
+      "DDB-EXPR-INPUT": {
+        "title": "Entrada JSON inválida para el analizador de expresiones",
+        "description": "El payload estructurado debe incluir kind, expression y mapas coherentes cuando apliquen.",
+        "suggestion": "Proporciona JSON válido con kind y expression según la API del analizador."
+      },
+      "DDB-KCE-NO-OR": {
+        "title": "KeyConditionExpression no admite OR",
+        "description": "Las condiciones de clave en Query deben expresarse como una conjunción (AND), no con OR entre ramas.",
+        "suggestion": "Usa solo AND o emite consultas separadas."
+      },
+      "DDB-KCE-PK-META": {
+        "title": "Falta metadata de la partition key",
+        "description": "Sin el nombre del atributo de partition key no se puede validar la forma de la KeyConditionExpression.",
+        "suggestion": "Incluye partitionKeyAttributeName y expressionAttributeNames en el JSON de análisis."
+      },
+      "DDB-KCE-PK-MISSING": {
+        "title": "KeyConditionExpression debe incluir la partition key",
+        "description": "En Query la condición de clave debe referir la partition key con el operador admitido.",
+        "suggestion": "Añade una igualdad entre la ruta de la PK (o su placeholder #) y un valor :placeholder."
+      },
+      "DDB-KCE-PK-MULTI": {
+        "title": "Más de una condición sobre la partition key",
+        "description": "Solo se permite una condición atómica sobre la partition key en KeyConditionExpression.",
+        "suggestion": "Fusiona la lógica en una sola condición sobre la PK."
+      },
+      "DDB-KCE-PK-OP": {
+        "title": "Forma u operador no válido para la partition key",
+        "description": "La partition key en KeyConditionExpression solo admite = (no BETWEEN ni IN ni begins_with sobre la PK).",
+        "suggestion": "Usa = entre la ruta de la PK y un único placeholder de valor; usa begins_with solo sobre la sort key si aplica."
+      },
+      "DDB-KCE-SK-OP": {
+        "title": "Operador no admitido en la sort key",
+        "description": "La sort key en KeyConditionExpression admite =, comparaciones de rango, BETWEEN y begins_with; IN y otros operadores no son válidos ahí.",
+        "suggestion": "Usa =, <, >, <=, >=, BETWEEN o begins_with según tu caso; IN no está soportado para sort keys en KeyConditionExpression."
+      },
+      "DDB-KCE-SK-FUNC": {
+        "title": "Solo begins_with() está permitido en la sort key aquí",
+        "description": "En KeyConditionExpression, además de comparadores, la única función típica sobre la sort key es begins_with.",
+        "suggestion": "Elimina otras llamadas a funciones sobre la ruta de la sort key."
+      },
+      "DDB-FE-ATTR-EXISTS-ARGS": {
+        "title": "attribute_exists requiere un argumento",
+        "description": "La función attribute_exists debe recibir exactamente una ruta de atributo.",
+        "suggestion": "Usa attribute_exists(#ruta.atributo)."
+      },
+      "DDB-FE-ATTR-NOT-EXISTS-ARGS": {
+        "title": "attribute_not_exists requiere un argumento",
+        "description": "La función attribute_not_exists debe recibir exactamente una ruta de atributo.",
+        "suggestion": "Usa attribute_not_exists(#ruta.atributo)."
+      },
+      "DDB-FE-CONTAINS-ARGS": {
+        "title": "contains requiere dos argumentos",
+        "description": "La firma es contains(path, operando).",
+        "suggestion": "Indica la ruta del atributo y el placeholder del valor o subcadena."
+      },
+      "DDB-FE-BEGINS-ARGS": {
+        "title": "begins_with requiere dos argumentos",
+        "description": "La firma es begins_with(path, prefijo).",
+        "suggestion": "Indica la ruta del atributo y el placeholder del prefijo."
+      },
+      "DDB-FE-SIZE-COMP": {
+        "title": "size() debe ir en una comparación",
+        "description": "size(attr) solo tiene sentido comparado con un valor (por ejemplo size(#a) > :n).",
+        "suggestion": "Envuelve size(...) en el lado izquierdo o derecho de =, <>, <, >, <= o >=."
+      },
+      "DDB-FE-IN-LARGE": {
+        "title": "IN con muchos valores puede degradar el rendimiento",
+        "description": "Listas muy largas en IN aumentan presión y tamaño de la expresión.",
+        "suggestion": "Divide en lotes o rediseña el patrón de acceso."
+      },
+      "DDB-FE-TYPE-MIX": {
+        "title": "Comparar dos rutas de atributo puede dar resultados inesperados",
+        "description": "Comparar atributo con atributo sin valores tipados facilita errores semánticos en DynamoDB.",
+        "suggestion": "Compara cada lado con un placeholder de valor con tipo claro cuando sea posible."
+      },
+      "DDB-FE-KEY-FILTER": {
+        "title": "Igualdad de PK en FilterExpression",
+        "description": "FilterExpression se aplica después de leer; condicionar la partition key ahí desperdicia RCU frente a KeyConditionExpression en Query.",
+        "suggestion": "Promueve la igualdad de partition key a KeyConditionExpression en operaciones Query."
+      },
+      "DDB-PE-NAME-MAP": {
+        "title": "Falta entrada en ExpressionAttributeNames",
+        "description": "Cada placeholder #name debe mapearse al nombre real del atributo.",
+        "suggestion": "Añade en expressionAttributeNames la clave # usada en la expresión."
+      },
+      "DDB-PE-VAL-MAP": {
+        "title": "ProjectionExpression no debe usar valores : sin mapear",
+        "description": "Las proyecciones listan rutas de atributo; los placeholders :val pertenecen a ExpressionAttributeValues en otros tipos de expresión.",
+        "suggestion": "Quita :valores de ProjectionExpression o mapea solo nombres con # según la API."
+      },
+      "DDB-PE-DUP": {
+        "title": "Atributo duplicado en ProjectionExpression",
+        "description": "La misma ruta aparece más de una vez en la lista separada por comas.",
+        "suggestion": "Elimina rutas repetidas."
+      },
+      "DDB-UE-SET-REMOVE": {
+        "title": "SET y REMOVE sobre el mismo atributo",
+        "description": "No puedes asignar y eliminar el mismo path en un único UpdateExpression.",
+        "suggestion": "Deja solo SET o solo REMOVE para ese atributo."
+      },
+      "DDB-UE-ADD-TYPE": {
+        "title": "ADD solo para Number y Set",
+        "description": "La acción ADD en UpdateExpression no aplica a String ni Map.",
+        "suggestion": "Usa SET para cadenas/mapas o ajusta el tipo del atributo."
+      },
+      "DDB-UE-DEL-TYPE": {
+        "title": "DELETE solo en conjuntos (sets)",
+        "description": "DELETE elimina elementos de conjuntos SS, NS o BS.",
+        "suggestion": "Verifica que el atributo sea un set tipado antes de usar DELETE."
+      },
+      "DDB-UE-IFNE-WHERE": {
+        "title": "if_not_exists solo en SET",
+        "description": "if_not_exists no puede usarse en cláusulas REMOVE, ADD o DELETE del mismo UpdateExpression.",
+        "suggestion": "Mueve if_not_exists a una cláusula SET."
+      },
+      "DDB-UE-LAPPEND": {
+        "title": "list_append espera listas",
+        "description": "El segundo argumento de list_append debe corresponder a una lista en ExpressionAttributeValues.",
+        "suggestion": "Asegura que el segundo operando sea un placeholder mapeado a un array JSON."
+      },
+      "DDB-CE-TAUTO": {
+        "title": "Condición siempre verdadera",
+        "description": "Comparar el mismo placeholder consigo mismo no evita escrituras no deseadas.",
+        "suggestion": "Compara con un valor distinto o usa attribute_exists / size según el caso."
+      },
+      "DDB-CE-PK-EXISTS": {
+        "title": "attribute_exists en la clave primaria es redundante",
+        "description": "La clave primaria siempre existe en el ítem almacenado en DynamoDB.",
+        "suggestion": "Puedes omitir attribute_exists sobre la partition key (y sort key)."
+      },
+      "ES-STRUCT-001": {
+        "title": "Tipo de aggregation usado como tipo de query",
+        "description": "Una clave de aggregation aparece directamente dentro del bloque 'query' en lugar de dentro de 'aggs'.",
+        "suggestion": "Mueve la aggregation al bloque correcto: {\"aggs\":{\"nombre\":{\"tipo\":{...}}}}"
+      },
+      "ES-MATCH-ALL": {
+        "title": "match_all sin filtros escanea TODOS los documentos",
+        "description": "Una query match_all sin filtros recorre el índice completo, lo cual es muy costoso en índices grandes.",
+        "suggestion": "Agrega un filtro dentro de bool: {\"query\":{\"bool\":{\"filter\":[...]}}}"
+      },
+      "ES-WILDCARD-LEAD": {
+        "title": "Wildcard inicial causa full index scan",
+        "description": "Un patrón que empieza con * o ? no puede usar el índice invertido y escanea todo el índice.",
+        "suggestion": "Usa edge n-grams en el mapping del campo en lugar de wildcards con prefijo."
+      },
+      "ES-REGEX": {
+        "title": "Regexp query consume mucha CPU",
+        "description": "Las queries de expresión regular se evalúan término a término y pueden desestabilizar el clúster en índices grandes.",
+        "suggestion": "Usa un campo keyword con terms query, o edge n-grams para búsquedas de prefijo."
+      },
+      "ES-SCRIPT": {
+        "title": "Script query ejecuta en cada documento",
+        "description": "Los scripts se evalúan por cada documento del índice, lo cual es muy lento e inseguro en producción.",
+        "suggestion": "Indexa el valor calculado en tiempo de escritura y consulta el campo indexado."
+      },
+      "ES-SIZE-LIMIT": {
+        "title": "size supera el límite máximo de Elasticsearch (10000)",
+        "description": "Elasticsearch no puede devolver más de 10000 documentos en una sola petición.",
+        "suggestion": "Usa search_after o la Scroll API para paginación más allá de 10000 resultados."
+      },
+      "ES-DEEP-PAGE": {
+        "title": "Paginación profunda (from + size > 10000)",
+        "description": "La paginación deep por from+size es costosa y está desactivada por defecto en Elasticsearch.",
+        "suggestion": "Usa search_after para paginación profunda — es stateless y escala bien."
+      },
+      "ES-CROSS-001": {
+        "title": "Múltiples queries sin límite de tamaño",
+        "description": "Varias queries en el script no tienen 'size' definido y podrían recuperar grandes volúmenes.",
+        "suggestion": "Añade 'size' a cada query para controlar el número de resultados."
+      },
+      "ES-CROSS-002": {
+        "title": "Mezcla de tipos de query en el script",
+        "description": "El script combina queries de solo agregación con queries de búsqueda. Verifica la intención.",
+        "suggestion": "Separa las queries de agregación y búsqueda si sirven propósitos distintos."
+      },
+      "ES-NESTED-DEPTH": {
+        "title": "Query demasiado anidado (profundidad > 5)",
+        "description": "Queries con más de 5 niveles de anidamiento reducen significativamente el rendimiento.",
+        "suggestion": "Aplana la query o usa bool para combinar condiciones al mismo nivel."
+      },
+      "ES-TRACK-TOTAL": {
+        "title": "track_total_hits: false omite el conteo exacto de documentos",
+        "description": "Esta opción mejora el rendimiento pero la respuesta no incluirá el total exacto de documentos.",
+        "suggestion": "Es una optimización válida. Quítalo si necesitas el total exacto."
+      },
+      "ES-SOURCE-FETCH": {
+        "title": "Obtener _source completo es costoso en conjuntos grandes",
+        "description": "Devolver el _source completo transfiere todos los campos aunque no los necesites.",
+        "suggestion": "Usa 'fields' para seleccionar solo los atributos necesarios en lugar de _source: true."
+      },
+      "ES-EXPLAIN": {
+        "title": "explain: true es solo para depuración",
+        "description": "El modo explain calcula y devuelve la puntuación de relevancia detallada, añadiendo sobrecarga significativa.",
+        "suggestion": "Elimina explain: true antes de usar la query en producción."
+      },
+      "ES-PROFILE": {
+        "title": "profile: true es solo para depuración",
+        "description": "El modo profile mide los tiempos internos de ejecución, añadiendo sobrecarga significativa.",
+        "suggestion": "Elimina profile: true antes de usar la query en producción."
+      },
+      "ES-DATE-FORMAT": {
+        "title": "Range de fechas sin 'format' puede causar ambigüedad",
+        "description": "Sin especificar el formato, Elasticsearch puede interpretar la fecha de forma incorrecta según la configuración del índice.",
+        "suggestion": "Especifica 'format' en la range query para evitar ambigüedad: \"format\": \"yyyy-MM-dd\""
+      },
+      "ES-DATE-TZ": {
+        "title": "Range de fechas sin time_zone puede dar resultados inesperados",
+        "description": "Sin time_zone, las comparaciones de fechas usan UTC, lo cual puede ser incorrecto para datos multi-zona.",
+        "suggestion": "Agrega time_zone: '+00:00' o tu zona objetivo a la range query."
+      },
+      "ES-DATE-HIST-INTERVAL": {
+        "title": "date_histogram requiere calendar_interval o fixed_interval",
+        "description": "Sin especificar el intervalo, la aggregation date_histogram no puede agrupar los documentos por tiempo.",
+        "suggestion": "Agrega calendar_interval (ej. '1d', '1M') o fixed_interval (ej. '7d', '1h')."
+      },
+      "ES-DATE-HIST-DEPRECATED": {
+        "title": "El parámetro 'interval' en date_histogram está deprecado desde ES 7.2",
+        "description": "El campo 'interval' fue reemplazado por 'calendar_interval' y 'fixed_interval' en Elasticsearch 7.2.",
+        "suggestion": "Reemplaza 'interval' con 'calendar_interval' o 'fixed_interval'."
+      },
+      "ES-FUZZY-HIGH": {
+        "title": "fuzziness > 2 impacta el rendimiento sin mejorar el recall",
+        "description": "Valores de fuzziness mayores a 2 generan demasiadas variaciones de término y ralentizan la búsqueda.",
+        "suggestion": "Usa fuzziness: 1 o 2; considera AUTO para fuzziness adaptada al largo del campo."
+      },
+      "ES-REGEXP-STATES": {
+        "title": "Regexp sin límite max_determinized_states puede causar errores de memoria",
+        "description": "Las expresiones regulares complejas generan autómatas grandes. Sin límite, pueden agotar la memoria del nodo.",
+        "suggestion": "Agrega max_determinized_states: 10000 para limitar la complejidad del autómata."
+      },
+      "ES-MLT-FREQ": {
+        "title": "more_like_this sin min_term_freq incluye términos muy raros",
+        "description": "Sin min_term_freq, la query incluye términos que aparecen muy pocas veces y aportan poco al resultado.",
+        "suggestion": "Establece min_term_freq: 2 para filtrar términos que aparecen solo una vez."
+      },
+      "ES-PHRASE-SLOP": {
+        "title": "slop alto en match_phrase reduce significativamente la precisión",
+        "description": "Un slop mayor a 5 permite demasiada distancia entre las palabras de la frase, devolviendo resultados poco relevantes.",
+        "suggestion": "Mantén slop <= 2 para precisión razonable; usa match para búsquedas más amplias."
+      },
+      "ES-NESTED-NO-PATH": {
+        "title": "Aggregation nested requiere el campo 'path'",
+        "description": "Sin 'path', la aggregation nested no sabe qué campo del documento es de tipo nested.",
+        "suggestion": "Agrega path: 'nombre_campo' donde nombre_campo es el campo de objeto anidado."
+      },
+      "ES-REV-NESTED-CONTEXT": {
+        "title": "reverse_nested debe usarse dentro de una aggregation nested",
+        "description": "reverse_nested solo tiene sentido como sub-aggregation de nested para volver al documento raíz.",
+        "suggestion": "Coloca reverse_nested como sub-aggregation de una aggregation nested."
+      },
+      "ES-TERMS-NO-SIZE": {
+        "title": "terms aggregation sin size explícito devuelve solo los 10 primeros",
+        "description": "El valor por defecto de size en terms es 10, lo cual puede ocultar buckets relevantes.",
+        "suggestion": "Establece size explícitamente para controlar cuántos buckets se devuelven."
+      },
+      "ES-CARDINALITY-THRESHOLD": {
+        "title": "precision_threshold > 40000 usa memoria excesiva con ganancia mínima",
+        "description": "Valores de precision_threshold mayores a 40000 consumen mucha memoria sin mejorar significativamente la precisión.",
+        "suggestion": "Establece precision_threshold entre 1000 y 40000 para el mejor balance memoria/precisión."
+      },
+      "ES-BUCKET-SCRIPT-PATH": {
+        "title": "bucket_script requiere buckets_path para referenciar aggregations hermanas",
+        "description": "Sin buckets_path, el script de bucket_script no tiene acceso a los valores de las aggregations hermanas.",
+        "suggestion": "Agrega buckets_path: { var1: 'nombre_agg' } a bucket_script."
+      },
+      "ES-BUCKET-SEL-FIELDS": {
+        "title": "bucket_selector requiere buckets_path y script",
+        "description": "bucket_selector necesita ambos campos: las referencias a aggregations hermanas y la condición de filtrado.",
+        "suggestion": "Agrega buckets_path (referencias) y script (condición) a bucket_selector."
+      },
+      "ES-MOVING-AVG-DEPRECATED": {
+        "title": "moving_avg está deprecado — usa moving_fn",
+        "description": "La aggregation moving_avg fue reemplazada por moving_fn en versiones recientes de Elasticsearch.",
+        "suggestion": "Reemplaza moving_avg con moving_fn usando MovingFunctions.unweightedAvg(values)."
+      },
+      "ES-AGG-DEPTH": {
+        "title": "Aggregations anidadas demasiado profundas (> 4 niveles)",
+        "description": "Las aggregations con más de 4 niveles de anidamiento impactan la memoria y el rendimiento del clúster.",
+        "suggestion": "Reestructura las aggregations para reducir el anidamiento o usa composite aggregation."
+      },
+      "ES-FUNC-SCORE-QUERY": {
+        "title": "function_score sin query evalúa TODOS los documentos",
+        "description": "Sin una query interna, function_score aplica las funciones de puntuación a todos los documentos del índice.",
+        "suggestion": "Agrega una query dentro de function_score para filtrar documentos antes de aplicar las funciones."
+      },
+      "ES-FUNC-SCORE-REPLACE": {
+        "title": "boost_mode 'replace' ignora la puntuación original de relevancia",
+        "description": "Con boost_mode: replace, la puntuación original de la query es completamente descartada.",
+        "suggestion": "Usa boost_mode: 'multiply' o 'sum' para combinar la puntuación original con la de la función."
+      },
+      "ES-SCRIPT-SCORE-LANG": {
+        "title": "script_score sin lang usa 'painless' por defecto",
+        "description": "Sin especificar el lenguaje, Elasticsearch asume painless. Es conveniente hacerlo explícito.",
+        "suggestion": "Agrega lang: 'painless' para hacer la intención explícita."
+      },
+      "ES-CONST-SCORE-BOOST": {
+        "title": "constant_score sin boost usa 1.0 por defecto",
+        "description": "Sin especificar boost, todos los documentos reciben puntuación 1.0, lo cual puede no ser la intención.",
+        "suggestion": "Agrega boost: 1.5 (o el valor deseado) para hacer la puntuación explícita."
+      },
+      "ES-GEO-DIST-UNIT": {
+        "title": "geo_distance sin unit usa metros por defecto",
+        "description": "Sin especificar la unidad, la distancia se interpreta en metros, lo cual puede ser inesperado.",
+        "suggestion": "Agrega unit: 'km', 'mi', 'm', etc. para hacer la intención explícita."
+      },
+      "ES-GEO-BBOX-LAT": {
+        "title": "geo_bounding_box: latitud de top_left debe ser mayor que la de bottom_right",
+        "description": "Las coordenadas del bounding box están invertidas — top_left debe tener mayor latitud que bottom_right.",
+        "suggestion": "Intercambia top_left y bottom_right, o corrige los valores de latitud."
+      },
+      "ES-GEO-SHAPE-REL": {
+        "title": "geo_shape sin relation usa 'intersects' por defecto",
+        "description": "Sin especificar la relación espacial, Elasticsearch usa 'intersects', lo cual puede no ser la intención.",
+        "suggestion": "Agrega relation: 'intersects', 'within' o 'contains' para hacer la intención explícita."
+      },
+      "ES-KNN-K": {
+        "title": "knn requiere el campo 'k' (número de vecinos más cercanos)",
+        "description": "Sin 'k', la query knn no sabe cuántos vecinos devolver.",
+        "suggestion": "Agrega k: 10 (o el número deseado) a la query knn."
+      },
+      "ES-KNN-CANDIDATES": {
+        "title": "knn sin num_candidates puede reducir el recall",
+        "description": "Sin num_candidates, Elasticsearch usa un valor por defecto que puede no ser suficiente para buena precisión.",
+        "suggestion": "Establece num_candidates a al menos 1.5 * k para buena exactitud (ej. k=10 → num_candidates=15)."
+      },
+      "MGO-SV-001": {
+        "title": "Falta un campo obligatorio según tus reglas",
+        "description": "El documento que insertas no trae un campo que tu equipo marcó como obligatorio en las reglas de validación.",
+        "suggestion": "Añade el campo con un valor razonable o actualiza las reglas si el requisito cambió.",
+        "studentExplanation": "Es como una ficha con casillas obligatorias: dejaste una en blanco y el sistema la devuelve.",
+        "voiceSummary": "Falta un campo requerido por el esquema. Añádelo o ajusta las reglas.",
+        "technicalMessage": "MGO-SV-001: el insert omite una clave listada en required de $jsonSchema."
+      },
+      "MGO-SV-002": {
+        "title": "Campo extra no permitido por tus reglas",
+        "description": "El documento incluye un campo que tus reglas de validación no autorizan.",
+        "suggestion": "Quita el campo inesperado o amplía las reglas para incluirlo en propiedades permitidas.",
+        "studentExplanation": "Como llevar un objeto más a una mudanza donde la lista dice solo cinco cajas: sobra algo no aprobado.",
+        "voiceSummary": "Hay un campo que el esquema prohíbe. Elimínalo o permítelo en el esquema.",
+        "technicalMessage": "MGO-SV-002: additionalProperties:false rechaza una clave presente en el insert."
+      },
+      "MGO-SV-003": {
+        "title": "El tipo de dato no encaja con la regla",
+        "description": "Un valor parece de otro tipo (texto, número, lista, etc.) respecto a lo que marca tu regla.",
+        "suggestion": "Adapta el valor al formato esperado o corrige la regla si el modelo de datos cambió.",
+        "studentExplanation": "Como poner letras donde pedían un número de teléfono: la forma no coincide.",
+        "voiceSummary": "Tipo de valor incompatible con el esquema. Corrige valor o regla.",
+        "technicalMessage": "MGO-SV-003: tipo JSON inferido incompatible con la unión de tipos $jsonSchema del campo."
+      },
+      "LUA-001": {
+        "title": "Manejo de errores frágil en el script",
+        "description": "El script llama a Redis de forma que un fallo detiene todo el script.",
+        "suggestion": "Usa la variante segura para que los errores se puedan tratar sin abortar todo.",
+        "studentExplanation": "Como apagar toda la casa si falla una bombilla: mejor un interruptor por habitación.",
+        "voiceSummary": "Prefiere la llamada segura a Redis para no tumbar el script entero.",
+        "technicalMessage": "LUA-001: se usa redis.call(); se recomienda redis.pcall() para aislar errores."
+      },
+      "LUA-002": {
+        "title": "Bucle que quizá nunca termina",
+        "description": "Un bucle parece sin fin porque no se ve una salida clara.",
+        "suggestion": "Añade un tope, una condición que cambie o una salida explícita para que no quede colgado.",
+        "studentExplanation": "Como una lavadora en ciclo infinito si nadie pulsa fin: pon una forma de parar.",
+        "voiceSummary": "Posible bucle infinito. Añade salida o contador acotado.",
+        "technicalMessage": "LUA-002: while/repeat sin break detectable (heurística de bucle infinito)."
+      },
+      "LUA-003": {
+        "title": "Variable global en el script",
+        "description": "El script escribe en un nombre global en lugar de local, más lento y propenso a errores.",
+        "suggestion": "Declara variables con local para que cada ejecución sea ordenada y más rápida.",
+        "studentExplanation": "Como escribir en la pizarra común del aula en vez de en tu cuaderno: todos lo ven y se ensucia.",
+        "voiceSummary": "Usa variables locales en Lua, no globales.",
+        "technicalMessage": "LUA-003: asignación a global (no local) en script Redis Lua."
+      },
+      "LUA-004": {
+        "title": "Claves y script pueden no coincidir en clúster",
+        "description": "El script podría tocar claves no declaradas al inicio, lo que falla en modo clúster.",
+        "suggestion": "Pasa todas las claves en la lista declarada y usa KEYS[n] dentro del script.",
+        "studentExplanation": "Como un repartidor con tres direcciones en la nota pero visita cuatro: el clúster exige la lista exacta.",
+        "voiceSummary": "Declara todas las claves en KEYS y coherencia con numkeys.",
+        "technicalMessage": "LUA-004: heurística KEYS[] / numkeys / slots en LuaAnalyzer."
+      },
+      "LUA-005": {
+        "title": "Argumentos usados como números sin convertir",
+        "description": "Los argumentos del cliente llegan como texto; usarlos en matemáticas sin convertir puede dar sorpresas.",
+        "suggestion": "Convierte con una función numérica antes de operar.",
+        "studentExplanation": "Como sumar etiquetas de precio sin quitar el símbolo de moneda: convierte primero.",
+        "voiceSummary": "Envuelve ARGV con tonumber antes de calcular.",
+        "technicalMessage": "LUA-005: ARGV[] en aritmética sin tonumber()."
+      },
+      "LUA-006": {
+        "title": "Script muy largo",
+        "description": "El script es tan largo que cuesta leerlo, probarlo y reutilizarlo con seguridad.",
+        "suggestion": "Divídelo en scripts más pequeños o carga ayudas una vez y reutiliza su hash.",
+        "studentExplanation": "Como un manual de cien páginas en una sola hoja: mejor capítulos manejables.",
+        "voiceSummary": "Más de cincuenta líneas. Divide o usa SCRIPT LOAD.",
+        "technicalMessage": "LUA-006: script Lua > 50 líneas (INFO mantenimiento)."
+      },
+      "LUA-007": {
+        "title": "Muchas llamadas a Redis dentro de un bucle",
+        "description": "Cada vuelta del bucle vuelve a hablar con el servidor, lo que puede ir lento y saturar.",
+        "suggestion": "Agrupa trabajo con pipeline en el cliente fuera de Lua o reduce lo que hace cada vuelta.",
+        "studentExplanation": "Como pedir al conserje una cosa por cada escalón en vez de una lista al final.",
+        "voiceSummary": "redis.call en bucle sin pipeline. Reduce o empaqueta fuera.",
+        "technicalMessage": "LUA-007: redis.call dentro de bucle (advertencia de rendimiento)."
+      },
+      "RDS-PIP-001": {
+        "title": "Comando arriesgado dentro de una transacción en cola",
+        "description": "Un comando que puede bloquear o borrar mucho se metió dentro de un bloque MULTI/EXEC.",
+        "suggestion": "Saca escaneos amplios y borrados totales fuera de MULTI/EXEC o evítalos en producción.",
+        "studentExplanation": "Como cerrar con llave y luego planear quemar el archivo: hazlo fuera del flujo encadenado.",
+        "voiceSummary": "KEYS o FLUSH dentro de MULTI/EXEC. Quítalo o muévelo.",
+        "technicalMessage": "RDS-PIP-001: KEYS * o FLUSH* dentro de pipeline MULTI/EXEC."
+      },
+      "RDS-PIP-002": {
+        "title": "Lote enorme de comandos en cola",
+        "description": "Hay más de mil comandos encolados de golpe, con riesgo de tiempo de espera y memoria.",
+        "suggestion": "Parte en lotes más pequeños o ajusta timeouts solo tras medir tamaños seguros.",
+        "studentExplanation": "Como apilar mil platos para un solo viaje: mejor varios viajes manejables.",
+        "voiceSummary": "Más de mil comandos en pipeline o cola MULTI. Divide lotes.",
+        "technicalMessage": "RDS-PIP-002: pipeline o cola MULTI > 1000 comandos."
+      },
+      "RDS-PIP-003": {
+        "title": "Vigilancia sin cierre",
+        "description": "Se vigilan claves pero no aparece un EXEC que cierre la operación prevista.",
+        "suggestion": "Empareja WATCH con MULTI, trabajo en cola y EXEC, o cancela con UNWATCH.",
+        "studentExplanation": "Como vigilar la puerta pero nunca decidir si entras o te vas: cierra el flujo.",
+        "voiceSummary": "WATCH sin EXEC después en el script. Termina o UNWATCH.",
+        "technicalMessage": "RDS-PIP-003: WATCH sin EXEC posterior en el mismo script."
+      },
+      "RDS-ACL-001": {
+        "title": "Reglas de cuenta demasiado amplias",
+        "description": "La línea de control de acceso concede categorías o patrones de clave muy amplios.",
+        "suggestion": "Reduce categorías y patrones a lo que esa identidad realmente necesita.",
+        "studentExplanation": "Como un pase que abre todos los armarios del edificio: demasiado para una sola persona.",
+        "voiceSummary": "ACL posiblemente sobre-privilegiada. Estrecha permisos.",
+        "technicalMessage": "RDS-ACL-001: patrón ACL SETUSER sugiere +@all o amplitud peligrosa."
+      },
+      "RDS-ACL-002": {
+        "title": "Perfil de solo lectura con alcance de claves muy amplio",
+        "description": "El perfil es de lectura pero aún abarca casi todas las claves posibles.",
+        "suggestion": "Ajusta el prefijo de claves a los namespaces reales de tu aplicación.",
+        "studentExplanation": "Como un pase de solo mirar que vale para todo el almacén: aún es sensible si se pierde.",
+        "voiceSummary": "ACL de lectura con patrón demasiado amplio. Acota prefijos.",
+        "technicalMessage": "RDS-ACL-002: ACL orientada a lectura con glob ~* demasiado amplio."
+      },
+      "RDS-ACL-003": {
+        "title": "Borrar el usuario por defecto",
+        "description": "Quitar el usuario predeterminado puede dejarte sin administración si no hay otro superusuario.",
+        "suggestion": "Asegura otra cuenta de administración antes de borrar cuentas base.",
+        "studentExplanation": "Como tirar la única llave maestra sin haber copiado otra.",
+        "voiceSummary": "ACL DELUSER sobre default. Confirma otro admin.",
+        "technicalMessage": "RDS-ACL-003: ACL DELUSER default — riesgo de bloqueo operativo."
+      },
+      "RDS-MOD-001": {
+        "title": "Dependencia del módulo JSON",
+        "description": "El comando requiere el módulo RedisJSON cargado en el servidor.",
+        "suggestion": "Instala y habilita RedisJSON en todos los nodos antes de depender de esto en producción.",
+        "studentExplanation": "Como usar una app que pide un plugin que aún no está instalado en el teléfono.",
+        "voiceSummary": "Comando JSON requiere módulo RedisJSON en el clúster.",
+        "technicalMessage": "RDS-MOD-001: familia JSON.* (requiere RedisJSON)."
+      },
+      "RDS-MOD-002": {
+        "title": "Dependencia del módulo de búsqueda",
+        "description": "El comando requiere RediSearch (o compatible) cargado.",
+        "suggestion": "Aprovisiona el módulo de búsqueda y el índice antes de usar FT.* en rutas críticas.",
+        "studentExplanation": "Como pedir catálogo por voz en una tienda que solo tiene estantes sin lector.",
+        "voiceSummary": "Comando FT requiere RediSearch desplegado.",
+        "technicalMessage": "RDS-MOD-002: comandos FT.* (dependencia RediSearch)."
+      },
+      "CAS-BATCH-001": {
+        "title": "Lote enorme de sentencias",
+        "description": "El lote agrupa demasiadas sentencias y presiona al coordinador.",
+        "suggestion": "Parte en lotes más pequeños o usa escrituras asíncronas con límite de concurrencia.",
+        "studentExplanation": "Como meter cincuenta maletas en un ascensor pequeño: sube en varios viajes.",
+        "voiceSummary": "Batch Cassandra mayor de cincuenta sentencias. Reduce tamaño.",
+        "technicalMessage": "CAS-BATCH-001: recuento estimado de sentencias en BATCH > 50."
+      },
+      "CAS-BATCH-002": {
+        "title": "Lote cruza particiones",
+        "description": "Las sentencias apuntan a distintas claves de partición y pierdes beneficios de un solo sitio.",
+        "suggestion": "Agrupa escrituras que compartan partición o envía lotes separados por partición.",
+        "studentExplanation": "Como mezclar cartas a distintas ciudades en un solo sobre: ordena por destino.",
+        "voiceSummary": "Batch multi-partición. Prefiere una partición por lote.",
+        "technicalMessage": "CAS-BATCH-002: BATCH cross-partition (anti-patrón)."
+      },
+      "CAS-BATCH-003": {
+        "title": "Buen uso de lote sin registro en una partición",
+        "description": "Un lote sin registro apunta a una sola partición, alineado con la guía de rendimiento de Cassandra.",
+        "suggestion": "Mantén el patrón y evita mezclar particiones distintas en el mismo lote.",
+        "studentExplanation": "Como una ruta de reparto solo por un barrio: eficiente cuando todo va al mismo sitio.",
+        "voiceSummary": "UNLOGGED BATCH en una partición se ve correcto.",
+        "technicalMessage": "CAS-BATCH-003: UNLOGGED BATCH con partición única conocida (INFO)."
+      },
+      "CAS-BATCH-004": {
+        "title": "Lote registrado donde bastaría sin registro",
+        "description": "Un lote durable envuelve solo escrituras de una partición, más costoso de lo necesario.",
+        "suggestion": "Usa BEGIN UNLOGGED BATCH cuando todas las mutaciones compartan la misma partición.",
+        "studentExplanation": "Como seguro de envío exprés para una carta al vecino: un modo más ligero basta.",
+        "voiceSummary": "BATCH LOGGED en una sola partición. Prefiere UNLOGGED.",
+        "technicalMessage": "CAS-BATCH-004: LOGGED BATCH con DML de partición única — preferir UNLOGGED."
+      },
+      "CAS-BATCH-005": {
+        "title": "Lote de contadores mezclado",
+        "description": "Un lote solo para contadores incluye sentencias que no son de contador.",
+        "suggestion": "Mueve inserts, borrados y updates normales fuera de ese lote.",
+        "studentExplanation": "Como una fila solo monedas con alguien pagando con mueble: separa lo incompatible.",
+        "voiceSummary": "BATCH COUNTER con sentencias no contador. Sácalas.",
+        "technicalMessage": "CAS-BATCH-005: COUNTER BATCH con DML no contador."
+      },
+      "CAS-LWT-001": {
+        "title": "Escritura condicional en partición caliente",
+        "description": "Las transacciones ligeras en una partición muy disputada frenan a todos.",
+        "suggestion": "Reparte claves calientes, reduce Paxos o rediseña el acceso.",
+        "studentExplanation": "Como pedir votación para cada paso en una cola enorme: funciona pero se atasca.",
+        "voiceSummary": "LWT en partición caliente. Espera contención.",
+        "technicalMessage": "CAS-LWT-001: LWT en partición caliente / alta cardinalidad (Paxos)."
+      },
+      "CAS-LWT-002": {
+        "title": "Varias escrituras condicionales en un lote",
+        "description": "Varias transacciones ligeras en un solo lote no equivalen a una sola ronda atómica.",
+        "suggestion": "Como máximo una condicional por lote o ejecútalas fuera del BATCH.",
+        "studentExplanation": "Como varias firmas de veto en el mismo sobre: Cassandra las cuenta aparte.",
+        "voiceSummary": "Varias LWT en un BATCH. Deja una o separa.",
+        "technicalMessage": "CAS-LWT-002: countLwtStatementsInBatch > 1."
+      },
+      "CAS-LWT-003": {
+        "title": "Lee el sí o no del resultado",
+        "description": "Un insert, update o delete condicional puede no aplicarse si la comprobación falla.",
+        "suggestion": "En la aplicación lee el resultado aplicado o CAS antes de asumir cambios.",
+        "studentExplanation": "Como preguntar si el cierre quedó bien en vez de irte sin mirar.",
+        "voiceSummary": "Revisa wasApplied tras IF / IF NOT EXISTS.",
+        "technicalMessage": "CAS-LWT-003: verificar wasApplied / resultado CAS en drivers."
+      },
+      "CAS-UDF-001": {
+        "title": "No declaraste si la función es estable",
+        "description": "La función definida por el usuario no indica si su resultado es determinista.",
+        "suggestion": "Añade la cláusula que tu versión de Cassandra admite o mantén el cuerpo sin azar ni efectos raros.",
+        "studentExplanation": "Como una receta sin tiempo de horno: el motor necesita saber si el resultado es repetible.",
+        "voiceSummary": "UDF sin DETERMINISTIC. Declara o documenta pureza.",
+        "technicalMessage": "CAS-UDF-001: CREATE FUNCTION sin palabra clave DETERMINISTIC."
+      },
+      "CAS-UDF-002": {
+        "title": "La función podría tardar demasiado dentro de consultas",
+        "description": "El cuerpo tiene bucles pesados que bloquean lecturas y escrituras.",
+        "suggestion": "Simplifica la lógica, baja iteraciones o mueve el trabajo pesado a la aplicación.",
+        "studentExplanation": "Como hacer maratón en la cola del banco: todos detrás esperan.",
+        "voiceSummary": "UDF con bucles costosos. Simplifica o saca trabajo.",
+        "technicalMessage": "CAS-UDF-002: CassandraJsParser — muchos bucles o límite numérico grande."
+      },
+      "CAS-UDF-003": {
+        "title": "La función toca el mundo exterior",
+        "description": "El cuerpo parece llamar a red, disco u otras APIs impuras.",
+        "suggestion": "Quita accesos externos; las UDF deben ser puras y rápidas en Cassandra.",
+        "studentExplanation": "Como pedirle al cajero que salga a la calle a mitad de cobro: rompe la caja segura.",
+        "voiceSummary": "UDF con E/S o APIs impuras. Elimínalas.",
+        "technicalMessage": "CAS-UDF-003: patrón impuro en cuerpo UDF (JS/Java)."
+      },
+      "CAS-UDA-001": {
+        "title": "Agregado sin valor inicial",
+        "description": "Crear un agregado sin estado inicial deja el comportamiento ambiguo.",
+        "suggestion": "Añade INITCOND con un literal compatible con el tipo de estado, aunque sea null.",
+        "studentExplanation": "Como un marcador sin cero al inicio: define por dónde empieza la cuenta.",
+        "voiceSummary": "CREATE AGGREGATE sin INITCOND. Añade estado inicial.",
+        "technicalMessage": "CAS-UDA-001: CREATE AGGREGATE sin cláusula INITCOND."
+      },
+      "CAS-UDA-002": {
+        "title": "Función de estado no aparece en el script",
+        "description": "El agregado referencia una función de estado que este script no define.",
+        "suggestion": "Define SFUNC antes en la migración o corrige nombre y keyspace.",
+        "studentExplanation": "Como citar el capítulo cinco en un libro de cuatro capítulos.",
+        "voiceSummary": "SFUNC no hallada en el contexto del script. Créala o corrige.",
+        "technicalMessage": "CAS-UDA-002: SFUNC ausente en SchemaRegistry."
+      },
+      "CAS-TRG-001": {
+        "title": "No podemos verificar la clase del disparador",
+        "description": "Los disparadores cargan clases Java en tiempo de ejecución; aquí no hay classpath.",
+        "suggestion": "Despliega el JAR en cada nodo y prueba en preproducción.",
+        "studentExplanation": "Como contratar magia sin ensayo general: pruébalo en el escenario real.",
+        "voiceSummary": "Clase de trigger no verificada estáticamente. Prueba en staging.",
+        "technicalMessage": "CAS-TRG-001: CREATE TRIGGER — clase Java no en classpath del analizador."
+      },
+      "CAS-TRG-002": {
+        "title": "Disparador sobre datos de sistema",
+        "description": "Un disparador apunta a tablas de keyspace de sistema, lo que Cassandra rechaza.",
+        "suggestion": "Usa disparadores solo en tablas de aplicación bajo tus keyspaces.",
+        "studentExplanation": "Como instalar una alarma en la sala de calderas municipal: no permitido.",
+        "voiceSummary": "Trigger en tabla de sistema inválido. Usa tablas de app.",
+        "technicalMessage": "CAS-TRG-002: trigger ON tabla de keyspace sistema."
+      },
+      "CAS-DCL-001": {
+        "title": "Rol puede entrar pero sin contraseña",
+        "description": "Se creó un rol con capacidad de login sin cláusula de contraseña.",
+        "suggestion": "Añade una contraseña fuerte y define LOGIN o SUPERUSER solo cuando haga falta.",
+        "studentExplanation": "Como un carnet que abre puertas pero sin PIN nunca asignado: inseguro.",
+        "voiceSummary": "CREATE ROLE sin PASSWORD para rol con login. Añade credenciales.",
+        "technicalMessage": "CAS-DCL-001: CREATE ROLE sin WITH PASSWORD cuando aplica login."
+      },
+      "CAS-DCL-002": {
+        "title": "Permiso total de conceder o quitar",
+        "description": "Conceder o revocar todo de golpe es inusualmente amplio o arriesgado.",
+        "suggestion": "Enumera permisos concretos sobre recursos concretos en lugar de ALL.",
+        "studentExplanation": "Como llaves maestras de todo el edificio cuando solo pedían un armario.",
+        "voiceSummary": "GRANT o REVOKE estilo ALL. Usa menor privilegio.",
+        "technicalMessage": "CAS-DCL-002: GRANT/REVOKE ALL o ALL PERMISSIONS."
+      },
+      "CAS-DCL-003": {
+        "title": "Marcado como superusuario",
+        "description": "El rol tiene SUPERUSER, que salta límites normales.",
+        "suggestion": "Reserva superusuario para cuentas de emergencia y usa roles acotados en lo demás.",
+        "studentExplanation": "Como dar mando total del aeropuerto a un becario: úsalo muy raro.",
+        "voiceSummary": "SUPERUSER true en rol. Úsalo con mucho cuidado.",
+        "technicalMessage": "CAS-DCL-003: SUPERUSER = true en CREATE/ALTER ROLE."
+      },
+      "CAS-DCL-004": {
+        "title": "Cambio de permisos a todo un keyspace",
+        "description": "El permiso afecta a todas las tablas de ese keyspace.",
+        "suggestion": "Si solo una tabla lo necesita, acota a TABLE keyspace.tabla.",
+        "studentExplanation": "Como pintar todo el piso porque manchaste una pared: reduce el pincel.",
+        "voiceSummary": "GRANT o REVOKE en keyspace entero. Valora alcance por tabla.",
+        "technicalMessage": "CAS-DCL-004: GRANT/REVOKE sobre recurso keyspace."
+      },
+      "CAS-DCL-005": {
+        "title": "Combinación rara de roles",
+        "description": "Un usuario con login recibe un rol sin login, suele ser un descuido de diseño.",
+        "suggestion": "Activa LOGIN en el rol delegado u otorga un rol pensado para uso interactivo.",
+        "studentExplanation": "Como dar la llave de casa a alguien que solo tiene tarjeta de biblioteca: no encaja.",
+        "voiceSummary": "Rol sin LOGIN a usuario con LOGIN. Revisa diseño.",
+        "technicalMessage": "CAS-DCL-005: hasNonLoginGrantedToLoginUser — posible error de delegación."
+      },
+      "CAS-AUTH-001": {
+        "title": "La contraseña se ve débil",
+        "description": "La contraseña es corta o solo letras y números.",
+        "suggestion": "Usa al menos ocho caracteres mezclando letras, números y símbolos para cuentas humanas.",
+        "studentExplanation": "Como un candado de tres ruedas: fácil de adivinar.",
+        "voiceSummary": "Contraseña Cassandra débil. Fortalécela.",
+        "technicalMessage": "CAS-AUTH-001: isWeakCassandraPassword."
+      },
+      "DDB-TX-001": {
+        "title": "Demasiadas acciones en una sola transacción",
+        "description": "La petición lista más de cien pasos, y DynamoDB lo rechaza.",
+        "suggestion": "Divide en varias transacciones u ordena el trabajo para que no todo vaya junto.",
+        "studentExplanation": "Como meter cien cartas de golpe en un buzón que solo admite diez.",
+        "voiceSummary": "TransactItems supera cien. Parte la transacción.",
+        "technicalMessage": "DDB-TX-001: TransactItems.size() > 100."
+      },
+      "DDB-TX-002": {
+        "title": "Lecturas y escrituras mezcladas en la misma API de transacción",
+        "description": "El mismo payload mezcla Get con escrituras, lo que la API de escritura no permite.",
+        "suggestion": "Usa la API de solo lectura para Gets o quita los Gets de este payload.",
+        "studentExplanation": "Como cobrar y inventariar en la misma cola imposible: separa colas.",
+        "voiceSummary": "TransactItems mezcla Get con escrituras. Separa APIs.",
+        "technicalMessage": "DDB-TX-002: anyGet && anyWrite en TransactItems."
+      },
+      "DDB-TX-003": {
+        "title": "Comprobación condicional sin regla escrita",
+        "description": "Hay un ítem de comprobación sin texto de expresión que evaluar.",
+        "suggestion": "Añade ConditionExpression describiendo qué debe cumplirse.",
+        "studentExplanation": "Como pedir al árbitro que pite sin decirle la regla.",
+        "voiceSummary": "ConditionCheck sin ConditionExpression.",
+        "technicalMessage": "DDB-TX-003: ConditionCheck con ConditionExpression vacío."
+      },
+      "DDB-TX-004": {
+        "title": "Varias tablas en una transacción",
+        "description": "La transacción toca más de una tabla; está permitido pero cuesta más y complica.",
+        "suggestion": "Documenta por qué es intencional o parte el trabajo; puedes marcar justificación en la herramienta.",
+        "studentExplanation": "Como un contrato para tres casas distintas en un solo sobre: anota el motivo.",
+        "voiceSummary": "Transacción multi-tabla. Confirma intención o divide.",
+        "technicalMessage": "DDB-TX-004: varias tablas sin multiTableJustified."
+      },
+      "DDB-COND-001": {
+        "title": "Funciones de actualización dentro de una condición",
+        "description": "Aparecen funciones pensadas para actualizaciones dentro de una condición, no soportado.",
+        "suggestion": "Mueve esas comprobaciones a UpdateExpression o usa ítems de transacción adecuados.",
+        "studentExplanation": "Como usar el temporizador del horno para abrir la puerta: cada cosa en su sitio.",
+        "voiceSummary": "if_not_exists o list_append en ConditionExpression. Quítalos o reubícalos.",
+        "technicalMessage": "DDB-COND-001: if_not_exists / list_append en ConditionExpression."
+      },
+      "DDB-COND-002": {
+        "title": "La comprobación de existencia sin ruta real",
+        "description": "La función de existencia necesita una ruta de campo, no un marcador de valor.",
+        "suggestion": "Pasa un nombre como #pk o status, no un token :valor.",
+        "studentExplanation": "Como preguntar «¿existe?» sin decir qué cosa.",
+        "voiceSummary": "attribute_exists necesita ruta de atributo.",
+        "technicalMessage": "DDB-COND-002: attribute_exists sin PathExpr o arity incorrecta."
+      },
+      "DDB-COND-003": {
+        "title": "Medir tamaño en un campo numérico",
+        "description": "Las comprobaciones de longitud no aplican a atributos numéricos en DynamoDB.",
+        "suggestion": "Compara números con operadores numéricos o guarda longitudes en otro atributo.",
+        "studentExplanation": "Como medir el peso del sonido: los números piden comparaciones, no talla.",
+        "voiceSummary": "size() sobre N o NS no válido. Compara numéricamente.",
+        "technicalMessage": "DDB-COND-003: size() sobre tipos N/NS."
+      },
+      "DDB-STR-001": {
+        "title": "Flujo de cambios activo sin caducidad de ítems",
+        "description": "Los streams guardan historia unas horas; la caducidad de filas es otro ajuste.",
+        "suggestion": "Activa TTL en la tabla si las filas deben borrarse solas además del stream.",
+        "studentExplanation": "Como grabar cámaras sin política de borrado de cintas: define retención de datos también.",
+        "voiceSummary": "Stream activo sin TTL de tabla. Considera TimeToLiveSpecification.",
+        "technicalMessage": "DDB-STR-001: StreamEnabled sin TTL habilitado (nota 24h)."
+      },
+      "DDB-STR-002": {
+        "title": "Consumidor de stream sin cola de mensajes fallidos",
+        "description": "Lambda lee el stream pero no define cola para registros tóxicos.",
+        "suggestion": "Añade ruta OnFailure o DeadLetterConfig para que los fallos no boucen sin fin.",
+        "studentExplanation": "Como un buzón de devoluciones sin cajón para paquetes rotos.",
+        "voiceSummary": "Mapping Lambda sin DLQ. Añade destino de fallo.",
+        "technicalMessage": "DDB-STR-002: EventSourceMapping sin DLQ / OnFailure."
+      },
+      "DDB-BAK-001": {
+        "title": "En producción las copias continuas parecen apagadas",
+        "description": "Las copias continuas están desactivadas mientras el payload marca entorno de producción.",
+        "suggestion": "Activa copias continuas y prueba restauraciones con calendario.",
+        "studentExplanation": "Como dejar el extintor precintado en estreno: enciende la seguridad en prod.",
+        "voiceSummary": "Producción sin continuous backups. Actívalos.",
+        "technicalMessage": "DDB-BAK-001: producción y ContinuousBackupsStatus DISABLED."
+      },
+      "DDB-BAK-002": {
+        "title": "Restaurar al mismo nombre que el origen",
+        "description": "Restaurar con el mismo nombre de tabla que el backup puede pisar datos vivos.",
+        "suggestion": "Restaura a un nombre nuevo y luego cambia tráfico con cuidado.",
+        "studentExplanation": "Como copiar un libro encima del original aún en la estantería.",
+        "voiceSummary": "Restore con Target igual al origen. Usa nombre nuevo.",
+        "technicalMessage": "DDB-BAK-002: TargetTableName igual a tabla origen del ARN."
+      },
+      "DDB-BAK-003": {
+        "title": "Recuperación punto en el tiempo desactivada",
+        "description": "Sin PITR solo tienes granularidad de copias normales.",
+        "suggestion": "Activa PITR cuando la tabla importa y necesitas ventanas finas de restauración.",
+        "studentExplanation": "Como fotos anuales frente a diarias: menos detalle al recuperar.",
+        "voiceSummary": "PITR desactivado. Valora activarlo.",
+        "technicalMessage": "DDB-BAK-003: PointInTimeRecoveryStatus DISABLED o spec lo desactiva."
+      },
+      "DDB-API-001": {
+        "title": "Seleccionar todo en una tabla grande",
+        "description": "Pedir todos los atributos en una tabla grande obliga a paginar a mano y lee mucho.",
+        "suggestion": "Pagina con claves de continuación y proyecta solo lo necesario.",
+        "studentExplanation": "Como vaciar un almacén por una puerta: ve por tandas y lleva solo lo pedido.",
+        "voiceSummary": "SELECT * en tabla grande sugerida. Pagina y proyecta.",
+        "technicalMessage": "DDB-API-001: SELECT * con hint de tamaño > umbral."
+      },
+      "DDB-API-002": {
+        "title": "Actualización sin filtrar la clave de partición",
+        "description": "El update no fija con claridad la clave de partición con una igualdad.",
+        "suggestion": "Añade WHERE con igualdad de clave de partición y sort key si aplica.",
+        "studentExplanation": "Como actualizar la agenda sin decir el contacto: nombra la fila primero.",
+        "voiceSummary": "UPDATE PartiQL necesita igualdad de clave de partición en WHERE.",
+        "technicalMessage": "DDB-API-002: UPDATE sin WHERE o sin igualdad en PK."
+      },
+      "PNL-001": {
+        "title": "Bucle que quizá no termina",
+        "description": "La condición del bucle parece siempre cierta y no hay salida clara.",
+        "suggestion": "Añade un tope, cambia la condición en cada paso, o return/break en el cuerpo.",
+        "studentExplanation": "Como una cinta sin botón de paro visible: asegura una forma de salir.",
+        "voiceSummary": "Bucle Painless sin salida verificable. Añade break o límite.",
+        "technicalMessage": "PNL-001: while/for sin salida verificable."
+      },
+      "PNL-002": {
+        "title": "Campo no listado en el esquema conocido",
+        "description": "El script lee un campo de documento que tu lista de esquema no incluye.",
+        "suggestion": "Corrige el nombre o actualiza el mapping que pasas al analizador.",
+        "studentExplanation": "Como pedir el pasillo doce en un súper de diez pasillos.",
+        "voiceSummary": "Campo doc ausente del conjunto de esquema. Corrige nombre.",
+        "technicalMessage": "PNL-002: doc['campo'] literal no está en schemaFields."
+      },
+      "PNL-003": {
+        "title": "Cambiar datos guardados en el tipo de script equivocado",
+        "description": "Un script de consulta intenta reescribir el documento fuente, no permitido ahí.",
+        "suggestion": "Mueve los cambios a un script de actualización o de ingest.",
+        "studentExplanation": "Como reescribir el libro durante la lectura pública: hazlo en el mostrador de préstamo.",
+        "voiceSummary": "Asignación a ctx._source en script de consulta. Usa update/ingest.",
+        "technicalMessage": "PNL-003: asignación a ctx._source con querySubtree true."
+      },
+      "PNL-004": {
+        "title": "El script debe devolver un valor",
+        "description": "Este contexto exige un resultado devuelto y no aparece ninguno.",
+        "suggestion": "Termina con un return explícito con la puntuación o valor que pide el llamador.",
+        "studentExplanation": "Como un examen que pide la respuesta final y solo mostraste el desarrollo.",
+        "voiceSummary": "Falta return donde es obligatorio.",
+        "technicalMessage": "PNL-004: requireReturn sin return en el AST."
+      },
+      "PNL-005": {
+        "title": "Bucle pesado dentro de un script de agregación",
+        "description": "El script recorre colecciones dentro de un camino por bucket y puede escalar mal.",
+        "suggestion": "Prefiere doc values, params o métricas precalculadas en lugar de bucles grandes por bucket.",
+        "studentExplanation": "Como contar frijoles en cada caja mientras la fila del súper espera.",
+        "voiceSummary": "Posible O(n) en script de agregación. Simplifica.",
+        "technicalMessage": "PNL-005: looksLikeLinearPass en aggsSubtree."
+      },
+      "PNL-006": {
+        "title": "Lectura de documento sin red de seguridad",
+        "description": "Acceder a campos puede lanzar error si faltan o el tipo no coincide, y no hay try.",
+        "suggestion": "Envuelve el acceso a doc en try/catch o valores por defecto seguros.",
+        "studentExplanation": "Como abrir taquillas sin comprobar número: ten plan si falla.",
+        "voiceSummary": "doc sin try/catch. Añade protección.",
+        "technicalMessage": "PNL-006: doc[...] sin palabra clave try (heurística ScriptException)."
+      },
+      "PNL-007": {
+        "title": "Aleatoriedad dentro de la puntuación",
+        "description": "Los números aleatorios hacen que la puntuación cambie entre ejecuciones.",
+        "suggestion": "Usa pesos fijos o pasa cualquier aleatorio desde fuera con params.",
+        "studentExplanation": "Como lanzar dados para calificar: el resultado no coincidirá mañana.",
+        "voiceSummary": "Math.random en Painless. Qúitalo para reproducibilidad.",
+        "technicalMessage": "PNL-007: Math.random en script."
+      },
+      "ES-IP-001": {
+        "title": "Pipeline sin manejo de fallos",
+        "description": "Si un processor falla, no hay recuperación a nivel pipeline ni por paso.",
+        "suggestion": "Añade on_failure en pipeline o en cada paso para que los errores se vean.",
+        "studentExplanation": "Como una fábrica sin botón rojo de parada cuando atasca una máquina.",
+        "voiceSummary": "Pipeline ingest sin on_failure. Añade manejadores.",
+        "technicalMessage": "ES-IP-001: sin on_failure a nivel pipeline ni por processor."
+      },
+      "ES-IP-002": {
+        "title": "Cadena muy larga de processors",
+        "description": "Más de veinte processors seguidos cuesta mantener y depurar.",
+        "suggestion": "Divide en pipelines más pequeños y encadena con el processor pipeline.",
+        "studentExplanation": "Como veinte pasos en una sola receta: conviene menús por partes.",
+        "voiceSummary": "Más de veinte processors. Divide pipeline.",
+        "technicalMessage": "ES-IP-002: processors.size() > 20."
+      },
+      "ES-IP-003": {
+        "title": "Referencia a pipeline anidado",
+        "description": "Este paso llama a otro pipeline por nombre; no podemos verificarlo aquí.",
+        "suggestion": "Confirma que el pipeline hijo existe en cada clúster antes de producción.",
+        "studentExplanation": "Como enlazar a otro libro sin comprobar si está en la biblioteca.",
+        "voiceSummary": "Processor pipeline anidado. Verifica existencia.",
+        "technicalMessage": "ES-IP-003: processor pipeline — referencia no verificada estáticamente."
+      },
+      "ES-IP-004": {
+        "title": "Foreach sin processor interno",
+        "description": "Un processor foreach no define el objeto processor interno.",
+        "suggestion": "Añade processor: { \"set\": { ... } } u otro processor dentro de foreach.",
+        "studentExplanation": "Como un bucle que dice «por cada ítem haz…» pero sin decir qué hacer.",
+        "voiceSummary": "foreach sin processor interno. Defínelo.",
+        "technicalMessage": "ES-IP-004: foreach sin inner processor."
+      },
+      "ES-IP-005": {
+        "title": "Lenguaje del script no indicado",
+        "description": "El processor script omite lang; el servidor asume Painless de todos modos.",
+        "suggestion": "Escribe lang explícito para que operadores sepan qué motor corre.",
+        "studentExplanation": "Como enviar pilas sin decir si son recargables: aclara la etiqueta.",
+        "voiceSummary": "Processor script sin lang. Pon painless explícito.",
+        "technicalMessage": "ES-IP-005: script processor sin lang."
+      },
+      "ES-IP-006": {
+        "title": "Patrón grok muy complejo",
+        "description": "Muchos grupos de captura hacen grok caro en ingest.",
+        "suggestion": "Simplifica el patrón o reparte el análisis en varios processors.",
+        "studentExplanation": "Como pedir a un solo regex que lea el periódico entero: trocea.",
+        "voiceSummary": "Grok con muchas capturas. Simplifica.",
+        "technicalMessage": "ES-IP-006: grokPatternGroupCount > 5."
+      },
+      "ES-IP-007": {
+        "title": "Renombrar tras borrar el mismo campo",
+        "description": "Un remove elimina un campo que un rename posterior aún referencia.",
+        "suggestion": "Reordena para renombrar antes de remove o ajusta nombres.",
+        "studentExplanation": "Como borrar la etiqueta y luego pedir leerla: cambia el orden.",
+        "voiceSummary": "rename sobre campo ya eliminado. Reordena pipeline.",
+        "technicalMessage": "ES-IP-007: rename sobre campo en removedFields."
+      },
+      "ES-RX-001": {
+        "title": "Reindex monohilo",
+        "description": "Sin slices, reindex grandes se quedan en un solo hilo coordinador.",
+        "suggestion": "Pon slices en auto o un entero positivo para paralelizar por shards.",
+        "studentExplanation": "Como mudar un almacén con un solo carrito: alquila más carritos.",
+        "voiceSummary": "Reindex sin slices. Añade paralelismo.",
+        "technicalMessage": "ES-RX-001: reindex sin campo slices."
+      },
+      "ES-RX-002": {
+        "title": "Script de reindex ignora borrados",
+        "description": "El script usa ctx._source pero no comprueba ctx.op en borrados o noop.",
+        "suggestion": "Protege con if (ctx.op == 'index' || ctx.op == 'create') { ... }.",
+        "studentExplanation": "Como empacar sin mirar si el pedido fue cancelado.",
+        "voiceSummary": "Reindex script usa _source sin ctx.op. Añade guardas.",
+        "technicalMessage": "ES-RX-002: usesSource && !guardsOp en script reindex."
+      },
+      "ES-RX-003": {
+        "title": "Nota de reindex mismo clúster",
+        "description": "Reindex sin bloque remote copia dentro del clúster, típico en migraciones.",
+        "suggestion": "Para copia entre clústeres añade source.remote con el alias remoto.",
+        "studentExplanation": "Como fotocopiar en casa frente a enviar a otra oficina: este modo es interno.",
+        "voiceSummary": "Reindex mismo clúster. Añade remote si cruza clúster.",
+        "technicalMessage": "ES-RX-003: reindex sin remote (INFO)."
+      },
+      "ES-ILM-001": {
+        "title": "Fase caliente sin rollover",
+        "description": "La fase hot no define rollover y los índices pueden crecer sin límite.",
+        "suggestion": "Añade rollover con umbral de edad, tamaño o documentos.",
+        "studentExplanation": "Como un cubo de basura sin plan de vaciado: se llena.",
+        "voiceSummary": "ILM hot sin rollover. Añade acción rollover.",
+        "technicalMessage": "ES-ILM-001: hot sin actions.rollover."
+      },
+      "ES-ILM-002": {
+        "title": "Fase delete sin ventana de retención",
+        "description": "La fase delete carece de min_age y el momento del borrado queda confuso o inmediato.",
+        "suggestion": "Define min_age, por ejemplo 90d, como ventana clara antes de borrar.",
+        "studentExplanation": "Como tirar papeles sin regla de «guardar un año».",
+        "voiceSummary": "Delete phase sin min_age. Define retención.",
+        "technicalMessage": "ES-ILM-002: delete sin min_age válido."
+      },
+      "ES-ILM-003": {
+        "title": "Shrink antes de forcemerge",
+        "description": "En warm, shrink aparece antes que forcemerge, orden poco habitual.",
+        "suggestion": "Prefiere forcemerge antes de shrink para un flujo ILM típico.",
+        "studentExplanation": "Como planchar antes de lavar: invierte el orden habitual.",
+        "voiceSummary": "ILM warm: shrink antes de forcemerge. Reordena.",
+        "technicalMessage": "ES-ILM-003: shrinkPos < fmPos en acciones warm."
+      },
+      "ES-ILM-004": {
+        "title": "Fase cold sin congelar",
+        "description": "Cold sin freeze deja más presión de memoria de la necesaria en archivos.",
+        "suggestion": "Añade freeze en cold cuando quieras archivo de solo lectura más barato en heap.",
+        "studentExplanation": "Como guardar abrigos sin bolsa al vacío: congelar compacta.",
+        "voiceSummary": "Cold sin freeze. Considera freeze.",
+        "technicalMessage": "ES-ILM-004: cold sin acción freeze."
+      },
+      "ES-ILM-005": {
+        "title": "Política ILM sin fase delete",
+        "description": "Sin delete, los índices viejos pueden quedarse para siempre en el clúster.",
+        "suggestion": "Añade fase delete u otra limpieza gestionada para datos caducos.",
+        "studentExplanation": "Como un armario sin día de limpieza: se llena.",
+        "voiceSummary": "ILM sin fase delete. Añade limpieza.",
+        "technicalMessage": "ES-ILM-005: phases sin clave delete."
+      },
+      "ES-SNP-001": {
+        "title": "Repositorio de snapshots sin compresión",
+        "description": "La configuración deja compress apagado y los snapshots usan más disco.",
+        "suggestion": "Activa compress donde el tipo de repositorio lo permita.",
+        "studentExplanation": "Como mudanza sin bolsas al vacío: ocupa más.",
+        "voiceSummary": "Repo snapshot sin compress true. Actívalo si aplica.",
+        "technicalMessage": "ES-SNP-001: settings.compress no true."
+      },
+      "ES-SNP-002": {
+        "title": "Restaurar sin patrón de renombre",
+        "description": "Restaurar sin rename puede sobrescribir índices existentes con el mismo nombre.",
+        "suggestion": "Usa rename_pattern y rename_replacement para aterrizar en nombres nuevos.",
+        "studentExplanation": "Como mover muebles a una habitación aún ocupada: etiqueta nuevas habitaciones.",
+        "voiceSummary": "Restore sin rename_pattern. Mapea nombres nuevos.",
+        "technicalMessage": "ES-SNP-002: restore sin rename_pattern."
+      },
+      "ES-SNP-003": {
+        "title": "Repositorio sin pista de verificación",
+        "description": "No hay calendario ni pista de verify_after_inactivity para el repositorio.",
+        "suggestion": "Programa POST _snapshot/repo/_verify o SLM con cron.",
+        "studentExplanation": "Como detector de humo sin recordatorio de prueba: agenda revisiones.",
+        "voiceSummary": "Repo sin pista de verificación periódica. Planifica verify.",
+        "technicalMessage": "ES-SNP-003: sin verify_after_inactivity ni schedule."
+      },
+      "ES-SNP-004": {
+        "title": "Snapshot incluye estado global",
+        "description": "include_global_state true captura metadatos de clúster; restaurar puede sorprender en prod.",
+        "suggestion": "Prefiere false salvo que quieras restaurar metadatos globales a propósito.",
+        "studentExplanation": "Como respaldar la llave maestra del edificio cuando solo querías un piso.",
+        "voiceSummary": "include_global_state true. Usa false salvo intención clara.",
+        "technicalMessage": "ES-SNP-004: snapshot create include_global_state true."
+      },
+      "ES-TPL-001": {
+        "title": "Faltan parámetros de plantilla",
+        "description": "La plantilla Mustache usa nombres que no aparecen en params.",
+        "suggestion": "Añade cada nombre bajo params o bloques {{^nombre}} por defecto.",
+        "studentExplanation": "Como un formulario con huecos que la carta pide pero no rellenaste.",
+        "voiceSummary": "Params incompletos para Mustache. Añade claves.",
+        "technicalMessage": "ES-TPL-001: raíces Mustache no cubiertas por params."
+      },
+      "ES-TPL-002": {
+        "title": "Parámetros opcionales sin valores por defecto",
+        "description": "Faltan bloques invertidos {{^name}} para parámetros opcionales usados en secciones.",
+        "suggestion": "Añade {{^nombre}}...{{/nombre}} para cada opcional que pueda faltar.",
+        "studentExplanation": "Como toppings opcionales sin línea de «ninguno» en el pedido.",
+        "voiceSummary": "Mustache sin defaults {{^}}. Añade bloques invertidos.",
+        "technicalMessage": "ES-TPL-002: secciones Mustache sin defaults para parámetros opcionales."
+      },
+      "ES-TPL-003": {
+        "title": "Plantilla parece ensamblaje inseguro",
+        "description": "El texto recuerda patrones de inyección o SQL dinámico peligroso.",
+        "suggestion": "Construye consultas desde campos JSON estructurados, no pegando texto de usuario.",
+        "studentExplanation": "Como pegar frases de desconocidos en un contrato: usa marcadores seguros.",
+        "voiceSummary": "Plantilla con patrón tipo inyección. Refactoriza.",
+        "technicalMessage": "ES-TPL-003: containsSqlInjectionLikePattern en plantilla Mustache."
+      },
+      "ES-TPL-004": {
+        "title": "Valida la plantilla antes de producción",
+        "description": "Las plantillas por id o con interpolaciones deben ensayarse con parámetros reales.",
+        "suggestion": "Llama POST _render/template con params parecidos a producción antes del go-live.",
+        "studentExplanation": "Como ensayar con el micrófono real, no solo en papel.",
+        "voiceSummary": "Usa render template para validar Mustache con params.",
+        "technicalMessage": "ES-TPL-004: aviso de validación _render/template (ElasticsearchAnalyzer)."
+      },
+      "ES-RND-001": {
+        "title": "Parámetros de render alineados",
+        "description": "Cada parámetro referenciado está presente y no sobran claves.",
+        "suggestion": "Mantén esta práctica de prueba en CI también para plantillas almacenadas por id.",
+        "studentExplanation": "Como ensayo donde cada actor trajo justo su atributo.",
+        "voiceSummary": "Params de render completos y alineados. Buena práctica.",
+        "technicalMessage": "ES-RND-001: params cubren raíces Mustache sin sobrantes."
+      },
+      "ES-RND-002": {
+        "title": "Claves de params no usadas",
+        "description": "El objeto params incluye claves que la plantilla no menciona.",
+        "suggestion": "Elimina claves no usadas para peticiones claras.",
+        "studentExplanation": "Como meter zapatos de playa en una maleta de negocios que no los nombra.",
+        "voiceSummary": "Params con claves sin usar. Límpialas.",
+        "technicalMessage": "ES-RND-002: claves de params no referenciadas por la plantilla."
+      },
+      "CQL-BATCH-APPLY": {
+        "title": "Lote sin cerrar correctamente",
+        "description": "Un bloque BATCH de Cassandra no termina con la frase obligatoria.",
+        "suggestion": "Cierra el lote con APPLY BATCH antes del punto y coma para que el servidor lo acepte.",
+        "studentExplanation": "Como sellar una carta pero olvidar la frase de cierre que el formulario exige.",
+        "voiceSummary": "BATCH debe terminar con APPLY BATCH.",
+        "technicalMessage": "CQL-BATCH-APPLY: endsWithApplyBatch false en CqlAnalyzer.analyzeBatch."
+      },
+      "CQL-BATCH-LARGE": {
+        "title": "Lote de Cassandra muy grande",
+        "description": "El lote incluye muchas sentencias; es un antipatrón conocido.",
+        "suggestion": "Divide en lotes más pequeños o usa escrituras asíncronas con concurrencia segura.",
+        "studentExplanation": "Como meter a todo el edificio en un solo ascensor: varios viajes son más seguros.",
+        "voiceSummary": "Lote CQL grande. Divide o ve asíncrono.",
+        "technicalMessage": "CQL-BATCH-LARGE: conteo estimado de sentencias > 100."
+      },
+      "DDB-MGMT-JSON": {
+        "title": "JSON inválido para gestión en DynamoDB",
+        "description": "Flujos, copias de seguridad o PITR requieren un objeto JSON válido.",
+        "suggestion": "Corrige llaves, comas y comillas y vuelve a enviar la petición de gestión.",
+        "studentExplanation": "Como un formulario ilegible que la oficina devuelve sin procesar.",
+        "voiceSummary": "Error de parseo JSON en gestión DynamoDB.",
+        "technicalMessage": "DDB-MGMT-JSON: JsonProcessingException en analyzeManagementPayload."
+      },
+      "DDB-STR-VIEW": {
+        "title": "Tipo de vista de stream desconocido",
+        "description": "StreamViewType no es un valor reconocido por DynamoDB.",
+        "suggestion": "Usa KEYS_ONLY, NEW_IMAGE, OLD_IMAGE o NEW_AND_OLD_IMAGES.",
+        "studentExplanation": "Como elegir un modo de cámara que tu modelo no ofrece.",
+        "voiceSummary": "StreamViewType de DynamoDB inválido.",
+        "technicalMessage": "DDB-STR-VIEW: valor fuera del conjunto STREAM_VIEW_TYPES."
+      },
+      "DDB-TX-JSON": {
+        "title": "JSON inválido para transacción",
+        "description": "TransactItems debe ir dentro de un único objeto JSON bien formado.",
+        "suggestion": "Valida la estructura JSON y asegura que TransactItems sea un array antes de reintentar.",
+        "studentExplanation": "Como una lista de compra rota por la mitad: el cajero no ve el carrito completo.",
+        "voiceSummary": "JSON de petición Transact inválido.",
+        "technicalMessage": "DDB-TX-JSON: JsonProcessingException en analyzeTransactRequest."
+      },
+      "ES-CROSS-003": {
+        "title": "Estilos de API de Elasticsearch mezclados",
+        "description": "El script combina cuerpos de búsqueda con ingest, reindex, ILM, snapshots o plantillas.",
+        "suggestion": "Envía cada tipo a su ruta HTTP correcta (/_search, /_ingest/pipeline, /_reindex, etc.).",
+        "studentExplanation": "Como mezclar cartas, paquetes y trámites legales en un solo sobre: sepáralos por ventanilla.",
+        "voiceSummary": "Script mezcla tipos de payload de Elasticsearch. Divide peticiones.",
+        "technicalMessage": "ES-CROSS-003: distinctApiKinds >= 2 en analyzeCrossScriptOnly."
+      },
+      "ES-CROSS-004": {
+        "title": "Varias definiciones de pipeline de ingest juntas",
+        "description": "Aparecen varias definiciones PUT de pipeline en un script; el clúster no las encadena solo.",
+        "suggestion": "Documenta dependencias entre pipelines en tu runbook o CI.",
+        "studentExplanation": "Como apilar varias tarjetas de receta: el horno no elige el orden por ti.",
+        "voiceSummary": "Varios pipelines de ingest en un script. Documenta el orden.",
+        "technicalMessage": "ES-CROSS-004: ingestBlocks >= 2 en analyzeCrossScriptOnly."
+      },
+      "LUA-PARSE-ERROR": {
+        "title": "No se pudo analizar el script Lua",
+        "description": "El fragmento Lua de Redis tiene un problema de sintaxis o de tokens.",
+        "suggestion": "Revisa comillas, llaves, estructura if/for/end y comentarios cerca de la línea indicada.",
+        "studentExplanation": "Como un patrón de punto omitido: las siguientes filas no cuadran.",
+        "voiceSummary": "Error de análisis léxico o sintáctico en Lua.",
+        "technicalMessage": "LUA-PARSE-ERROR: LexException o ParseException en LuaAnalyzer."
+      },
+      "MGO-AGG-PERF-001": {
+        "title": "Pipeline largo sin filtro temprano",
+        "description": "Muchas etapas de agregación van antes de un $match selectivo; el servidor puede escanear demasiados documentos.",
+        "suggestion": "Coloca primero un $match selectivo para reducir el conjunto de trabajo.",
+        "studentExplanation": "Como lavar todos los platos del edificio antes de elegir qué estantería llenar: filtra primero.",
+        "voiceSummary": "Más de cinco etapas sin $match inicial. Añade $match al inicio.",
+        "technicalMessage": "MGO-AGG-PERF-001: stageOpens.size()>5 y primera etapa distinta de $match."
+      },
+      "MGO-ELEM-001": {
+        "title": "Consulta de elemento sin condición real",
+        "description": "Hay $elemMatch pero vacío; no describe qué elementos del arreglo buscas.",
+        "suggestion": "Añade al menos un predicado dentro de $elemMatch, por ejemplo una comparación sobre un campo.",
+        "studentExplanation": "Como decir «cualquier fila» sin decir qué columna comprobar.",
+        "voiceSummary": "$elemMatch necesita condiciones internas.",
+        "technicalMessage": "MGO-ELEM-001: validateElemMatch con lista interior vacía."
+      },
+      "MGO-GEO-IDX-001": {
+        "title": "La consulta geo necesita índice",
+        "description": "Filtros near o within esperan un índice 2dsphere o 2d en el campo de coordenadas.",
+        "suggestion": "Crea el índice geo adecuado antes de depender de estas consultas en producción.",
+        "studentExplanation": "Como usar mapas sin mapas descargados: la ruta no carga.",
+        "voiceSummary": "Consulta geo requiere índice 2dsphere o 2d.",
+        "technicalMessage": "MGO-GEO-IDX-001: advisory $near/$nearSphere/$geoWithin/$geoIntersects en MongoDbAnalyzer."
+      },
+      "MGO-GEO-NEAR-001": {
+        "title": "Consulta near sin tope de distancia",
+        "description": "Una consulta estilo $near no tiene $maxDistance; coste y resultados pueden dispararse.",
+        "suggestion": "Añade $maxDistance (y opcionalmente $minDistance) para acotar el radio.",
+        "studentExplanation": "Como pedir todos los restaurantes del mundo ordenados por distancia: di hasta dónde vas.",
+        "voiceSummary": "Añade $maxDistance a consultas near.",
+        "technicalMessage": "MGO-GEO-NEAR-001: falta $maxDistance en validateNearMaxDistance."
+      },
+      "MGO-GEO-POLY-001": {
+        "title": "Anillo del polígono sin cerrar",
+        "description": "Los polígonos GeoJSON deben repetir la primera coordenada como último punto de cada anillo.",
+        "suggestion": "Cierra cada anillo lineal copiando la primera coordenada al final.",
+        "studentExplanation": "Como una valla que no vuelve al primer poste.",
+        "voiceSummary": "Polígono GeoJSON: primero y último punto deben coincidir.",
+        "technicalMessage": "MGO-GEO-POLY-001: !isClosedLinearRing en validateGeoWithinPolygon."
+      },
+      "MGO-JS-101": {
+        "title": "Script de servidor lee campos con “this”",
+        "description": "El fragmento usa this para leer campos del documento en el servidor; es difícil auditar y costoso.",
+        "suggestion": "Prefiere operadores de consulta, agregación o $expr en lugar de JavaScript en servidor.",
+        "studentExplanation": "Como un cuaderno que se reescribe solo: más difícil de revisar con seguridad.",
+        "voiceSummary": "JS en servidor Mongo usa this. Prefiere operadores o $expr.",
+        "technicalMessage": "MGO-JS-101: MongoJsParser WORD_THIS en JS depurado."
+      },
+      "MGO-JS-102": {
+        "title": "Llamada peligrosa en JavaScript de servidor",
+        "description": "Aparecen patrones como eval, require o Function en JavaScript del lado MongoDB.",
+        "suggestion": "Elimina estas llamadas; pueden permitir abusos o comportamiento inesperado.",
+        "studentExplanation": "Como dar el mando maestro de tu casa a un desconocido: revoca llamadas riesgosas.",
+        "voiceSummary": "Llamada JS peligrosa en fragmento Mongo. Elimina eval o similar.",
+        "technicalMessage": "MGO-JS-102: MongoJsParser dangerous() para eval/require/Function."
+      },
+      "MGO-OID-001": {
+        "title": "ObjectId comparado como texto plano",
+        "description": "Comparar _id con una cadena hex de 24 caracteres sin ObjectId nunca coincidirá con ObjectIds BSON.",
+        "suggestion": "Usa ObjectId(\"...\") o el tipo BSON que espere tu driver.",
+        "studentExplanation": "Como comparar el número del casillero en papel con la chapita de la llave: formas distintas.",
+        "voiceSummary": "Envuelve cadenas hex de _id con ObjectId.",
+        "technicalMessage": "MGO-OID-001: scanObjectIdStringComparisons cadena hex junto a campo _id."
+      },
+      "MGO-PUSH-001": {
+        "title": "Empujar varios valores sin $each",
+        "description": "Empujar varios elementos a la vez debe usar el modificador $each por claridad y eficiencia.",
+        "suggestion": "Envuelve los valores como { $each: [ ... ] } dentro de $push o $addToSet.",
+        "studentExplanation": "Como varios platos en una sola etiqueta: usa el divisor del carrito.",
+        "voiceSummary": "Usa $each para $push o $addToSet multivalor.",
+        "technicalMessage": "MGO-PUSH-001: validatePushStyleArrays varios elementos sin $each."
+      },
+      "MGO-PULL-001": {
+        "title": "Regla $pull vacía",
+        "description": "Un $pull vacío puede borrar todos los elementos coincidentes del arreglo sin querer.",
+        "suggestion": "Añade predicados explícitos a $pull o confirma que quieres vaciar coincidencias.",
+        "studentExplanation": "Como «quita todas las pegatinas» sin decir cuál: puede irse todo.",
+        "voiceSummary": "$pull vacío es arriesgado. Añade predicados.",
+        "technicalMessage": "MGO-PULL-001: validatePull con objeto interior vacío."
+      },
+      "MGO-TEXT-LANG-001": {
+        "title": "Idioma de búsqueda de texto no reconocido",
+        "description": "El valor de $language no está en la lista de idiomas de texto admitidos por MongoDB.",
+        "suggestion": "Elige un código admitido u omite $language para usar el valor por defecto del índice.",
+        "studentExplanation": "Como corregir ortografía en un idioma sin diccionario instalado.",
+        "voiceSummary": "$language no admitido para búsqueda de texto.",
+        "technicalMessage": "MGO-TEXT-LANG-001: validateTextLanguage idioma fuera de KNOWN_TEXT_LANGUAGES."
+      },
+      "PNL-PARSE-ERROR": {
+        "title": "No se pudo analizar el script Painless",
+        "description": "El fragmento Painless de Elasticsearch tiene un error de sintaxis cerca de la posición indicada.",
+        "suggestion": "Revisa llaves, punto y coma, uso de def y comentarios en el error.",
+        "studentExplanation": "Como una fórmula con un paréntesis de más: la hoja deja de calcular.",
+        "voiceSummary": "Error léxico o sintáctico en Painless.",
+        "technicalMessage": "PNL-PARSE-ERROR: LexException o ParseException de Painless."
+      },
+      "RDS-TX-005": {
+        "title": "Transacción abierta al final del script",
+        "description": "Un bloque MULTI nunca recibe EXEC o DISCARD antes de terminar el script.",
+        "suggestion": "Cierra siempre MULTI con EXEC para aplicar o DISCARD para cancelar antes de finalizar.",
+        "studentExplanation": "Como dejar la caja a mitad de cobro sin pagar ni anular: el registro queda bloqueado.",
+        "voiceSummary": "El script termina dentro de MULTI. Envía EXEC o DISCARD.",
+        "technicalMessage": "RDS-TX-005: inMulti true al final del análisis cross-script Redis."
+      }
+    }
+  },
+  "history": {
+    "title": "Historial de Queries",
+    "subtitle": "Cada análisis que ejecutes con sesión iniciada se guarda aquí — como un Grammarly para queries.",
+    "searchPlaceholder": "Buscar en historial…",
+    "clearAll": "Limpiar todo",
+    "filterAll": "Todas",
+    "filterValid": "Válidas",
+    "filterInvalid": "Inválidas",
+    "filterFavorites": "Favoritas",
+    "badgeValid": "VÁLIDA",
+    "badgeInvalid": "INVÁLIDA",
+    "badgeNativeValid": "Nativo: válida",
+    "badgeNativeInvalid": "Nativo: inválida",
+    "badgeAiValid": "IA: válida",
+    "badgeAiInvalid": "IA: inválida",
+    "nativeValidityTitle": "Resultado del analizador nativo QWERYS",
+    "aiValidityTitle": "Resultado tras la segunda pasada IA (complemento)",
+    "favorite": "Añadir a favoritos",
+    "unfavorite": "Quitar de favoritos",
+    "reanalyze": "Re-analizar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "confirmDeleteMessage": "¿Eliminar esta entrada del historial?",
+    "confirmClearTitle": "Limpiar historial",
+    "confirmClearMessage": "¿Eliminar todas las entradas del historial? Esta acción no se puede deshacer.",
+    "loading": "Cargando historial…",
+    "empty": "Aún no hay entradas. Analiza una query con sesión iniciada para crear tu historial.",
+    "selectEntry": "Selecciona una entrada para ver la query completa y el análisis.",
+    "detailTitle": "Detalle del análisis",
+    "fullQuery": "Query completa",
+    "errorsSection": "Errores",
+    "optimizationsSection": "Optimizaciones",
+    "aiComplementSection": "Perspectiva IA (complemento)",
+    "aiProvider": "Fuente IA",
+    "aiNativeReviews": "Revisión del análisis nativo",
+    "aiWarnings": "Advertencias IA",
+    "aiOptimizations": "Sugerencias de optimización (IA)",
+    "noParsedResult": "No se pudo interpretar el JSON del resultado guardado.",
+    "analysisTime": "Tiempo de análisis: {{ms}} ms",
+    "warningsCount": "{{count}} advertencia(s)",
+    "optimizationsCount": "{{count}} optimización(es)",
+    "prevPage": "Anterior",
+    "nextPage": "Siguiente",
+    "pageOf": "Página {{current}} de {{total}}",
+    "toolbarAria": "Búsqueda y acciones del historial",
+    "filtersAria": "Filtros del historial",
+    "listAria": "Entradas del historial",
+    "detailAria": "Detalle de la entrada seleccionada",
+    "paginationAria": "Paginación del historial",
+    "entryAria": "Entrada del historial: {{query}}",
+    "back": "Volver",
+    "backToList": "Volver al historial",
+    "errors": {
+      "authRequired": "Inicia sesión para ver y gestionar tu historial de queries.",
+      "generic": "No se pudo cargar el historial. Inténtalo de nuevo.",
+      "clearFailed": "No se pudo limpiar el historial. Inténtalo de nuevo."
+    }
+  },
+  "placeholders": {
+    "analyzer": "Analizador de Queries — próximamente",
+    "migration": "Migración de Código",
+    "schema": "Explorador de Esquemas — próximamente",
+    "history": "Historial",
+    "ai": "Sugerencias IA",
+    "settings": "Configuración"
+  },
+  "auth": {
+    "tagline": "One system. Any query. Any user.",
+    "tabs": {
+      "login": "Iniciar Sesión",
+      "register": "Crear Cuenta"
+    },
+    "fields": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña"
+    },
+    "placeholders": {
+      "name": "Tu nombre",
+      "email": "tu@correo.com",
+      "password": "••••••••",
+      "confirmPassword": "Repite tu contraseña"
+    },
+    "buttons": {
+      "login": "Entrar",
+      "register": "Crear Cuenta",
+      "guest": "Continuar como Invitado"
+    },
+    "divider": "o",
+    "loading": "Cargando...",
+    "error": {
+      "invalidCredentials": "Correo o contraseña incorrectos. Inténtalo de nuevo.",
+      "emailNotFound": "No existe ninguna cuenta con este correo electrónico",
+      "registerFailed": "No se pudo crear la cuenta. Inténtalo más tarde.",
+      "emailAlreadyRegistered": "Este correo ya tiene cuenta. Usa Iniciar sesión con la misma contraseña.",
+      "backendUnavailable": "No se pudo conectar con el servidor. Comprueba que el backend esté encendido (puerto 8080) e inténtalo de nuevo.",
+      "emailInvalid": "Ingresa un correo válido.",
+      "passwordRequired": "La contraseña es obligatoria.",
+      "passwordMin": "La contraseña debe tener al menos 6 caracteres.",
+      "nameRequired": "El nombre es obligatorio.",
+      "passwordMismatch": "Las contraseñas no coinciden."
+    }
+  },
+  "onboarding": {
+    "title": "Personaliza tu experiencia",
+    "subtitleGuest": "Esta personalización es temporal. Si creas una cuenta, la guardarás para siempre.",
+    "subtitleNew": "Elige cómo quieres que QWERYS se adapte a ti.",
+    "langLabel": "Seleccionar idioma",
+    "themeToggle": "Cambiar tema",
+    "modesLabel": "Modos de accesibilidad",
+    "start": "Empezar",
+    "theme": {
+      "light": "Claro",
+      "dark": "Oscuro"
+    },
+    "modes": {
+      "blind": {
+        "label": "Modo Ciego",
+        "desc": "Navegación optimizada para lector de pantalla"
+      },
+      "lowVision": {
+        "label": "Baja Visión",
+        "desc": "Texto grande y alto contraste"
+      },
+      "dyslexia": {
+        "label": "Dislexia",
+        "desc": "Fuente y espaciado adaptados"
+      },
+      "deaf": {
+        "label": "Sordo",
+        "desc": "Sin alertas de audio, más contexto visual"
+      },
+      "adhd": {
+        "label": "TDAH",
+        "desc": "Interfaz sin distracciones y enfocada"
+      },
+      "student": {
+        "label": "Estudiante",
+        "desc": "Explicaciones detalladas y guías"
+      },
+      "expert": {
+        "label": "Experto",
+        "desc": "Modo compacto, sin ayudas adicionales"
+      }
+    }
+  },
+  "schema": {
+    "title": "Explorador de esquemas",
+    "subtitle": "Conecta a tu motor, lista tablas o colecciones y revisa columnas sin salir de QWERYS.",
+    "host": "Host",
+    "port": "Puerto",
+    "database": "Base de datos",
+    "filePath": "Ruta del archivo (.db)",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "keyspace": "Keyspace",
+    "index": "Índice",
+    "dbNumber": "Base de datos (0-15)",
+    "region": "Región AWS",
+    "accessKeyId": "Access Key ID",
+    "secretAccessKey": "Secret Access Key",
+    "authOptionalHint": "Autenticación opcional para este motor.",
+    "dynamodbPortHint": "8000 = DynamoDB Local. 443 = AWS real (HTTPS).",
+    "dynamodbRegionHint": "Región AWS (ej. us-east-1). Si está vacía, el servidor usa AWS_REGION.",
+    "dynamodbConnectionHint": "AWS: host regional (ej. dynamodb.us-east-1.amazonaws.com) y puerto 443. Local: localhost y puerto 8000.",
+    "dbType": "Tipo de BD",
+    "timeout": "Tiempo de espera (segundos)",
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "connecting": "Conectando…",
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "connectionError": "Error de conexión",
+    "connectionErrorDetail": "No se pudo establecer la conexión. Comprueba host, puerto, credenciales y nombre de la base de datos, o inténtalo de nuevo más tarde.",
+    "connectionSuccess": "Conexión correcta.",
+    "tablesLoadError": "No se pudo cargar la lista de tablas o colecciones.",
+    "columnsLoadError": "No se pudo cargar el detalle de columnas.",
+    "engines": {
+      "mysql": "MySQL",
+      "postgresql": "PostgreSQL",
+      "sqlite": "SQLite",
+      "sqlserver": "SQL Server",
+      "oracle": "Oracle",
+      "mongodb": "MongoDB",
+      "redis": "Redis",
+      "cassandra": "Cassandra",
+      "dynamodb": "DynamoDB",
+      "elasticsearch": "Elasticsearch"
+    },
+    "tables": "Tablas / colecciones",
+    "columns": "Columnas",
+    "columnName": "Nombre",
+    "dataType": "Tipo",
+    "nullable": "Nullable",
+    "primaryKey": "PK",
+    "noTableSelected": "Selecciona una tabla o colección de la lista.",
+    "noColumns": "No hay columnas para mostrar.",
+    "noTables": "Conexión correcta, pero no se encontraron tablas o colecciones.",
+    "awsNote": "DynamoDB suele usar credenciales y región del entorno (por ejemplo variables AWS). Completa el identificador de recurso que pida tu despliegue.",
+    "yes": "Sí",
+    "no": "No",
+    "back": "Volver",
+    "backToList": "Volver a la lista de tablas"
+  },
+  "migration": {
+    "title": "Migración de código",
+    "subtitle": "Convierte código entre lenguajes de programación con las 9 estrategias de QWERYS.",
+    "source": "Origen",
+    "target": "Destino",
+    "sourceLanguage": "Lenguaje origen",
+    "targetLanguage": "Lenguaje destino",
+    "migrate": "Migrar →",
+    "converting": "Convirtiendo…",
+    "copy": "Copiar código",
+    "download": "Descargar",
+    "copied": "Código copiado al portapapeles.",
+    "copyFailed": "No se pudo copiar. Intenta seleccionar el texto manualmente.",
+    "migratedPlaceholder": "El código migrado aparecerá aquí…",
+    "warningsTitle": "Advertencias",
+    "manualTitle": "Pasos manuales",
+    "sourceEditorLabel": "Editor de código origen. Escribe o pega el código a migrar.",
+    "targetEditorLabel": "Editor de código migrado, solo lectura.",
+    "resultReady": "Migración completada a {{language}}.",
+    "languages": {
+      "cpp": "C++",
+      "python": "Python",
+      "java": "Java",
+      "typescript": "TypeScript"
+    },
+    "errors": {
+      "conversionFailed": "No se pudo completar la migración."
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "accessibility": {
+      "title": "Modos de Accesibilidad",
+      "blind": {
+        "label": "Modo Ciego",
+        "desc": "Activa lector de pantalla y navegación por teclado"
+      },
+      "lowVision": {
+        "label": "Baja Visión",
+        "desc": "Fuente XXL, alto contraste, botones grandes"
+      },
+      "dyslexia": {
+        "label": "Dislexia",
+        "desc": "Fuente OpenDyslexic, espaciado aumentado, bloques colapsables"
+      },
+      "deaf": {
+        "label": "Sordo",
+        "desc": "Elimina audio, agrega captions a animaciones"
+      },
+      "adhd": {
+        "label": "TDAH",
+        "desc": "Interfaz simplificada, modo paso a paso, sin distracciones"
+      },
+      "student": {
+        "label": "Estudiante",
+        "desc": "Explicaciones detalladas, ejemplos, tooltips educativos"
+      },
+      "expert": {
+        "label": "Experto",
+        "desc": "Árbol AST visible, métricas técnicas, atajos avanzados"
+      },
+      "highContrast": {
+        "label": "Alto Contraste",
+        "desc": "Fondo negro puro, texto blanco, bordes blancos — máxima legibilidad"
+      }
+    },
+    "device": {
+      "title": "Dispositivo",
+      "mobile": "Móvil",
+      "tablet": "Tablet",
+      "laptop": "Laptop",
+      "desktop": "Desktop",
+      "detect": "Detectar automáticamente"
+    },
+    "language": {
+      "title": "Idioma",
+      "es": "Español",
+      "en": "English"
+    },
+    "account": {
+      "title": "Mi Cuenta",
+      "changePassword": "Cambiar contraseña",
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "savePassword": "Guardar contraseña",
+      "changeEmail": "Cambiar correo electrónico",
+      "newEmail": "Nuevo correo electrónico",
+      "saveEmail": "Guardar correo",
+      "deleteAccount": "Eliminar cuenta",
+      "deleteWarning": "Esta acción es permanente e irreversible. Todos tus datos serán eliminados.",
+      "deleteButton": "Eliminar mi cuenta",
+      "deleteConfirm": "¿Estás seguro? Esta acción no se puede deshacer.",
+      "confirmYes": "Sí, eliminar mi cuenta",
+      "confirmNo": "Cancelar",
+      "sessionRequired": "Tu sesión no es válida. Vuelve a iniciar sesión.",
+      "passwordMismatch": "Las contraseñas nuevas no coinciden",
+      "passwordMinLength": "Mínimo 6 caracteres",
+      "passwordUpdated": "Contraseña actualizada correctamente",
+      "passwordChangeFailed": "Error al cambiar la contraseña",
+      "emailUpdated": "Correo actualizado correctamente",
+      "emailChangeFailed": "Error al cambiar el correo",
+      "deleteFailed": "Error al eliminar la cuenta"
+    },
+    "engines": {
+      "title": "Motores de Base de Datos",
+      "predefined_hint": "Motores incluidos por defecto:",
+      "base": "Motor base",
+      "name_label": "Nombre del motor",
+      "name_placeholder": "Ej: MiBaseDeDatos",
+      "base_label": "Motor base similar",
+      "add_button": "+ Agregar motor",
+      "remove": "Eliminar motor",
+      "guest_sync_hint": "Los motores personalizados se guardan en este dispositivo. Inicia sesión (no como invitado) para sincronizarlos entre dispositivos y verlos en la API del analizador.",
+      "saved": "Motores guardados en tu cuenta.",
+      "error": "No se pudo sincronizar con tu cuenta. Los motores locales siguen guardados en este navegador.",
+      "ai_hint": "Los motores personalizados usan IA (con GROQ_API_KEY) o un análisis aproximado del motor base que elijas.",
+      "ai_hint_active": "IA activa: los motores personalizados se analizan con Groq usando el motor base solo como referencia.",
+      "reference_hint": "El motor base similar solo orienta a la IA; el análisis final es para tu motor personalizado.",
+      "sql_like_reference_hint": "Si tu motor usa consultas tipo SQL (Couchbase N1QL, CQL, SQL++…), suele funcionar mejor elegir MySQL o PostgreSQL como referencia, no MongoDB ni Redis."
+    }
+  },
+  "student": {
+    "whatIsThis": "¿Qué significa esto?",
+    "correctedExample": "Ejemplo corregido",
+    "practicesScore": "Buenas prácticas",
+    "practicesScoreStatement": "Buenas prácticas (sentencia {{index}})",
+    "keywordsDetected": "Palabras clave en tu query",
+    "tooltipSyntax": "Sintaxis básica",
+    "tooltipExample": "Ejemplo",
+    "tooltips": {
+      "SELECT": {
+        "purpose": "Recupera columnas de una o más tablas.",
+        "syntax": "SELECT columna1, columna2 FROM tabla",
+        "example": "SELECT id, nombre FROM usuarios WHERE activo = true"
+      },
+      "FROM": {
+        "purpose": "Indica de qué tabla(s) salen los datos.",
+        "syntax": "SELECT ... FROM tabla [alias]",
+        "example": "SELECT * FROM pedidos p JOIN clientes c ON p.cliente_id = c.id"
+      },
+      "WHERE": {
+        "purpose": "Filtra filas que cumplan una condición.",
+        "syntax": "WHERE condición",
+        "example": "SELECT * FROM usuarios WHERE edad >= 18 AND pais = 'ES'"
+      },
+      "DELETE": {
+        "purpose": "Elimina filas de una tabla.",
+        "syntax": "DELETE FROM tabla WHERE condición",
+        "example": "DELETE FROM sesiones WHERE expira_en < NOW()"
+      },
+      "DELETE_FROM": {
+        "purpose": "Elimina filas de la tabla indicada.",
+        "syntax": "DELETE FROM tabla WHERE condición",
+        "example": "DELETE FROM logs WHERE fecha < '2024-01-01'"
+      },
+      "UPDATE": {
+        "purpose": "Modifica valores de columnas en filas existentes.",
+        "syntax": "UPDATE tabla SET col = valor WHERE condición",
+        "example": "UPDATE usuarios SET activo = false WHERE ultimo_login < '2025-01-01'"
+      },
+      "JOIN": {
+        "purpose": "Combina filas de dos o más tablas relacionadas.",
+        "syntax": "FROM a JOIN b ON a.id = b.a_id",
+        "example": "SELECT u.nombre, p.total FROM usuarios u JOIN pedidos p ON u.id = p.usuario_id"
+      },
+      "LIMIT": {
+        "purpose": "Acota cuántas filas devuelve la consulta.",
+        "syntax": "LIMIT n [OFFSET m]",
+        "example": "SELECT * FROM productos ORDER BY precio DESC LIMIT 20"
+      }
+    },
+    "keywords": {
+      "GROUP_BY": "Agrupa filas con valores iguales",
+      "ORDER_BY": "Ordena los resultados",
+      "LEFT_JOIN": "Combina tablas conservando todas las filas de la izquierda",
+      "RIGHT_JOIN": "Combina tablas conservando todas las filas de la derecha",
+      "INNER_JOIN": "Combina solo las filas que coinciden en ambas tablas",
+      "FULL_JOIN": "Combina todas las filas de ambas tablas",
+      "INSERT_INTO": "Inserta nuevos registros en una tabla",
+      "DELETE_FROM": "Elimina registros de una tabla",
+      "SELECT": "Selecciona columnas de una tabla",
+      "FROM": "Indica la tabla de donde obtener los datos",
+      "WHERE": "Filtra los resultados según una condición",
+      "JOIN": "Combina filas de dos o más tablas",
+      "HAVING": "Filtra grupos (como WHERE pero para GROUP BY)",
+      "LIMIT": "Limita el número de resultados devueltos",
+      "OFFSET": "Salta las primeras filas del resultado",
+      "INSERT": "Inserta nuevos registros en una tabla",
+      "UPDATE": "Modifica registros existentes",
+      "DELETE": "Elimina registros de una tabla",
+      "CREATE": "Crea una nueva tabla u objeto",
+      "DROP": "Elimina una tabla u objeto permanentemente",
+      "ALTER": "Modifica la estructura de una tabla",
+      "DISTINCT": "Elimina resultados duplicados",
+      "UNION": "Combina resultados de dos consultas",
+      "EXCEPT": "Devuelve filas de la primera consulta que no están en la segunda",
+      "INTERSECT": "Devuelve filas comunes entre dos consultas"
+    },
+    "explanations": {
+      "OPT-001": {
+        "what": "Estás seleccionando TODAS las columnas de la tabla",
+        "why": "Imagina pedir un libro completo cuando solo necesitas un capítulo — la base de datos trabaja de más",
+        "correctedExample": "SELECT id, nombre, email FROM usuarios WHERE activo = true"
+      },
+      "OPT-002": {
+        "what": "Esta consulta podría no usar ningún índice",
+        "why": "Sin índice, la base de datos revisa cada fila una por una, como buscar una palabra en un libro sin índice al final",
+        "correctedExample": "CREATE INDEX idx_usuario_email ON usuarios(email)"
+      },
+      "OPT-003": {
+        "what": "Este patrón puede ejecutar una query extra por cada resultado",
+        "why": "Si tienes 100 usuarios, podrías ejecutar 101 queries en lugar de 1 — muy lento",
+        "correctedExample": "Usa JOIN para obtener todo en una sola consulta"
+      }
+    }
+  },
+  "expert": {
+    "astTitle": "Árbol AST",
+    "astEmpty": "Analiza una query para ver el árbol de sintaxis.",
+    "astEmptyStatement": "Esta sentencia no tiene árbol (error de sintaxis o sin AST para este motor).",
+    "astNotAvailable": "Este motor no expone árbol AST SQL. Disponible en motores SQL y en PartiQL de DynamoDB.",
+    "astMultiHint": "Elige la sentencia que quieres ver en el panel AST.",
+    "selectStatement": "Sentencia para el árbol AST",
+    "statementLabel": "Sentencia {{index}}",
+    "metricsScopeStatement": "Métricas de la sentencia {{index}}",
+    "metricsNotAvailable": "Las métricas de lexer/parser no aplican a este motor (usa motores SQL o PartiQL en DynamoDB).",
+    "astToggle": "Expandir o contraer nodo",
+    "metricsTitle": "Métricas técnicas",
+    "tokenCount": "Tokens totales",
+    "astDepth": "Profundidad del AST",
+    "lexingTime": "Tiempo de lexing",
+    "parsingTime": "Tiempo de parsing",
+    "semanticTime": "Tiempo de análisis semántico",
+    "rulesEvaluated": "Reglas de optimización evaluadas",
+    "aiSupportedAst": "AST apoyado por IA (el analizador nativo no pudo construir el árbol)"
+  },
+  "tts": {
+    "readAloud": "Leer en voz alta",
+    "stop": "Detener lectura",
+    "notSupported": "Tu navegador no soporta lectura en voz alta",
+    "readingNow": "Leyendo…",
+    "blindErrorsFirstOne": "Tu query tiene un error. El error es: {{message}}",
+    "blindErrorsFirstOther": "Tu query tiene {{count}} errores. El primer error es: {{message}}",
+    "blindValidOptimizationsOne": "Tu query es válida. Hay una sugerencia de optimización.",
+    "blindValidOptimizationsOther": "Tu query es válida. Hay {{count}} sugerencias de optimización.",
+    "blindWarningsOnlyOne": "Tu query es válida con una advertencia.",
+    "blindWarningsOnlyOther": "Tu query es válida con {{count}} advertencias.",
+    "blindAnalysisDone": "Análisis completado.",
+    "blindMultiDoneOne": "Análisis multi-sentencia completado: una sentencia.",
+    "blindMultiDoneOther": "Análisis multi-sentencia completado: {{count}} sentencias.",
+    "statementHeading": "Sentencia {{index}}.",
+    "timingMs": "Tiempo de análisis {{ms}} milisegundos.",
+    "multiScriptIntroOne": "Análisis multi-sentencia: una sentencia. Tiempo total {{ms}} milisegundos.",
+    "multiScriptIntroOther": "Análisis multi-sentencia: {{count}} sentencias. Tiempo total {{ms}} milisegundos.",
+    "scriptHealthHint": "Salud del script {{pct}} por ciento.",
+    "lineOnly": "Línea {{line}}",
+    "lineCol": "Línea {{line}}, columna {{col}}"
+  },
+  "a11y": {
+    "skipToContent": "Saltar al contenido principal",
+    "mainNav": "Menú principal"
+  },
+  "editor": {
+    "ariaLabel": "Editor de código SQL y NoSQL. Escribe tu query aquí.",
+    "hint": "Presiona Ctrl+Enter para analizar. Ctrl+K para limpiar. Ctrl+Shift+M para dictado por voz."
+  },
+  "ai": {
+    "title": "Sugerencias IA",
+    "subtitle": "Genera, completa y construye queries con inteligencia artificial. Funciona con o sin API key (modo reglas).",
+    "guestTitle": "Sugerencias IA — Solo para usuarios registrados",
+    "guestDesc": "Crea una cuenta y desbloquea el motor de inteligencia artificial de QWERYS.",
+    "feature1": "Genera queries SQL describiendo lo que necesitas",
+    "feature2": "Autocompleta queries parciales con IA",
+    "feature3": "Construye queries con un formulario guiado",
+    "feature4": "Detecta patrones de SQL injection en tu historial",
+    "createAccount": "Crear cuenta",
+    "login": "Ya tengo cuenta",
+    "unavailableBanner": "El servicio de IA en la nube no está configurado. Se usarán sugerencias basadas en reglas hasta que el administrador configure GROQ_API_KEY.",
+    "retryStatus": "Comprobar de nuevo",
+    "databaseType": "Motor de base de datos",
+    "schemaHint": "{{count}} tablas del explorador de esquemas disponibles para contexto.",
+    "schemaEmptyHint": "Conecta el Explorador de Esquemas para que la IA use tus tablas reales.",
+    "schemaConnectionTitle": "Base de datos conectada (Explorador de esquemas)",
+    "schemaConnectionDetail": "{{engine}} · {{host}}:{{port}} · {{database}} · usuario {{user}}",
+    "schemaConnectionLink": "Abrir explorador",
+    "expertMeta": "Proveedor: {{provider}} · {{ms}} ms · {{live}}",
+    "liveAi": "IA en vivo",
+    "fallback": "reglas locales",
+    "tabsLabel": "Secciones de sugerencias IA",
+    "tabs": {
+      "generate": "Generar query",
+      "autocomplete": "Autocompletar",
+      "builder": "Constructor",
+      "security": "Seguridad"
+    },
+    "student": {
+      "generate": "Describe en español lo que necesitas (por ejemplo: usuarios activos del último mes) y la IA escribirá el SQL por ti.",
+      "autocomplete": "Escribe el inicio de tu consulta y la IA la completará usando las tablas que conozca.",
+      "builder": "Elige operación, tabla y columnas; obtendrás una plantilla SQL lista para analizar.",
+      "security": "Primero escanea con reglas rápidas. Si quieres, activa el interruptor de IA para una explicación más detallada de cada hallazgo (opcional)."
+    },
+    "naturalLabel": "Descripción en lenguaje natural",
+    "naturalPlaceholder": "Ej: Todos los usuarios que hicieron un pedido en los últimos 30 días",
+    "generateBtn": "Generar con IA",
+    "generating": "Generando...",
+    "partialLabel": "Inicio de tu query",
+    "partialPlaceholder": "SELECT u.name FROM users u WHERE",
+    "completeBtn": "Completar",
+    "useQueryBtn": "Usar esta query en el analizador",
+    "operation": "Operación",
+    "tableName": "Nombre de tabla",
+    "columns": "Columnas (separadas por comas)",
+    "columnsPlaceholder": "id, name, email o * para todas",
+    "where": "Condición WHERE (opcional)",
+    "buildBtn": "Construir query",
+    "analyzeBtn": "Analizar esta query",
+    "copy": "Copiar",
+    "copied": "Copiado al portapapeles",
+    "copyFailed": "No se pudo copiar",
+    "resultEditorLabel": "Query generada",
+    "genericError": "No se pudo completar la solicitud de IA.",
+    "explainBtn": "Explicar con IA",
+    "explaining": "Consultando IA...",
+    "improveMigrationBtn": "Mejorar con IA",
+    "improving": "Mejorando...",
+    "migrationImproved": "Código migrado actualizado con IA.",
+    "security": {
+      "loginRequired": "Inicia sesión para escanear tu historial de queries.",
+      "scanBtn": "Escanear historial reciente",
+      "aiToggle": "Enriquecer hallazgos con IA (opcional)",
+      "aiToggleHint": "Activa la API key de Groq en el servidor para explicaciones más detalladas. El escaneo por reglas sigue funcionando sin IA.",
+      "explainBtn": "Explicar este riesgo con IA",
+      "none": "No se detectaron patrones de riesgo en las últimas consultas.",
+      "loadError": "No se pudo cargar el historial.",
+      "risks": {
+        "concat": "Concatenación de strings en la query: riesgo alto de inyección SQL.",
+        "dynamicExec": "Ejecución dinámica detectada: la query puede ser manipulada en tiempo de ejecución.",
+        "drop": "DROP detectado: operación destructiva irreversible.",
+        "mongoWhere": "Uso de $where en MongoDB: puede ejecutar JavaScript del lado servidor.",
+        "redisEval": "EVAL con script embebido en Redis: riesgo de inyección de comandos.",
+        "esScript": "Scripts inline en Elasticsearch: revisa permisos y validación de entrada."
+      },
+      "fixes": {
+        "concat": "Usa parámetros preparados (? o :nombre) en lugar de unir strings con +.",
+        "dynamicExec": "Evita EXEC dinámico; usa consultas parametrizadas o procedimientos fijos.",
+        "drop": "Confirma el entorno, haz backup y restringe permisos antes de ejecutar DROP.",
+        "mongoWhere": "Evita $where; usa operadores de consulta seguros ($eq, $in, etc.).",
+        "redisEval": "Usa comandos parametrizados o Lua con ARGV en lugar de concatenar entrada.",
+        "esScript": "Restringe scripts, valida entradas y usa plantillas revisadas."
+      },
+      "rules": {
+        "concat": "SEC-INJ-001: string concatenation pattern",
+        "dynamicExec": "SEC-INJ-002: dynamic EXEC / sp_executesql",
+        "drop": "SEC-DEST-001: DROP without safeguards",
+        "mongoWhere": "SEC-NOSQL-001: MongoDB $where",
+        "redisEval": "SEC-NOSQL-002: Redis EVAL con script embebido",
+        "esScript": "SEC-NOSQL-003: Elasticsearch script inline"
+      }
+    }
+  },
+  "shortcuts": {
+    "title": "Atajos de teclado",
+    "intro": "Atajos disponibles en toda la aplicación. Pulsa F1 en cualquier momento para ver esta lista.",
+    "colKey": "Atajo",
+    "colAction": "Acción",
+    "analyze": "Analizar query",
+    "clear": "Limpiar editor",
+    "toggleVoice": "Activar o desactivar dictado por voz",
+    "help": "Mostrar esta ayuda",
+    "close": "Cerrar panel o diálogo",
+    "closeDialog": "Cerrar",
+    "navAnalyzer": "Ir al Analizador",
+    "navMigration": "Ir a Migración",
+    "navSchema": "Ir al Explorador de Esquemas",
+    "keys": {
+      "analyze": "Ctrl + Enter",
+      "clear": "Ctrl + K",
+      "toggleVoice": "Ctrl + Shift + M",
+      "help": "F1",
+      "close": "Escape",
+      "navAnalyzer": "Alt + Shift + 1",
+      "navMigration": "Alt + Shift + 2",
+      "navSchema": "Alt + Shift + 3"
+    }
+  },
+  "common": {
+    "close": "Cerrar"
+  },
+  "export": {
+    "json": "Exportar JSON",
+    "copy": "Copiar reporte",
+    "copied": "¡Copiado al portapapeles!",
+    "section": "Exportar resultados",
+    "jsonAriaLabel": "Descargar resultado del análisis como archivo JSON",
+    "copyAriaLabel": "Copiar resumen del análisis al portapapeles",
+    "report": {
+      "header": "Query analizada el {{date}}.",
+      "status": "Estado: {{status}}.",
+      "valid": "VÁLIDA",
+      "invalid": "INVÁLIDA",
+      "counts": "Errores: {{errors}}. Optimizaciones: {{optimizations}}.",
+      "errorsSection": "ERRORES DETECTADOS:",
+      "optsSection": "OPTIMIZACIONES SUGERIDAS:",
+      "errorLine": "  - [{{code}}] {{message}}",
+      "optLine": "  - {{description}}",
+      "none": "  Ninguno",
+      "multiSummary": "Script multi-sentencia: {{count}} sentencias. Tiempo total: {{ms}} ms.",
+      "statementLine": "Sentencia {{index}}: {{status}}. Errores: {{errors}}. Optimizaciones: {{optimizations}}."
+    }
+  },
+  "diff": {
+    "title": "Comparador de Queries",
+    "original": "Query original",
+    "optimized": "Query optimizada",
+    "generating": "Generando versión optimizada con IA...",
+    "aiUnavailable": "El motor de IA no está disponible. Aquí está la sugerencia de mejora:",
+    "suggestion": "Sugerencia",
+    "similarity": "Similitud",
+    "useOptimized": "Usar query optimizada",
+    "openTooltip": "Ver diferencias",
+    "openAriaLabel": "Abrir comparador de diferencias para esta optimización"
+  },
+  "stt": {
+    "startDictation": "Dictar query por voz",
+    "stopDictation": "Detener dictado",
+    "listening": "Escuchando...",
+    "notSupported": "Tu navegador no soporta dictado por voz. Prueba Chrome o Edge.",
+    "errorNoSpeech": "No se detectó voz. Inténtalo de nuevo.",
+    "errorAudioCapture": "No se pudo acceder al micrófono.",
+    "errorNotAllowed": "Permiso de micrófono denegado. Ve a la configuración del navegador para habilitarlo.",
+    "errorUnknown": "Error en el reconocimiento de voz."
+  }
+}

@@ -1,0 +1,29 @@
+<h2 mat-dialog-title id="keyboard-help-title">{{ 'shortcuts.title' | translate }}</h2>
+
+<mat-dialog-content aria-labelledby="keyboard-help-title">
+  <p class="keyboard-help__intro">{{ 'shortcuts.intro' | translate }}</p>
+  <table class="shortcuts-table">
+    <thead>
+      <tr>
+        <th scope="col">{{ 'shortcuts.colKey' | translate }}</th>
+        <th scope="col">{{ 'shortcuts.colAction' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of rows; track row.descKey) {
+        <tr>
+          <td>
+            <kbd>{{ row.keysKey | translate }}</kbd>
+          </td>
+          <td>{{ row.descKey | translate }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" mat-dialog-close type="button" [attr.aria-label]="'shortcuts.closeDialog' | translate">
+    {{ 'shortcuts.closeDialog' | translate }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,136 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <span class="logo-text">QWERYS</span>
+      <span class="logo-tagline">{{ 'auth.tagline' | translate }}</span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs" role="tablist">
+      <button
+        role="tab"
+        [class.active]="activeTab() === 'login'"
+        [attr.aria-selected]="activeTab() === 'login'"
+        (click)="setTab('login')">
+        {{ 'auth.tabs.login' | translate }}
+      </button>
+      <button
+        role="tab"
+        [class.active]="activeTab() === 'register'"
+        [attr.aria-selected]="activeTab() === 'register'"
+        (click)="setTab('register')">
+        {{ 'auth.tabs.register' | translate }}
+      </button>
+    </div>
+
+    <!-- Error -->
+    <div class="auth-error" *ngIf="errorMessage()" role="alert">
+      {{ errorMessage()! | translate }}
+    </div>
+
+    <!-- Login form -->
+    <form *ngIf="activeTab() === 'login'" [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
+      <div class="field-group">
+        <label for="login-email">{{ 'auth.fields.email' | translate }}</label>
+        <input
+          id="login-email"
+          type="email"
+          formControlName="email"
+          [placeholder]="'auth.placeholders.email' | translate"
+          autocomplete="email" />
+        <span class="field-error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          {{ 'auth.error.emailInvalid' | translate }}
+        </span>
+      </div>
+
+      <div class="field-group">
+        <label for="login-password">{{ 'auth.fields.password' | translate }}</label>
+        <input
+          id="login-password"
+          type="password"
+          formControlName="password"
+          [placeholder]="'auth.placeholders.password' | translate"
+          autocomplete="current-password" />
+        <span class="field-error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          {{ 'auth.error.passwordRequired' | translate }}
+        </span>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loading()">
+        {{ loading() ? ('auth.loading' | translate) : ('auth.buttons.login' | translate) }}
+      </button>
+    </form>
+
+    <!-- Register form -->
+    <form *ngIf="activeTab() === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()" novalidate>
+      <div class="field-group">
+        <label for="reg-name">{{ 'auth.fields.name' | translate }}</label>
+        <input
+          id="reg-name"
+          type="text"
+          formControlName="name"
+          [placeholder]="'auth.placeholders.name' | translate"
+          autocomplete="name" />
+        <span class="field-error" *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+          {{ 'auth.error.nameRequired' | translate }}
+        </span>
+      </div>
+
+      <div class="field-group">
+        <label for="reg-email">{{ 'auth.fields.email' | translate }}</label>
+        <input
+          id="reg-email"
+          type="email"
+          formControlName="email"
+          [placeholder]="'auth.placeholders.email' | translate"
+          autocomplete="email" />
+        <span class="field-error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          {{ 'auth.error.emailInvalid' | translate }}
+        </span>
+      </div>
+
+      <div class="field-group">
+        <label for="reg-password">{{ 'auth.fields.password' | translate }}</label>
+        <input
+          id="reg-password"
+          type="password"
+          formControlName="password"
+          [placeholder]="'auth.placeholders.password' | translate"
+          autocomplete="new-password" />
+        <span class="field-error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          {{ 'auth.error.passwordMin' | translate }}
+        </span>
+      </div>
+
+      <div class="field-group">
+        <label for="reg-confirm">{{ 'auth.fields.confirmPassword' | translate }}</label>
+        <input
+          id="reg-confirm"
+          type="password"
+          formControlName="confirmPassword"
+          [placeholder]="'auth.placeholders.confirmPassword' | translate"
+          autocomplete="new-password" />
+        <span class="field-error" *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+          {{ 'auth.error.passwordMismatch' | translate }}
+        </span>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loading()">
+        {{ loading() ? ('auth.loading' | translate) : ('auth.buttons.register' | translate) }}
+      </button>
+    </form>
+
+    <!-- Divider -->
+    <div class="auth-divider">
+      <span>{{ 'auth.divider' | translate }}</span>
+    </div>
+
+    <!-- Guest -->
+    <button class="btn-secondary" (click)="onGuest()">
+      {{ 'auth.buttons.guest' | translate }}
+    </button>
+
+  </div>
+</div>

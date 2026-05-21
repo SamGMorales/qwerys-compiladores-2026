@@ -1,0 +1,37 @@
+@if (dataSource.data.length === 0) {
+  <p class="ast-tree-empty">{{ 'expert.astEmpty' | translate }}</p>
+} @else {
+  <mat-tree
+    #treeRoot
+    [dataSource]="dataSource"
+    [treeControl]="treeControl"
+    class="ast-tree"
+    role="tree"
+    [attr.aria-label]="'expert.astTitle' | translate"
+    tabindex="0"
+    (keydown)="onTreeKeydown($event)">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button mat-icon-button disabled type="button" class="ast-tree-toggle ast-tree-toggle--leaf" aria-hidden="true"></button>
+      <span class="ast-node" [ngClass]="nodeCssClass(node.type)">{{ nodeLabel(node) }}</span>
+    </mat-tree-node>
+
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+      <div class="ast-tree-branch">
+        <button
+          mat-icon-button
+          type="button"
+          class="ast-tree-toggle"
+          matTreeNodeToggle
+          [attr.aria-label]="'expert.astToggle' | translate">
+          <mat-icon>
+            {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+          </mat-icon>
+        </button>
+        <span class="ast-node" [ngClass]="nodeCssClass(node.type)">{{ nodeLabel(node) }}</span>
+        <div [class.ast-tree-hidden]="!treeControl.isExpanded(node)" role="group">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </div>
+      </div>
+    </mat-nested-tree-node>
+  </mat-tree>
+}

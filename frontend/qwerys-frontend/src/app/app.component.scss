@@ -1,0 +1,358 @@
+@use 'styles/breakpoints' as *;
+
+// ── Variables de color (§7 PROJECT_MASTER_GUIDE_V3) ──────────────────────────
+$color-bg-sidenav:     #0F172A;   // Índigo oscuro — fondo sidenav
+$color-text-light:     #F1F5F9;   // Blanco grisáceo — texto principal sidenav
+$color-text-muted:     #94A3B8;   // Gris slate — texto secundario
+$color-primary:        #2563EB;   // Azul — acciones principales / activo
+$color-primary-light:  rgba(#2563EB, 0.15);
+$color-nosql:          #7C3AED;   // Violeta — elementos NoSQL / Migración
+$color-nosql-light:    rgba(#7C3AED, 0.15);
+$color-ai:             #7C3AED;   // Violeta — Sugerencias IA
+$color-border:         rgba(#F1F5F9, 0.08);
+$color-hover:          rgba(#F1F5F9, 0.07);
+
+$sidenav-width:        250px;
+$toolbar-height:       64px;
+$border-radius:        8px;
+$transition-speed:     0.2s;
+
+// ── Layout raíz ──────────────────────────────────────────────────────────────
+:host {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+mat-sidenav-container {
+  width: 100%;
+  height: 100%;
+}
+
+.app-container {
+  height: 100vh;
+  width: 100%;
+}
+
+// ── Sidenav ───────────────────────────────────────────────────────────────────
+.app-sidenav {
+  width: $sidenav-width;
+  background-color: $color-bg-sidenav !important;
+  color: $color-text-light;
+  border-right: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+
+  // ── Anular variables MDC de Angular Material para el tema del sidenav ──────
+  // Angular Material v17 MDC aplica color en elementos internos via CSS vars.
+  // Sin estos overrides, el texto sale negro (rgba(0,0,0,0.87)) sobre fondo oscuro.
+  --mdc-list-list-item-label-text-color:            #{$color-text-muted};
+  --mdc-list-list-item-leading-icon-color:          #{$color-text-muted};
+  --mdc-list-list-item-hover-label-text-color:      #{$color-text-light};
+  --mdc-list-list-item-hover-leading-icon-color:    #{$color-text-light};
+  --mdc-list-list-item-hover-state-layer-color:     #{$color-hover};
+  --mdc-list-list-item-focus-label-text-color:      #{$color-text-light};
+  --mdc-list-list-item-focus-leading-icon-color:    #{$color-text-light};
+
+  // Logo
+  .sidenav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 20px 20px;
+
+    .logo-text {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: $color-text-light;
+      line-height: 1;
+    }
+
+    .logo-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: $color-primary;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      align-self: flex-end;
+      margin-bottom: 3px;
+    }
+
+    &.logo-small {
+      padding: 16px 16px 12px;
+      gap: 6px;
+
+      .logo-text {
+        font-size: 1.25rem;
+      }
+
+      .logo-badge {
+        font-size: 0.55rem;
+        padding: 1px 4px;
+      }
+    }
+  }
+
+  .sidenav-divider {
+    border-color: $color-border !important;
+    margin: 0 16px 8px;
+  }
+
+  // Lista de navegación
+  .sidenav-nav {
+    flex: 1;
+    padding: 4px 8px;
+
+    .nav-item {
+      border-radius: $border-radius;
+      margin-bottom: 2px;
+      color: $color-text-muted !important;
+      transition: background $transition-speed ease, color $transition-speed ease;
+      height: 48px;
+
+      .nav-icon {
+        color: inherit !important;
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
+      }
+
+      .nav-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      &:hover {
+        background: $color-hover !important;
+        color: $color-text-light !important;
+      }
+
+      // Estado activo (routerLinkActive)
+      &.nav-active {
+        background: $color-primary-light !important;
+        color: $color-primary !important;
+
+        .nav-icon {
+          color: $color-primary !important;
+        }
+      }
+
+      // Ítem de Migración (NoSQL)
+      &.nav-migration {
+        &:hover {
+          background: $color-nosql-light !important;
+          color: $color-nosql !important;
+        }
+
+        &.nav-active {
+          background: $color-nosql-light !important;
+          color: $color-nosql !important;
+
+          .nav-icon {
+            color: $color-nosql !important;
+          }
+        }
+      }
+
+      // Ítem de IA
+      &.nav-ai {
+        &:hover {
+          background: $color-nosql-light !important;
+          color: $color-nosql !important;
+        }
+
+        &.nav-active {
+          background: $color-nosql-light !important;
+          color: $color-nosql !important;
+
+          .nav-icon {
+            color: $color-nosql !important;
+          }
+        }
+      }
+    }
+  }
+
+  // Footer del sidenav
+  .sidenav-footer {
+    padding: 12px 20px;
+    border-top: 1px solid $color-border;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .register-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 8px;
+      margin-bottom: 4px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(37, 99, 235, 0.08));
+      border: 1px solid rgba(37, 99, 235, 0.35);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.28), rgba(37, 99, 235, 0.14));
+        border-color: rgba(37, 99, 235, 0.6);
+      }
+
+      .banner-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #60a5fa;
+        flex-shrink: 0;
+      }
+
+      .banner-text {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        min-width: 0;
+
+        .banner-title {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #93c5fd;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .banner-cta {
+          font-size: 0.68rem;
+          color: #60a5fa;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .logout-btn {
+      width: 100%;
+      justify-content: flex-start;
+      gap: 8px;
+      color: $color-text-muted;
+      border-radius: 8px;
+      padding: 0 8px;
+      height: 40px;
+      transition: background 0.2s ease, color 0.2s ease;
+
+      mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+      &:hover {
+        background: rgba(239, 68, 68, 0.12);
+        color: #f87171;
+      }
+    }
+
+    .sidenav-version {
+      font-size: 0.72rem;
+      color: $color-text-muted;
+      letter-spacing: 0.05em;
+      padding-left: 8px;
+    }
+  }
+}
+
+// ── Contenido principal ───────────────────────────────────────────────────────
+.app-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+
+  .menu-toggle {
+    margin-right: 8px;
+  }
+
+  .toolbar-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+
+    &.logo-small {
+      font-size: 1rem;
+    }
+  }
+
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  // Selector de idioma
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    min-width: unset;
+    height: 36px;
+    margin-right: 8px;
+    transition: border-color $transition-speed ease,
+                background $transition-speed ease;
+
+    .lang-current {
+      opacity: 1;
+    }
+
+    .lang-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .lang-next {
+      opacity: 0.6;
+      font-size: 0.7rem;
+    }
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .accessibility-btn {
+    margin-left: 4px;
+  }
+}
+
+// ── Área de contenido enrutado ────────────────────────────────────────────────
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  background: var(--bg-secondary);
+}
+
+@include tablet {
+  .app-sidenav {
+    width: $sidenav-width;
+  }
+
+  .app-toolbar .menu-toggle {
+    margin-right: 4px;
+  }
+}

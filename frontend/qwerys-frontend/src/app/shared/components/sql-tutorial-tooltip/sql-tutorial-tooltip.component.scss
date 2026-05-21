@@ -1,0 +1,17 @@
+app-sql-tutorial-tooltip {
+  display: block;
+}
+
+.sql-tutorial-trigger {
+  display: block;
+  cursor: help;
+}
+
+.sql-tutorial-tooltip-panel {
+  max-width: min(360px, 92vw);
+  white-space: pre-line;
+  font-family: var(--font-student, Roboto, sans-serif);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: 0.25rem 0;
+}

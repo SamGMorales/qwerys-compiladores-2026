@@ -1,0 +1,533 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: auto;
+  color: var(--mat-sys-on-surface, var(--text-primary));
+  background: var(--mat-sys-surface, var(--bg-secondary));
+}
+
+.ai-page {
+  padding: 1.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ai-header {
+  margin-bottom: 0.25rem;
+}
+
+.ai-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.ai-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant, var(--text-secondary));
+}
+
+.ai-banner-warn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+}
+
+.ai-banner-retry {
+  margin-left: auto;
+}
+
+.engine-field {
+  width: 100%;
+  max-width: 320px;
+}
+
+.schema-connection-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  border: 1px solid var(--mat-sys-outline-variant, rgba(255, 255, 255, 0.12));
+}
+
+.schema-connection-icon {
+  color: var(--mat-sys-primary);
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.schema-connection-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.schema-connection-title {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+
+.schema-connection-detail,
+.schema-connection-hint {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--mat-sys-on-surface-variant, var(--text-secondary));
+}
+
+.schema-connection-link-btn {
+  flex-shrink: 0;
+  margin-left: auto;
+  min-height: 32px;
+  padding: 0 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--mat-sys-primary, #38bdf8) !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    background: color-mix(in srgb, var(--mat-sys-primary, #38bdf8) 12%, transparent);
+  }
+}
+
+.schema-connection-empty {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant, var(--text-secondary));
+}
+
+.ai-meta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.student-card {
+  background: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
+  padding: 12px 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.btn-spinner {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.editor-shell {
+  border: 1px solid var(--mat-sys-outline);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ai-monaco {
+  display: block;
+  height: 200px;
+}
+
+.result-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.completion-box {
+  background: var(--mat-sys-surface-variant);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.completion-pre {
+  margin: 0 0 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+}
+
+.completion-highlight {
+  color: var(--mat-sys-primary);
+  font-weight: 600;
+}
+
+.builder-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  .span-2 {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ai-page {
+    padding: 1rem;
+  }
+
+  .ai-monaco {
+    height: 180px;
+    min-height: 180px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    .mat-mdc-button {
+      width: 100%;
+    }
+  }
+
+  .full-width.mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+.auth-hint {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.security-clear {
+  color: var(--mat-sys-primary);
+}
+
+.security-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.security-item {
+  background: var(--mat-sys-surface-variant);
+  border-radius: 8px;
+  padding: 16px;
+  border-left: 4px solid var(--mat-sys-error);
+}
+
+.security-risk {
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--mat-sys-error);
+}
+
+.security-query {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+}
+
+.security-fix {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.security-rule {
+  margin: 8px 0 0;
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant);
+  font-family: ui-monospace, monospace;
+}
+
+.security-ai-toggle {
+  margin-bottom: 4px;
+}
+
+.security-ai-hint {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.security-ai-actions {
+  margin-top: 12px;
+}
+
+.security-ai-explanation {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--mat-sys-surface-variant);
+  border-left: 3px solid var(--mat-sys-primary);
+
+  p {
+    margin: 0;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+  }
+}
+
+/* ── Modo oscuro: texto Material legible (tabs, selects, hints) ───────── */
+:host-context(body.dark-theme) {
+  color: var(--text-primary);
+
+  .ai-title {
+    color: var(--text-primary);
+  }
+
+  .ai-subtitle,
+  .ai-meta,
+  .auth-hint,
+  .security-ai-hint,
+  .security-rule {
+    color: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary)) !important;
+  }
+
+  .student-card {
+    background: color-mix(in srgb, var(--text-primary) 8%, var(--bg-secondary));
+    color: var(--text-primary) !important;
+    border: 1px solid color-mix(in srgb, var(--text-primary) 14%, transparent);
+  }
+
+  .completion-box,
+  .security-item,
+  .security-ai-explanation {
+    background: color-mix(in srgb, var(--text-primary) 7%, var(--bg-secondary));
+    color: var(--text-primary);
+  }
+
+  .completion-pre {
+    color: var(--text-primary);
+  }
+
+  ::ng-deep .ai-tabs {
+    .mdc-tab__text-label {
+      color: var(--text-secondary) !important;
+      opacity: 1 !important;
+    }
+
+    .mdc-tab--active .mdc-tab__text-label {
+      color: var(--text-primary) !important;
+      font-weight: 600;
+    }
+
+    .mat-mdc-tab-header {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .mdc-tab-indicator__content--underline {
+      border-color: var(--mat-sys-primary, #60a5fa) !important;
+    }
+  }
+
+  ::ng-deep .mat-mdc-form-field {
+    --mat-form-field-outlined-label-text-color: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary));
+    --mat-form-field-outlined-hover-label-text-color: var(--text-primary);
+    --mat-mdc-outlined-text-field-outline-color: color-mix(in srgb, var(--text-primary) 38%, transparent);
+    --mat-mdc-outlined-text-field-focus-outline-color: var(--mat-sys-primary, #60a5fa);
+    --mat-mdc-outlined-text-field-hover-outline-color: color-mix(in srgb, var(--text-primary) 55%, transparent);
+    --mat-mdc-outlined-text-field-input-text-color: var(--text-primary);
+    --mat-mdc-outlined-text-field-caret-color: var(--text-primary);
+    --mat-select-enabled-trigger-text-color: var(--text-primary);
+    --mat-select-enabled-arrow-color: var(--text-primary);
+    --mat-form-field-outlined-input-text-color: var(--text-primary);
+  }
+
+  ::ng-deep .mat-mdc-form-field-hint,
+  ::ng-deep .mat-mdc-floating-label {
+    color: color-mix(in srgb, var(--text-secondary) 35%, var(--text-primary)) !important;
+  }
+
+  ::ng-deep .mat-mdc-input-element::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1 !important;
+  }
+
+  ::ng-deep .mat-mdc-slide-toggle .mdc-label {
+    color: var(--text-primary) !important;
+  }
+
+  /* Botones principales visibles (Material a veces los deja casi negros) */
+  ::ng-deep button.ai-cta-primary.mat-mdc-unelevated-button:not(:disabled) {
+    background: linear-gradient(180deg, #7dd3fc, #38bdf8) !important;
+    color: #0f172a !important;
+    font-weight: 600;
+    box-shadow: 0 2px 10px color-mix(in srgb, #000 45%, transparent);
+  }
+
+  ::ng-deep button.ai-cta-accent.mat-mdc-unelevated-button:not(:disabled) {
+    background: linear-gradient(180deg, #6ee7b7, #34d399) !important;
+    color: #052e16 !important;
+    font-weight: 600;
+    box-shadow: 0 2px 10px color-mix(in srgb, #000 45%, transparent);
+  }
+
+  ::ng-deep button.ai-cta-secondary.mat-mdc-outlined-button:not(:disabled) {
+    color: var(--text-primary) !important;
+    border-color: color-mix(in srgb, var(--text-primary) 55%, transparent) !important;
+    background: color-mix(in srgb, var(--text-primary) 8%, var(--bg-secondary)) !important;
+    font-weight: 600;
+  }
+
+  ::ng-deep button.ai-cta-secondary.mat-mdc-outlined-button:not(:disabled):hover {
+    background: color-mix(in srgb, var(--text-primary) 14%, var(--bg-secondary)) !important;
+  }
+
+  ::ng-deep button.ai-cta-primary.mat-mdc-unelevated-button:disabled,
+  ::ng-deep button.ai-cta-accent.mat-mdc-unelevated-button:disabled,
+  ::ng-deep button.ai-cta-secondary.mat-mdc-outlined-button:disabled {
+    opacity: 0.55 !important;
+    color: var(--text-muted) !important;
+    border-color: var(--border-subtle) !important;
+  }
+
+  ::ng-deep .result-actions button.mat-mdc-outlined-button:not(:disabled) {
+    color: var(--text-primary) !important;
+    border-color: color-mix(in srgb, var(--text-primary) 45%, transparent) !important;
+  }
+}
+
+.guest-gate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 24px;
+  color: var(--text-primary);
+}
+
+/* mat-card en tema oscuro suele quedar blanco; forzar superficie y texto del design system */
+.gate-card.mat-mdc-card {
+  --mdc-elevated-card-container-color: var(--bg-secondary);
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  padding: 32px;
+  border-radius: 16px;
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 8px 32px color-mix(in srgb, #000 28%, transparent);
+}
+
+.gate-card ::ng-deep .mat-mdc-card-content {
+  color: inherit;
+  padding: 0;
+}
+
+.gate-icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  color: var(--mat-sys-primary, var(--student-accent, #38bdf8));
+  margin-bottom: 16px;
+}
+
+.gate-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.gate-card p {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.gate-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 32px;
+  text-align: left;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-subtle);
+
+    mat-icon {
+      color: var(--mat-sys-primary, var(--student-accent, #38bdf8));
+      flex-shrink: 0;
+    }
+  }
+}
+
+.gate-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  ::ng-deep a.gate-login-btn.mat-mdc-outlined-button:not(:disabled) {
+    --mdc-outlined-button-label-text-color: var(--text-primary);
+    --mdc-outlined-button-outline-color: var(--border-strong);
+    --mat-outlined-button-state-layer-color: var(--text-primary);
+    color: var(--text-primary) !important;
+    border-color: var(--border-strong) !important;
+    background: color-mix(in srgb, var(--text-primary) 6%, var(--bg-secondary)) !important;
+    font-weight: 600;
+  }
+
+  ::ng-deep a.gate-login-btn.mat-mdc-outlined-button:not(:disabled):hover {
+    background: color-mix(in srgb, var(--text-primary) 14%, var(--bg-secondary)) !important;
+    border-color: var(--mat-sys-primary, var(--student-accent, #38bdf8)) !important;
+    color: var(--text-primary) !important;
+  }
+
+  ::ng-deep a.gate-login-btn.mat-mdc-outlined-button .mdc-button__label {
+    color: var(--text-primary) !important;
+  }
+}
+
+body.dark-theme :host {
+  .gate-card.mat-mdc-card {
+    box-shadow: 0 8px 32px color-mix(in srgb, #000 55%, transparent);
+  }
+
+  .gate-actions ::ng-deep a.gate-login-btn.mat-mdc-outlined-button:not(:disabled) {
+    --mdc-outlined-button-label-text-color: #f1f5f9;
+    color: #f1f5f9 !important;
+    border-color: #5a7ab5 !important;
+    background: rgba(241, 245, 249, 0.08) !important;
+
+    .mdc-button__label {
+      color: #f1f5f9 !important;
+    }
+  }
+}

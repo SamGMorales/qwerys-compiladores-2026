@@ -1,0 +1,57 @@
+# ═══════════════════════════════════════════════════════
+# QWERYS Backend — Configuración de ejemplo
+# ═══════════════════════════════════════════════════════
+# INSTRUCCIONES PARA EL EQUIPO:
+# 1. Copia este archivo y renómbralo a: application.properties
+# 2. Llena cada valor con TUS datos locales
+# 3. NUNCA subas application.properties al repositorio (está en .gitignore)
+# 4. Para la API key de IA, pídela al líder del proyecto por WhatsApp/Telegram
+# ═══════════════════════════════════════════════════════
+
+# ─── Base de datos MySQL ───
+spring.datasource.url=jdbc:mysql://localhost:3306/qwerys?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+spring.datasource.username=TU_USUARIO_MYSQL
+spring.datasource.password=TU_CONTRASEÑA_MYSQL
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# ─── JPA / Hibernate ───
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# ─── JWT ───
+jwt.secret=TU_CLAVE_SECRETA_JWT_MINIMO_32_CARACTERES
+jwt.expiration=86400000
+
+# ─── Servidor ───
+server.port=8080
+
+# ─── IA — Primario (Groq) ───
+# Obtén tu API key gratuita en: https://console.groq.com
+# Compártela con el equipo por canal privado, NUNCA por git
+ai.provider=groq
+ai.api-key=PEGAR_API_KEY_DE_GROQ_AQUI
+ai.model=llama-3.3-70b-versatile
+ai.base-url=https://api.groq.com/openai/v1
+
+# ─── IA — Fallback opcional (OpenRouter) ───
+# Se activa automáticamente si Groq devuelve 429 (límite diario),
+# timeout, o cualquier error de red. Deja en blanco para desactivar.
+# Obtén tu key en https://openrouter.ai/keys (recarga créditos en Billing)
+# Usa el mismo modelo base (Llama 3.3 70B) para resultados equivalentes.
+ai.fallback-provider=openrouter
+ai.fallback-api-key=PEGAR_API_KEY_DE_OPENROUTER_AQUI
+ai.fallback-model=meta-llama/llama-3.3-70b-instruct
+ai.fallback-base-url=https://openrouter.ai/api/v1
+# OpenRouter routing (in code): prefers Groq → Friendli → Together first;
+# allow_fallbacks=true so other hosts are still used when those are saturated.
+# OpenRouter attribution headers (recommended)
+ai.fallback-http-referer=http://localhost:4200
+ai.fallback-app-title=QWERYS
+
+# ─── Opcional: propiedades extra del proyecto QWERYS ───
+# Descomenta y ajusta si usas PostgreSQL secundario:
+# app.datasource.postgresql.url=jdbc:postgresql://localhost:5432/qwerys_db
+# app.datasource.postgresql.username=postgres
+# app.datasource.postgresql.password=TU_PASSWORD
+# spring.application.name=qwerys-backend

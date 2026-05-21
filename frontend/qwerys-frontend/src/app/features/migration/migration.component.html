@@ -1,0 +1,202 @@
+<div class="migration-page">
+  <header class="migration-header">
+    <h1 id="migration-page-title" class="migration-title">
+      {{ 'migration.title' | translate }}
+    </h1>
+    <p class="migration-subtitle">{{ 'migration.subtitle' | translate }}</p>
+  </header>
+
+  <div
+    class="migration-workspace"
+    [class.mobile-stack]="isMobile"
+    role="region"
+    [attr.aria-labelledby]="'migration-page-title'">
+    <section class="migration-column migration-column--source source-column" aria-labelledby="migration-source-heading">
+      <h2 id="migration-source-heading" class="column-heading">
+        {{ 'migration.source' | translate }}
+      </h2>
+
+      <mat-form-field appearance="outline" class="language-field">
+        <mat-label>{{ 'migration.sourceLanguage' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="sourceLanguage"
+          name="sourceLanguage"
+          (ngModelChange)="onSourceLanguageChange()"
+          [attr.aria-label]="'migration.sourceLanguage' | translate">
+          @for (lang of sourceLanguages; track lang) {
+            <mat-option [value]="lang">{{ languageLabelKey(lang) | translate }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="editor-shell" [attr.aria-label]="'migration.sourceEditorLabel' | translate">
+        <ngx-monaco-editor
+          class="code-editor"
+          [insideNg]="true"
+          [options]="sourceEditorOptions"
+          [(ngModel)]="sourceCode"
+          (onInit)="onSourceEditorInit($event)">
+        </ngx-monaco-editor>
+      </div>
+
+      @if (!isMobile) {
+      <div class="column-actions column-actions--desktop-migrate">
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          class="migrate-btn"
+          [disabled]="!sourceCode.trim() || isConverting"
+          (click)="migrate()">
+          <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+          {{ 'migration.migrate' | translate }}
+        </button>
+      </div>
+      }
+    </section>
+
+    @if (isMobile) {
+    <div class="migrate-button-wrapper">
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="migrate-btn"
+        [disabled]="!sourceCode.trim() || isConverting"
+        (click)="migrate()">
+        <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+        {{ 'migration.migrate' | translate }}
+      </button>
+    </div>
+    }
+
+    <div class="migration-divider" [attr.aria-hidden]="!isConverting">
+      @if (isConverting) {
+        <mat-spinner diameter="36" class="divider-spinner"></mat-spinner>
+        <span class="converting-label" aria-live="polite" aria-atomic="true">
+          {{ 'migration.converting' | translate }}
+        </span>
+      } @else {
+        <mat-icon class="divider-arrow" aria-hidden="true">arrow_forward</mat-icon>
+      }
+    </div>
+
+    <section class="migration-column migration-column--target target-column" aria-labelledby="migration-target-heading">
+      <h2 id="migration-target-heading" class="column-heading">
+        {{ 'migration.target' | translate }}
+      </h2>
+
+      <mat-form-field appearance="outline" class="language-field">
+        <mat-label>{{ 'migration.targetLanguage' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="targetLanguage"
+          name="targetLanguage"
+          (ngModelChange)="onTargetLanguageChange()"
+          [attr.aria-label]="'migration.targetLanguage' | translate">
+          @for (lang of availableTargets; track lang) {
+            <mat-option [value]="lang">{{ languageLabelKey(lang) | translate }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="editor-shell editor-shell--target" [attr.aria-label]="'migration.targetEditorLabel' | translate">
+        <ngx-monaco-editor
+          class="code-editor code-editor--readonly"
+          [insideNg]="true"
+          [options]="targetEditorOptions"
+          [(ngModel)]="migratedCode"
+          (onInit)="onTargetEditorInit($event)">
+        </ngx-monaco-editor>
+        @if (!migratedCode && !isConverting) {
+          <p class="editor-placeholder" aria-hidden="true">
+            {{ 'migration.migratedPlaceholder' | translate }}
+          </p>
+        }
+      </div>
+
+      @if (showImproveWithAi()) {
+        <div class="ai-improve-section">
+          <button
+            mat-stroked-button
+            color="accent"
+            type="button"
+            [disabled]="aiImproving"
+            (click)="improveWithAI()"
+            [attr.aria-label]="'ai.improveMigrationBtn' | translate">
+            @if (aiImproving) {
+              <mat-spinner diameter="16"></mat-spinner>
+            } @else {
+              <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+            }
+            {{ aiImproving ? ('ai.improving' | translate) : ('ai.improveMigrationBtn' | translate) }}
+          </button>
+        </div>
+      }
+
+      <div class="column-actions column-actions--target">
+        <button
+          mat-stroked-button
+          type="button"
+          [disabled]="!migratedCode.trim()"
+          (click)="copyCode()"
+          [attr.aria-label]="'migration.copy' | translate">
+          <mat-icon aria-hidden="true">content_copy</mat-icon>
+          {{ 'migration.copy' | translate }}
+        </button>
+        <button
+          mat-stroked-button
+          type="button"
+          [disabled]="!migratedCode.trim()"
+          (click)="downloadCode()"
+          [attr.aria-label]="'migration.download' | translate">
+          <mat-icon aria-hidden="true">download</mat-icon>
+          {{ 'migration.download' | translate }}
+        </button>
+      </div>
+
+      @if (copyFeedback) {
+        <p class="copy-feedback" aria-live="polite">{{ copyFeedback }}</p>
+      }
+    </section>
+  </div>
+
+  <p class="sr-only" aria-live="polite" aria-atomic="true">{{ resultAnnouncement }}</p>
+
+  @if (error) {
+    <p class="migration-error" role="alert">{{ error }}</p>
+  }
+
+  @if (warnings.length > 0) {
+    <section
+      class="migration-card migration-warnings"
+      qwerysCollapsible
+      aria-labelledby="migration-warnings-heading">
+      <h2 id="migration-warnings-heading" class="section-heading">
+        <mat-icon aria-hidden="true" class="section-icon section-icon--warn">warning</mat-icon>
+        {{ 'migration.warningsTitle' | translate }}
+      </h2>
+      <ul class="migration-list" aria-live="polite">
+        @for (warning of warnings; track $index) {
+          <li>{{ warning }}</li>
+        }
+      </ul>
+    </section>
+  }
+
+  @if (manualSteps.length > 0) {
+    <section
+      class="migration-card migration-manual"
+      qwerysCollapsible
+      aria-labelledby="migration-manual-heading">
+      <h2 id="migration-manual-heading" class="section-heading">
+        <mat-icon aria-hidden="true" class="section-icon">checklist</mat-icon>
+        {{ 'migration.manualTitle' | translate }}
+      </h2>
+      <ol class="migration-list migration-list--numbered">
+        @for (step of manualSteps; track $index) {
+          <li>{{ step }}</li>
+        }
+      </ol>
+    </section>
+  }
+</div>

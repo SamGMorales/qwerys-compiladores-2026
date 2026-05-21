@@ -1,0 +1,380 @@
+@if (isRegisteredUser) {
+<div class="ai-page" *ngIf="vm$ | async as vm">
+  <header class="ai-header">
+    <h1 id="ai-page-title" class="ai-title">{{ 'ai.title' | translate }}</h1>
+    <p class="ai-subtitle">{{ 'ai.subtitle' | translate }}</p>
+  </header>
+
+  @if (!aiStatusAvailable) {
+    <mat-card class="ai-banner-warn" role="status" aria-live="polite">
+      <mat-icon aria-hidden="true">info</mat-icon>
+      <span>{{ 'ai.unavailableBanner' | translate }}</span>
+      <button
+        mat-stroked-button
+        type="button"
+        class="ai-banner-retry"
+        (click)="refreshAiStatus()"
+        [attr.aria-label]="'ai.retryStatus' | translate">
+        {{ 'ai.retryStatus' | translate }}
+      </button>
+    </mat-card>
+  }
+
+  @if (schemaConnection; as conn) {
+    <div class="schema-connection-banner" role="status" aria-live="polite">
+      <mat-icon aria-hidden="true" class="schema-connection-icon">storage</mat-icon>
+      <div class="schema-connection-lines">
+        <span class="schema-connection-title">{{ 'ai.schemaConnectionTitle' | translate }}</span>
+        <span class="schema-connection-detail">
+          {{
+            'ai.schemaConnectionDetail'
+              | translate
+                : {
+                    engine: conn.dbType,
+                    host: conn.host,
+                    port: conn.port,
+                    database: conn.database,
+                    user: conn.username,
+                    count: conn.tableCount
+                  }
+          }}
+        </span>
+        <span class="schema-connection-hint">{{ 'ai.schemaHint' | translate : { count: conn.tableCount } }}</span>
+      </div>
+      <button
+        mat-button
+        type="button"
+        class="schema-connection-link-btn"
+        (click)="openSchemaExplorer()">
+        {{ 'ai.schemaConnectionLink' | translate }}
+      </button>
+    </div>
+  } @else {
+    <p class="schema-connection-empty" role="status">
+      {{ 'ai.schemaEmptyHint' | translate }}
+    </p>
+  }
+
+  <mat-form-field appearance="outline" class="engine-field">
+    <mat-label>{{ 'ai.databaseType' | translate }}</mat-label>
+    <mat-select
+      [(ngModel)]="databaseType"
+      name="databaseType"
+      [attr.aria-label]="'ai.databaseType' | translate">
+      @for (eng of engines; track eng) {
+        <mat-option [value]="eng">{{ eng }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (vm.expertMode && lastMeta) {
+    <p class="ai-meta" aria-live="polite">
+      {{ 'ai.expertMeta' | translate : {
+        provider: lastMeta.provider ?? 'rule-based',
+        ms: lastMeta.responseTimeMs ?? 0,
+        live: lastMeta.aiAvailable ? ('ai.liveAi' | translate) : ('ai.fallback' | translate)
+      } }}
+    </p>
+  }
+
+  <mat-tab-group class="ai-tabs" dynamicHeight [attr.aria-label]="'ai.tabsLabel' | translate">
+    <!-- Tab 1: Generate -->
+    <mat-tab [label]="'ai.tabs.generate' | translate">
+      <div class="tab-panel">
+        @if (vm.studentMode) {
+          <mat-card class="student-card">
+            <p>{{ 'ai.student.generate' | translate }}</p>
+          </mat-card>
+        }
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'ai.naturalLabel' | translate }}</mat-label>
+          <textarea
+            matInput
+            rows="4"
+            [(ngModel)]="naturalDescription"
+            name="naturalDescription"
+            [placeholder]="'ai.naturalPlaceholder' | translate"
+            [attr.aria-label]="'ai.naturalLabel' | translate"></textarea>
+        </mat-form-field>
+
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          class="ai-cta-primary"
+          [disabled]="!naturalDescription.trim() || generating"
+          (click)="generateFromDescription()"
+          [attr.aria-label]="'ai.generateBtn' | translate">
+          @if (generating) {
+            <mat-spinner diameter="18" class="btn-spinner"></mat-spinner>
+          } @else {
+            <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+          }
+          {{ generating ? ('ai.generating' | translate) : ('ai.generateBtn' | translate) }}
+        </button>
+
+        @if (generatedQuery) {
+          <div class="result-block" aria-live="polite" aria-atomic="true">
+            <div class="editor-shell" [attr.aria-label]="'ai.resultEditorLabel' | translate">
+              <ngx-monaco-editor
+                class="ai-monaco"
+                [insideNg]="true"
+                [options]="monacoOptions"
+                [(ngModel)]="generatedQuery">
+              </ngx-monaco-editor>
+            </div>
+            <div class="result-actions">
+              <button mat-stroked-button type="button" (click)="copyText(generatedQuery)"
+                [attr.aria-label]="'ai.copy' | translate">
+                <mat-icon aria-hidden="true">content_copy</mat-icon>
+                {{ 'ai.copy' | translate }}
+              </button>
+              <button mat-flat-button color="accent" type="button" class="ai-cta-accent" (click)="sendToAnalyzer(generatedQuery)"
+                [attr.aria-label]="'ai.analyzeBtn' | translate">
+                {{ 'ai.analyzeBtn' | translate }}
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- Tab 2: Autocomplete -->
+    <mat-tab [label]="'ai.tabs.autocomplete' | translate">
+      <div class="tab-panel">
+        @if (vm.studentMode) {
+          <mat-card class="student-card">
+            <p>{{ 'ai.student.autocomplete' | translate }}</p>
+          </mat-card>
+        }
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'ai.partialLabel' | translate }}</mat-label>
+          <textarea
+            matInput
+            rows="3"
+            [(ngModel)]="partialQuery"
+            (ngModelChange)="onPartialQueryChange()"
+            name="partialQuery"
+            [placeholder]="'ai.partialPlaceholder' | translate"
+            [attr.aria-label]="'ai.partialLabel' | translate"></textarea>
+        </mat-form-field>
+
+        <button
+          mat-stroked-button
+          type="button"
+          class="ai-cta-secondary"
+          [disabled]="!partialQuery.trim() || autocompleteLoading"
+          (click)="runAutocomplete()"
+          [attr.aria-label]="'ai.completeBtn' | translate">
+          @if (autocompleteLoading) {
+            <mat-spinner diameter="18" class="btn-spinner"></mat-spinner>
+          }
+          {{ 'ai.completeBtn' | translate }}
+        </button>
+
+        @if (completedQuery) {
+          <div class="completion-box" aria-live="polite">
+            <pre class="completion-pre"><code>{{ partialQuery }}<span class="completion-highlight">{{ continuationHighlight }}</span></code></pre>
+            <button mat-flat-button color="accent" type="button" class="ai-cta-accent" (click)="sendToAnalyzer(completedQuery)"
+              [attr.aria-label]="'ai.useQueryBtn' | translate">
+              {{ 'ai.useQueryBtn' | translate }}
+            </button>
+          </div>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- Tab 3: Builder -->
+    <mat-tab [label]="'ai.tabs.builder' | translate">
+      <div class="tab-panel">
+        @if (vm.studentMode) {
+          <mat-card class="student-card">
+            <p>{{ 'ai.student.builder' | translate }}</p>
+          </mat-card>
+        }
+
+        <div class="builder-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'ai.operation' | translate }}</mat-label>
+            <mat-select [(ngModel)]="operation" name="operation"
+              [attr.aria-label]="'ai.operation' | translate">
+              @for (op of operations; track op) {
+                <mat-option [value]="op">{{ op }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'ai.tableName' | translate }}</mat-label>
+            <input matInput [(ngModel)]="tableName" name="tableName"
+              [attr.aria-label]="'ai.tableName' | translate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="span-2">
+            <mat-label>{{ 'ai.columns' | translate }}</mat-label>
+            <input matInput [(ngModel)]="columnsCsv" name="columnsCsv"
+              [placeholder]="'ai.columnsPlaceholder' | translate"
+              [attr.aria-label]="'ai.columns' | translate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="span-2">
+            <mat-label>{{ 'ai.where' | translate }}</mat-label>
+            <input matInput [(ngModel)]="whereCondition" name="whereCondition"
+              [attr.aria-label]="'ai.where' | translate" />
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          class="ai-cta-primary"
+          [disabled]="!tableName.trim() || building"
+          (click)="buildStructuredQuery()"
+          [attr.aria-label]="'ai.buildBtn' | translate">
+          @if (building) {
+            <mat-spinner diameter="18" class="btn-spinner"></mat-spinner>
+          }
+          {{ 'ai.buildBtn' | translate }}
+        </button>
+
+        @if (builtQuery) {
+          <div class="result-block" aria-live="polite">
+            <div class="editor-shell">
+              <ngx-monaco-editor
+                class="ai-monaco"
+                [insideNg]="true"
+                [options]="monacoOptions"
+                [(ngModel)]="builtQuery">
+              </ngx-monaco-editor>
+            </div>
+            <button mat-flat-button color="accent" type="button" class="ai-cta-accent" (click)="sendToAnalyzer(builtQuery)"
+              [attr.aria-label]="'ai.analyzeBtn' | translate">
+              {{ 'ai.analyzeBtn' | translate }}
+            </button>
+          </div>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- Tab 4: Security (V3 requirement, restored) -->
+    <mat-tab [label]="'ai.tabs.security' | translate">
+      <div class="tab-panel">
+        @if (vm.studentMode) {
+          <mat-card class="student-card">
+            <p>{{ 'ai.student.security' | translate }}</p>
+          </mat-card>
+        }
+
+          <mat-slide-toggle
+            class="security-ai-toggle"
+            [checked]="securityAiEnrichment"
+            (change)="onSecurityAiEnrichmentChange($event.checked)"
+            [attr.aria-label]="'ai.security.aiToggle' | translate">
+            {{ 'ai.security.aiToggle' | translate }}
+          </mat-slide-toggle>
+          @if (securityAiEnrichment && !aiStatusAvailable) {
+            <p class="security-ai-hint">{{ 'ai.security.aiToggleHint' | translate }}</p>
+          }
+
+          <button
+            mat-stroked-button
+            type="button"
+            class="ai-cta-secondary"
+            [disabled]="securityLoading"
+            (click)="scanSecurityHistory()"
+            [attr.aria-label]="'ai.security.scanBtn' | translate">
+            @if (securityLoading) {
+              <mat-spinner diameter="18" class="btn-spinner"></mat-spinner>
+            }
+            {{ 'ai.security.scanBtn' | translate }}
+          </button>
+
+          @if (securityScanned && securityFindings.length === 0) {
+            <p class="security-clear" aria-live="polite">{{ 'ai.security.none' | translate }}</p>
+          }
+
+          <ul class="security-list" aria-live="polite">
+            @for (f of securityFindings; track f.id) {
+              <li class="security-item" qwerysCollapsible>
+                <p class="security-risk">{{ f.riskKey | translate }}</p>
+                <p class="security-query"><code>{{ f.queryPreview }}</code></p>
+                <p class="security-fix">{{ f.fixKey | translate }}</p>
+                @if (vm.expertMode) {
+                  <p class="security-rule">{{ f.ruleKey | translate }}</p>
+                }
+                @if (securityAiEnrichment) {
+                  <div class="security-ai-actions">
+                    <button
+                      mat-stroked-button
+                      color="accent"
+                      type="button"
+                      [disabled]="securityAiLoadingId === f.id"
+                      (click)="explainSecurityWithAi(f)"
+                      [attr.aria-label]="'ai.security.explainBtn' | translate">
+                      @if (securityAiLoadingId === f.id) {
+                        <mat-spinner diameter="16"></mat-spinner>
+                      } @else {
+                        <mat-icon aria-hidden="true">auto_awesome</mat-icon>
+                      }
+                      {{ securityAiLoadingId === f.id
+                          ? ('ai.explaining' | translate)
+                          : ('ai.security.explainBtn' | translate) }}
+                    </button>
+                  </div>
+                  @if (securityAiExplanations[f.id]) {
+                    <div class="security-ai-explanation" aria-live="polite">
+                      <p>{{ securityAiExplanations[f.id] }}</p>
+                    </div>
+                  }
+                }
+              </li>
+            }
+          </ul>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+} @else {
+  <div class="guest-gate">
+    <mat-card class="gate-card">
+      <mat-card-content>
+        <mat-icon class="gate-icon" aria-hidden="true">auto_awesome</mat-icon>
+        <h2 id="ai-guest-title">{{ 'ai.guestTitle' | translate }}</h2>
+        <p>{{ 'ai.guestDesc' | translate }}</p>
+        <ul class="gate-features">
+          <li>
+            <mat-icon aria-hidden="true">psychology</mat-icon>
+            {{ 'ai.feature1' | translate }}
+          </li>
+          <li>
+            <mat-icon aria-hidden="true">auto_fix_high</mat-icon>
+            {{ 'ai.feature2' | translate }}
+          </li>
+          <li>
+            <mat-icon aria-hidden="true">construction</mat-icon>
+            {{ 'ai.feature3' | translate }}
+          </li>
+          <li>
+            <mat-icon aria-hidden="true">security</mat-icon>
+            {{ 'ai.feature4' | translate }}
+          </li>
+        </ul>
+        <div class="gate-actions">
+          <a mat-flat-button color="primary" routerLink="/auth" [queryParams]="{ tab: 'register' }">
+            {{ 'ai.createAccount' | translate }}
+          </a>
+          <a
+            mat-stroked-button
+            class="gate-login-btn"
+            routerLink="/auth"
+            [queryParams]="{ tab: 'login' }">
+            {{ 'ai.login' | translate }}
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+}
