@@ -1,0 +1,560 @@
+# Entrega al repositorio del profesor — guía completa por integrante
+
+**Curso:** Compiladores 2026 — UMG — Ing. Richard Ortiz  
+**Equipo QWERYS**
+
+| # | Integrante | Carné |
+|---|------------|-------|
+| 1 | Marjorie Samantha Girón Morales | 1890-22-19957 |
+| 2 | Juanita Raguex Tzum | 1890-20-544 |
+| 3 | Mercedes Azucena López Pérez | 1890-20-11489 |
+| 4 | Josué David Morales Ramírez | 1890-23-10545 |
+| 5 | Joshua Eduardo García Reyes | 1890-22-5831 |
+
+---
+
+## 0. Dos repositorios — no confundirlos
+
+| Repositorio | URL | Para qué sirve |
+|-------------|-----|----------------|
+| **Equipo (clonar y correr)** | https://github.com/SamGMorales/qwerys-compiladores-2026 | QWERYS completo: backend, frontend, Docker, IA, NoSQL. **Ya está listo.** Guía: [`../GUIA_EQUIPO.md`](../GUIA_EQUIPO.md) |
+| **Profesor (entrega calificada)** | https://github.com/Azucena17/REFACTORIZACION-_C-_-JAVA.git | Donde **cada integrante** debe subir su parte con **rama propia + Pull Request**, como pide la planificación del curso |
+| **Referencia C++ (solo estudio)** | https://github.com/compilations-teams/compilador-sql-final.git | Compilador original del curso (solo SELECT) |
+
+> **Regla del profesor:** ningún integrante hace push directo a `main`. Siempre: rama ? PR ? revisión ? merge.
+
+---
+
+## 1. Plan original vs. lo que quedó en el código (importante)
+
+La planificación (`QWERYS_PLANIFICACION_GANTT`) describe un producto; el equipo **lo amplió** durante el desarrollo. Al estudiar y al subir al repo del profesor, usen esta tabla:
+
+| Planificacion original | Estado real en QWERYS | Nota para la entrega |
+|------------------------|----------------------|----------------------|
+| `Lexer.java` | `SqlLexer.java` + lexers NoSQL (`MongoDbLexer`, `CqlLexer`, etc.) | En repo profesor: módulo académico `Lexer.java` en `docs/java-compiler/` |
+| `Parser.java` + `ASTBuilder.java` | `SqlParser.java` + `AstNode.java` (parser construye AST directamente) | No existe `ASTBuilder.java` separado |
+| `SymbolTable.java` (HashMap fijo) | `SemanticAnalyzer` + validación con schema live (`adapter/`, `analyzer/schema/`) | Tabla de símbolos evolucionó a schema dinámico |
+| `IntermediateCodeGenerator.java` | **No implementado** | Se reemplazó por `OptimizationEngine` (sugerencias, no bytecode) |
+| 10 reglas de optimización | **18 reglas** en `optimization/` | Más completo que el plan |
+| 13 patrones SQL Injection | **5 patrones** en `SemanticAnalyzer` (`SE007`) | Menos patrones, pero integrado en semántica |
+| WebSocket tiempo real | **No implementado** | Análisis vía REST (`POST /api/queries/analyze`) |
+| Swagger `/swagger-ui.html` | **No implementado** | API documentada en README + controllers |
+| Solo SQL | SQL + **5 motores NoSQL** + IA + auth + historial | Extensiones del producto final |
+| `IntegrationTest.java` | Muchos tests JUnit (~63 archivos) | Nombres distintos pero cobertura amplia |
+
+### Dos capas de código en el repo del equipo
+
+1. **Capa académica (entrega al profesor, nombres del plan):**  
+   `docs/java-compiler/` — compilador standalone Maven con `Lexer.java`, `Parser.java`, `SemanticAnalyzer.java`, tests, etc. **Cada integrante sube ESTOS archivos** al repo del profesor.
+
+2. **Capa producto (QWERYS completo):**  
+   `backend/qwerys-backend/` + `frontend/qwerys-frontend/` — lo que corren con Docker. **Marjorie coordina** PRs de integración al repo del profesor si el catedrático acepta el monorepo completo.
+
+---
+
+## 2. Proceso Git — pasos exactos (todos los integrantes)
+
+### 2.1 Configurar Git con TU identidad (una sola vez)
+
+Abre PowerShell o terminal y ejecuta **con tu nombre y correo de GitHub**:
+
+```powershell
+git config --global user.name "Tu Nombre Completo"
+git config --global user.email "tu-correo@ejemplo.com"
+```
+
+Verifica:
+
+```powershell
+git config user.name
+git config user.email
+```
+
+> Los commits deben aparecer con **tu usuario**, no el de otra persona. El profesor revisará el historial por integrante.
+
+### 2.2 Fork del repo del profesor
+
+1. Abre: https://github.com/Azucena17/REFACTORIZACION-_C-_-JAVA  
+2. Clic en **Fork** (arriba a la derecha) ? créalo en **tu cuenta** de GitHub.  
+3. Copia la URL de **tu fork** (ejemplo):  
+   `https://github.com/TU_USUARIO/REFACTORIZACION-_C-_-JAVA.git`
+
+### 2.3 Clonar TU fork (no el del compañero)
+
+```powershell
+cd C:\Users\TU_USUARIO\Documents
+git clone https://github.com/TU_USUARIO/REFACTORIZACION-_C-_-JAVA.git
+cd REFACTORIZACION-_C-_-JAVA
+```
+
+### 2.4 Añadir el repo del equipo como referencia (solo lectura)
+
+Para copiar archivos sin errores:
+
+```powershell
+git remote add equipo https://github.com/SamGMorales/qwerys-compiladores-2026.git
+git fetch equipo
+```
+
+### 2.5 Crear TU rama (nombre exacto según tu rol — ver sección 3)
+
+```powershell
+git checkout -b feature/TU-RAMA
+```
+
+Ejemplo Juanita:
+
+```powershell
+git checkout -b feature/juanita-raguex-lexer
+```
+
+### 2.6 Copiar SOLO tus archivos desde el repo del equipo
+
+Desde la raíz de tu clone del fork del profesor, copia desde tu clone local del repo del equipo (`qwerys-compiladores-2026`):
+
+**Opción A — copiar manualmente en el Explorador de archivos**  
+**Opción B — PowerShell** (ajusta la ruta `ORIGEN`):
+
+```powershell
+$ORIGEN = "C:\Users\msmor\OneDrive\Documentos\qwerys-project"
+$DESTINO = "C:\Users\TU_USUARIO\Documents\REFACTORIZACION-_C-_-JAVA"
+# Ejemplo Juanita — ver sección 3 para tu lista exacta
+Copy-Item "$ORIGEN\docs\java-compiler\src\main\java\com\qwerys\compiler\Lexer.java" `
+  "$DESTINO\src\main\java\com\qwerys\compiler\" -Force
+```
+
+> **Crea las carpetas** `src\main\java\com\qwerys\compiler\` y `src\test\java\com\qwerys\compiler\` si no existen.
+
+### 2.7 Verificar que compila (obligatorio antes del PR)
+
+En la raíz del fork del profesor (donde esté el `pom.xml` del módulo académico):
+
+```powershell
+# Si Marjorie ya subió el pom.xml base:
+mvn compile
+mvn test
+```
+
+Si aún no hay `pom.xml`, espera el PR de Marjorie o cópialo tú solo si eres Marjorie.
+
+### 2.8 Commit con mensaje descriptivo
+
+```powershell
+git status
+git add .
+git commit -m "feat(lexer): migrar analizador lexico de C++ a Java (Fase 2)"
+```
+
+Usa prefijos: `feat`, `test`, `docs`, `fix`. Menciona la fase del plan.
+
+### 2.9 Push a TU fork
+
+```powershell
+git push -u origin feature/TU-RAMA
+```
+
+### 2.10 Abrir Pull Request hacia el repo del profesor
+
+1. Ve a **tu fork** en GitHub.  
+2. Aparecerá banner **Compare & pull request** ? clic.  
+3. **Base repository:** `Azucena17/REFACTORIZACION-_C-_-JAVA` ? rama `main`  
+4. **Head repository:** tu fork ? tu rama `feature/...`  
+5. Título ejemplo: `Fase 2 — Analizador Léxico (Juanita Raguex)`  
+6. Descripción (plantilla):
+
+```markdown
+## Integrante
+Juanita Raguex Tzum — 1890-20-544
+
+## Fase
+Fase 2 — Migración Analizador Léxico
+
+## Archivos incluidos
+- src/main/java/com/qwerys/compiler/Lexer.java
+- (tests si aplica)
+
+## Correspondencia C++ ? Java
+- Lexer.cpp / Lexer.h ? Lexer.java
+
+## Cómo probar
+mvn test -Dtest=LexerTest
+
+## Revisores
+@SamGMorales @Azucena17
+```
+
+7. **Create pull request** — no hacer merge tú solo; otro integrante revisa.
+
+---
+
+## 3. Orden recomendado de PRs (evitar conflictos)
+
+| Orden | Integrante | Rama | Por qué primero |
+|-------|------------|------|-----------------|
+| 1 | Marjorie | `feature/marjorie-giron-arquitectura` | Crea `pom.xml`, estructura de carpetas, `Main.java`, tokens base |
+| 2 | Juanita | `feature/juanita-raguex-lexer` | Depende de `Token.java` / `TokenType.java` |
+| 3 | Mercedes | `feature/mercedes-lopez-parser-ast` | Depende de tokens y lexer |
+| 4 | Josué | `feature/josue-morales-semantic` | Depende del AST del parser |
+| 5 | Joshua | `feature/joshua-garcia-testing` | Tests finales sobre todo lo anterior |
+
+Entre PRs: hacer `git pull origin main` en tu fork antes de empezar si alguien ya mergeó.
+
+---
+
+## 4. Qué sube cada integrante — detalle exacto
+
+### Fuente de archivos en el repo del equipo
+
+Todos los archivos académicos están en:
+
+```
+qwerys-compiladores-2026/docs/java-compiler/
+```
+
+Clonen el repo del equipo si aún no lo tienen:
+
+```powershell
+git clone https://github.com/SamGMorales/qwerys-compiladores-2026.git
+```
+
+---
+
+### Integrante 1 — Marjorie Samantha Girón (Arquitecto)
+
+**Rama:** `feature/marjorie-giron-arquitectura`
+
+#### Archivos a subir al repo del profesor (módulo académico)
+
+| Archivo destino en repo profesor | Copiar desde repo del equipo |
+|----------------------------------|------------------------------|
+| `pom.xml` | `docs/java-compiler/pom.xml` |
+| `README.md` | `docs/java-compiler/README.md` |
+| `src/main/java/com/qwerys/compiler/TokenType.java` | idem |
+| `src/main/java/com/qwerys/compiler/Token.java` | idem |
+| `src/main/java/com/qwerys/compiler/Main.java` | idem |
+
+#### Responsabilidad adicional (producto QWERYS — para estudiar y demo)
+
+| Área | Rutas en repo del equipo |
+|------|--------------------------|
+| Docker / compose | `docker-compose.yml`, `.env.example`, `backend/qwerys-backend/Dockerfile`, `frontend/qwerys-frontend/Dockerfile` |
+| API REST | `backend/.../controller/*.java` |
+| Orquestación | `backend/.../service/QueryAnalysisService.java` |
+| Config Spring | `backend/.../config/`, `application-docker.properties` |
+| Frontend Angular | `frontend/qwerys-frontend/` completo |
+| Optimización (18 reglas) | `backend/.../optimization/` |
+| Adapters BD | `backend/.../adapter/` |
+
+#### Plan de estudio — 2 días
+
+| Día | Temas | Archivos a leer en orden |
+|-----|-------|--------------------------|
+| Día 1 AM | Pipeline completo | `QueryAnalysisService.java` (líneas 39–120), `QueryController.java` |
+| Día 1 PM | Docker y despliegue | `docker-compose.yml`, `application-docker.properties`, `nginx.conf` |
+| Día 2 AM | Frontend + Monaco | `query-analyzer.component.ts`, `core/services/query.service.ts` |
+| Día 2 PM | Integración módulos | `OptimizationEngine.java`, README raíz |
+
+#### Prompt tutor IA (copiar y pegar)
+
+```
+Soy Marjorie, arquitecta del proyecto QWERYS (migración compilador SQL C++ ? Java, Spring Boot + Angular).
+Debo dominar en 2 días: (1) cómo QueryAnalysisService orquesta lexer?parser?semántica?optimización,
+(2) cómo docker-compose conecta MySQL/PostgreSQL/backend/frontend, (3) cómo el frontend llama /api/queries/analyze.
+
+Contexto: el repo académico usa docs/java-compiler/ (Lexer, Parser, SemanticAnalyzer standalone).
+El producto real está en backend/qwerys-backend con SqlLexer, SqlParser, SemanticAnalyzer.
+
+Explícame como si yo hubiera diseñado todo: flujo de una query "SELECT id FROM users WHERE id=1" desde
+el POST HTTP hasta la respuesta JSON. Usa diagramas ASCII. Luego hazme 10 preguntas de examen oral
+y corrige mis respuestas. Si me equivoco, cítame clases concretas.
+```
+
+---
+
+### Integrante 2 — Juanita Raguex (Analizador Léxico)
+
+**Rama:** `feature/juanita-raguex-lexer`
+
+#### Archivos a subir al repo del profesor
+
+| Archivo | Origen en repo del equipo |
+|---------|---------------------------|
+| `src/main/java/com/qwerys/compiler/Lexer.java` | `docs/java-compiler/.../Lexer.java` |
+
+#### Código equivalente en QWERYS completo (para estudiar)
+
+| Archivo | Qué hace |
+|---------|----------|
+| `backend/.../analyzer/SqlLexer.java` | Lexer SQL principal (~561 LOC) |
+| `backend/.../analyzer/Token.java` | Token con línea/columna |
+| `backend/.../analyzer/TokenType.java` | Enum de tipos |
+| `backend/.../analyzer/MongoDbLexer.java` | Extensión NoSQL (extra del producto) |
+| `backend/.../analyzer/CqlLexer.java` | Extensión Cassandra |
+| `backend/.../analyzer/RedisLexer.java` | Extensión Redis |
+
+#### Correspondencia C++
+
+| C++ (`compilador-sql-final`) | Java académico | Java QWERYS |
+|------------------------------|----------------|-------------|
+| `Lexer.cpp`, `Lexer.h` | `Lexer.java` | `SqlLexer.java` |
+| `Token.h` | `Token.java` | `Token.java` |
+
+#### Plan de estudio — 2 días
+
+| Día | Actividad |
+|-----|-----------|
+| Día 1 | Leer `Lexer.cpp` del repo C++ y `Lexer.java` académico lado a lado. Dibujar tabla token?lexema para `SELECT nombre FROM usuarios` |
+| Día 2 | Leer `SqlLexer.java`: keywords por dialecto, comentarios `--`, strings. Ejecutar `SqlLexerTest.java`. Explicar en voz alta qué es un token |
+
+#### Prompt tutor IA
+
+```
+Soy Juanita, responsable del analizador léxico en QWERYS (curso Compiladores UMG).
+Debo explicar como si yo hubiera escrito Lexer.java migrando Lexer.cpp de C++.
+
+Tareas:
+1. Explícame fase léxica: entrada SQL ? lista de tokens con line/column.
+2. Compara Lexer.cpp (solo SELECT/FROM/WHERE) vs SqlLexer.java (SQL completo multi-dialecto).
+3. Dame 5 ejemplos de SQL y genera la tabla de tokens esperada.
+4. Pregúntame qué pasa con: 'O''Brien', -- comentario, SELECT * (tres tokens distintos).
+5. Simula preguntas del profesor sobre expresiones regulares y autómatas finitos aplicados a nuestro lexer.
+
+Responde en español, técnico pero claro. Corrige mis errores.
+```
+
+---
+
+### Integrante 3 — Mercedes Azucena López (Parser + AST)
+
+**Rama:** `feature/mercedes-lopez-parser-ast`
+
+#### Archivos a subir al repo del profesor
+
+| Archivo | Origen |
+|---------|--------|
+| `CompOperator.java` | `docs/java-compiler/.../CompOperator.java` |
+| `ASTNode.java` | `docs/java-compiler/.../ASTNode.java` |
+| `ExpressionNode.java` | idem |
+| `ConditionNode.java` | idem |
+| `SelectNode.java` | idem |
+| `Parser.java` | idem |
+
+> El plan mencionaba `ASTBuilder.java` — **no existe**. El parser construye el AST directamente (igual en `SqlParser.java` del producto).
+
+#### Código equivalente en QWERYS completo
+
+| Archivo | Qué hace |
+|---------|----------|
+| `SqlParser.java` | Parser recursivo (~3500 LOC): SELECT, INSERT, JOIN, CTE, etc. |
+| `AstNode.java` | Nodo genérico del AST |
+| `StatementSplitter.java` | Divide scripts multi-sentencia |
+| `procedural/*Parser.java` | Parsers PL/SQL, T-SQL, etc. (extensión) |
+
+#### Correspondencia C++
+
+| C++ | Java académico | Java QWERYS |
+|-----|----------------|-------------|
+| `Parser.cpp` | `Parser.java` | `SqlParser.java` |
+| `AST.h` (SelectNode, etc.) | `SelectNode`, `ConditionNode`, … | `AstNode` genérico |
+
+#### Plan de estudio — 2 días
+
+| Día | Actividad |
+|-----|-----------|
+| Día 1 | Gramática del SELECT del repo C++. Recorrer `Parser.java` académico: `parseSelect()`, `parseColumnList()`, `parseWhere()` |
+| Día 2 | Abrir `SqlParserTest.java` y explicar cada test. Leer inicio de `SqlParser.java` (constructores, `parse()`) |
+
+#### Prompt tutor IA
+
+```
+Soy Mercedes, responsable del analizador sintáctico y AST en QWERYS.
+Migré Parser.cpp a Parser.java (recursivo descendente). No usamos ASTBuilder separado.
+
+Enséñame en 2 días:
+1. Diferencia análisis léxico vs sintáctico con ejemplo "SELECT a, b FROM t WHERE x = 1".
+2. Cómo Parser.java construye SelectNode/ConditionNode desde tokens.
+3. Qué es ParseException y por qué reportamos línea/columna.
+4. Comparar gramática C++ (solo SELECT simple) vs SqlParser.java (JOIN, subqueries).
+5. Hazme dibujar el AST de: SELECT id, name FROM users WHERE id = 1 AND active = 1
+
+Modo examen oral: pregúntame, corrige, repite hasta que domine.
+```
+
+---
+
+### Integrante 4 — Josué David Morales (Semántico + Tabla de símbolos)
+
+**Rama:** `feature/josue-morales-semantic`
+
+#### Archivos a subir al repo del profesor
+
+| Archivo | Origen |
+|---------|--------|
+| `DataType.java` | `docs/java-compiler/.../DataType.java` |
+| `Column.java` | idem |
+| `Table.java` | idem |
+| `SymbolTable.java` | idem |
+| `SemanticAnalyzer.java` | idem |
+
+> El plan pedía `IntermediateCodeGenerator.java` — **no existe**. En su lugar: `OptimizationEngine` (Marjorie/arquitectura) y detección SQL injection en `SemanticAnalyzer` (tu parte ampliada).
+
+#### Código equivalente en QWERYS completo
+
+| Archivo | Qué hace |
+|---------|----------|
+| `SemanticAnalyzer.java` | Reglas semánticas, **5 patrones SQL injection** (`SE007`) |
+| `SchemaAwareSemanticAnalyzer.java` | Wrapper con schema |
+| `MySQLDialectAnalyzer.java` (+ otros dialectos) | Reglas por motor |
+| `analyzer/schema/*` | Validación contra schema live |
+| `SemanticError.java` | Errores con código |
+
+#### Correspondencia C++
+
+| C++ | Java académico | Java QWERYS |
+|-----|----------------|-------------|
+| `SymbolTable.cpp` | `SymbolTable.java` | Schema + reglas en `SemanticAnalyzer` |
+| `SemanticAnalyzer.cpp` | `SemanticAnalyzer.java` | `SemanticAnalyzer.java` (~2200 LOC) |
+
+#### Plan de estudio — 2 días
+
+| Día | Actividad |
+|-----|-----------|
+| Día 1 | `SymbolTable.java` académico: tablas `usuarios`/`productos`. Reglas: tabla existe, columna existe, tipos compatibles en WHERE |
+| Día 2 | `SemanticAnalyzer.java` producto: buscar `INJECTION_STRING_PATTERNS`, `INJECTION_STRUCTURAL_PATTERNS`, código `SE007`. Leer `SchemaAwareSemanticAnalyzerTest.java` |
+
+#### Prompt tutor IA
+
+```
+Soy Josué, responsable del analizador semántico y tabla de símbolos en QWERYS.
+
+Debo dominar:
+1. SymbolTable.java (HashMap, tablas hardcodeadas) vs schema dinámico en QWERYS.
+2. Validación de tipos en WHERE (INT vs VARCHAR error en C++ y Java).
+3. Detección SQL injection: 5 patrones en SemanticAnalyzer (SE007) — no son 13 como decía el plan.
+4. Por qué no implementamos IntermediateCodeGenerator y qué hace OptimizationEngine en su lugar.
+
+Dame casos: query válida, tabla inexistente, columna inexistente, type mismatch, injection "' OR '1'='1".
+Explícame qué error lanza cada una. Simula defensa oral ante el profesor.
+```
+
+---
+
+### Integrante 5 — Joshua Eduardo García (QA / Testing)
+
+**Rama:** `feature/joshua-garcia-testing`
+
+#### Archivos a subir al repo del profesor
+
+| Archivo | Origen |
+|---------|--------|
+| `src/test/java/com/qwerys/compiler/LexerTest.java` | `docs/java-compiler/.../LexerTest.java` |
+| `src/test/java/com/qwerys/compiler/ParserTest.java` | idem |
+| `src/test/java/com/qwerys/compiler/SemanticTest.java` | idem |
+
+#### Documentación a preparar (PR separado o mismo PR)
+
+| Entregable | Acción |
+|------------|--------|
+| README actualizado | Copiar/adaptar README del repo del equipo |
+| Informe técnico | Documento comparando C++ vs Java (1–2 páginas) |
+| Evidencia tests | Captura de `mvn test` con BUILD SUCCESS |
+
+> Swagger no está implementado — documentar endpoints manualmente en README:
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| POST | `/api/queries/analyze` | Analizar query SQL/NoSQL |
+| GET | `/api/queries/engines` | Motores soportados |
+| POST | `/api/auth/register` | Registro |
+| POST | `/api/auth/login` | Login |
+
+#### Tests adicionales en QWERYS completo (referencia)
+
+| Archivo | Área |
+|---------|------|
+| `SqlLexerTest.java`, `SqlParserTest.java` | Core SQL |
+| `SchemaAwareSemanticAnalyzerTest.java` | Semántica |
+| `OptimizationEngine*Test.java` | Optimización |
+| `RuleBasedAiFallbackTest.java` | IA offline |
+| ~60 archivos más | NoSQL, procedural, adapters |
+
+#### Plan de estudio — 2 días
+
+| Día | Actividad |
+|-----|-----------|
+| Día 1 | JUnit 5: `@Test`, `assertEquals`, `assertThrows`. Correr `mvn test` en `docs/java-compiler`. Leer los 3 tests académicos |
+| Día 2 | Correr `mvn test` en `backend/qwerys-backend`. Preparar informe: qué prueba cada test académico vs ejemplos del repo C++ (`query1.sql` … `query_error3.sql`) |
+
+#### Prompt tutor IA
+
+```
+Soy Joshua, QA del proyecto QWERYS. Debo dominar JUnit 5 y explicar la suite de tests como si yo la escribí.
+
+Ayúdame a:
+1. Explicar LexerTest, ParserTest, SemanticTest del módulo docs/java-compiler.
+2. Mapear tests a ejemplos del repo C++ compilador-sql-final (query1.sql válido, query_error1 tabla inexistente, etc.).
+3. Preparar informe técnico: migración C++?Java, beneficios (portabilidad, GC, JUnit, Spring), desviaciones del plan (18 reglas optimización, 5 patrones injection, sin WebSocket).
+4. Simular preguntas del profesor sobre TDD y cobertura.
+
+Dame plantilla de informe en markdown y 10 preguntas tipo examen con respuestas modelo.
+```
+
+---
+
+## 5. Después del módulo académico — PR de integración QWERYS (opcional)
+
+Si el profesor acepta el **producto completo**, Marjorie (o el equipo coordinado) abre un PR adicional con:
+
+```
+backend/qwerys-backend/     (Spring Boot completo)
+frontend/qwerys-frontend/   (Angular 17)
+docker-compose.yml
+.env.example
+README.md
+GUIA_EQUIPO.md
+```
+
+Los demás integrantes **comentan/revisan** ese PR citando su módulo:
+
+- Juanita ? sección `analyzer/SqlLexer.java`
+- Mercedes ? `SqlParser.java`, `AstNode.java`
+- Josué ? `SemanticAnalyzer.java`
+- Joshua ? `src/test/**`
+
+---
+
+## 6. Checklist antes de abrir cada PR
+
+- [ ] Rama con nombre correcto `feature/nombre-apellido-modulo`
+- [ ] `git config user.name` es **tu** nombre
+- [ ] Solo incluyes **tus** archivos (no copies todo el proyecto si no te corresponde)
+- [ ] `mvn compile` y `mvn test` pasan en tu rama
+- [ ] PR tiene descripción: integrante, fase, archivos, cómo probar
+- [ ] Otro integrante revisa antes del merge
+- [ ] No subiste `.env`, `application.properties`, ni API keys
+
+---
+
+## 7. Cómo practicar la demo oral (todos)
+
+1. Clonar repo del equipo ? Docker ? http://localhost  
+2. Pegar query del repo C++: `SELECT nombre FROM usuarios WHERE edad > 18`  
+3. Explicar qué hace cada fase (léxico ? sintáctico ? semántico)  
+4. Mostrar un error: tabla `clientes` inexistente  
+5. Cada uno explica **solo su fase** en 2–3 minutos  
+
+---
+
+## 8. Contactos y repos — referencia rápida
+
+| Recurso | URL |
+|---------|-----|
+| Repo equipo (correr app) | https://github.com/SamGMorales/qwerys-compiladores-2026 |
+| Repo profesor (entrega) | https://github.com/Azucena17/REFACTORIZACION-_C-_-JAVA |
+| C++ referencia | https://github.com/compilations-teams/compilador-sql-final |
+| Guía clonar/correr | [`../GUIA_EQUIPO.md`](../GUIA_EQUIPO.md) |
+| Módulo académico local | `docs/java-compiler/` |
+
+---
+
+*Documento generado para el equipo QWERYS — Compiladores UMG 2026. Ajustado al estado final del código, no solo al plan Gantt original.*

@@ -10,6 +10,8 @@ Thumbs.db
 # Excluir archivos de docs EXCEPTO docs/java-compiler/
 # (*.md solo aplica a archivos directamente en docs/, no a subdirectorios)
 docs/*.md
+!docs/ENTREGA_REPO_PROFESOR.md
+!docs/GUIA_INTEGRANTES_DEFINITIVA.md
 docs/*.docx
 docs/*.db
 docs/*.bd
