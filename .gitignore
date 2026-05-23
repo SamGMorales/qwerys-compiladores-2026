@@ -12,6 +12,7 @@ Thumbs.db
 docs/*.md
 !docs/ENTREGA_REPO_PROFESOR.md
 !docs/GUIA_INTEGRANTES_DEFINITIVA.md
+!docs/GUIA_ENTREGA_COMPLETA_INTEGRANTES.md
 docs/*.docx
 docs/*.db
 docs/*.bd

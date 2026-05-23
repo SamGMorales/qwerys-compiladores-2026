@@ -1,31 +1,31 @@
-# QWERYS — SQL/NoSQL Query Analyzer
+# QWERYS â€” SQL/NoSQL Query Analyzer
 
-Migración y extensión del compilador SQL de C++ a Java.  
-Curso de Compiladores 2026 — Universidad Mariano Gálvez de Guatemala.
+MigraciÃ³n y extensiÃ³n del compilador SQL de C++ a Java.  
+Curso de Compiladores 2026 â€” Universidad Mariano GÃ¡lvez de Guatemala.
 
 Repositorio de referencia (C++ original): [compilador-sql-final](https://github.com/compilations-teams/compilador-sql-final.git)
 
-**Entrega al repo del profesor (cada integrante):** [`docs/GUIA_INTEGRANTES_DEFINITIVA.md`](docs/GUIA_INTEGRANTES_DEFINITIVA.md) — qué subir, cómo y en qué orden para que el repo del curso quede igual de funcional que este.
+**Entrega al repo del profesor:** [docs/GUIA_ENTREGA_COMPLETA_INTEGRANTES.md](docs/GUIA_ENTREGA_COMPLETA_INTEGRANTES.md) (guÃ­a principal) Â· acadÃ©mico solo: [docs/GUIA_INTEGRANTES_DEFINITIVA.md](docs/GUIA_INTEGRANTES_DEFINITIVA.md)
 
 ---
 
-## ¿Qué es esto?
+## Â¿QuÃ© es esto?
 
 Sistema web completo que incluye:
 
-- **Compilador SQL en Java** — análisis léxico, sintáctico y semántico (migración del esqueleto C++ del curso)
-- **Análisis multi-motor** — SQL (MySQL, PostgreSQL, SQL Server, Oracle, SQLite) y NoSQL (MongoDB, Redis, Elasticsearch, Cassandra, DynamoDB)
-- **Detección de SQL Injection** — 5 patrones heurísticos en el analizador semántico (`SE007`)
-- **Motor de optimización** — 18 reglas AST sobre SQL y SQL procedural
-- **Migración de código entre lenguajes** — módulo aparte (C++/Python/Java/TypeScript; no es la migración del compilador SQL)
+- **Compilador SQL en Java** â€” anÃ¡lisis lÃ©xico, sintÃ¡ctico y semÃ¡ntico (migraciÃ³n del esqueleto C++ del curso)
+- **AnÃ¡lisis multi-motor** â€” SQL (MySQL, PostgreSQL, SQL Server, Oracle, SQLite) y NoSQL (MongoDB, Redis, Elasticsearch, Cassandra, DynamoDB)
+- **DetecciÃ³n de SQL Injection** â€” 5 patrones heurÃ­sticos en el analizador semÃ¡ntico (`SE007`)
+- **Motor de optimizaciÃ³n** â€” 18 reglas AST sobre SQL y SQL procedural
+- **MigraciÃ³n de cÃ³digo entre lenguajes** â€” mÃ³dulo aparte (C++/Python/Java/TypeScript; no es la migraciÃ³n del compilador SQL)
 - **Frontend Angular 17** con Monaco Editor
-- **Análisis asistido por IA** — Groq (primario) y OpenRouter (fallback opcional)
-- **PWA instalable**, diseño responsivo y modos de accesibilidad (incl. modo ciego)
+- **AnÃ¡lisis asistido por IA** â€” Groq (primario) y OpenRouter (fallback opcional)
+- **PWA instalable**, diseÃ±o responsivo y modos de accesibilidad (incl. modo ciego)
 
-### Pipeline del compilador (migración C++ ? Java)
+### Pipeline del compilador (migraciÃ³n C++ â†’ Java)
 
 ```
-SQL ? SqlLexer ? SqlParser ? AstNode ? SemanticAnalyzer ? OptimizationEngine ? REST API
+SQL â†’ SqlLexer â†’ SqlParser â†’ AstNode â†’ SemanticAnalyzer â†’ OptimizationEngine â†’ REST API
 ```
 
 | Componente C++ (`compilador-sql-final`) | Equivalente Java (`backend/qwerys-backend`) |
@@ -33,10 +33,10 @@ SQL ? SqlLexer ? SqlParser ? AstNode ? SemanticAnalyzer ? OptimizationEngine ? R
 | `Lexer.cpp` / `Token.h`                | `analyzer/SqlLexer.java`, `Token.java`      |
 | `Parser.cpp` / `AST.h`                 | `analyzer/SqlParser.java`, `AstNode.java`   |
 | `SemanticAnalyzer.cpp`                 | `analyzer/SemanticAnalyzer.java`            |
-| `SymbolTable.cpp`                      | Validación con schema (adapters + reglas)   |
+| `SymbolTable.cpp`                      | ValidaciÃ³n con schema (adapters + reglas)   |
 | `main.cpp`                             | `QueryAnalysisService` + `QueryController`    |
 
-El compilador C++ de referencia implementa **SELECT** con esquema fijo; la versión Java conserva la misma arquitectura por fases y la extiende a DML/DDL, múltiples dialectos, NoSQL y API REST — sin JNI ni código nativo.
+El compilador C++ de referencia implementa **SELECT** con esquema fijo; la versiÃ³n Java conserva la misma arquitectura por fases y la extiende a DML/DDL, mÃºltiples dialectos, NoSQL y API REST â€” sin JNI ni cÃ³digo nativo.
 
 ---
 
@@ -44,12 +44,12 @@ El compilador C++ de referencia implementa **SELECT** con esquema fijo; la versi
 
 - **Java 17**
 - **Node.js 20** (frontend local)
-- **Docker Desktop** (opción recomendada)
-- **Maven** — incluido como wrapper (`mvnw` / `mvnw.cmd`)
+- **Docker Desktop** (opciÃ³n recomendada)
+- **Maven** â€” incluido como wrapper (`mvnw` / `mvnw.cmd`)
 
 ---
 
-## Opción 1 — Correr con Docker (recomendado)
+## OpciÃ³n 1 â€” Correr con Docker (recomendado)
 
 1. Clonar el repositorio:
 
@@ -58,7 +58,7 @@ El compilador C++ de referencia implementa **SELECT** con esquema fijo; la versi
    cd qwerys-project
    ```
 
-2. Copiar la plantilla de configuración:
+2. Copiar la plantilla de configuraciÃ³n:
 
    ```bash
    cp .env.example .env
@@ -72,12 +72,12 @@ El compilador C++ de referencia implementa **SELECT** con esquema fijo; la versi
 
 3. Editar `.env` y completar:
 
-   | Variable | Descripción |
+   | Variable | DescripciÃ³n |
    |----------|-------------|
-   | `MYSQL_ROOT_PASSWORD` | Contraseña root de MySQL en Docker |
-   | `POSTGRES_PASSWORD` | Contraseña de PostgreSQL en Docker |
-   | `JWT_SECRET` | Texto aleatorio de **mínimo 32 caracteres** |
-   | `AI_API_KEY` | API key de Groq (opcional; sin ella funciona el análisis por reglas) |
+   | `MYSQL_ROOT_PASSWORD` | ContraseÃ±a root de MySQL en Docker |
+   | `POSTGRES_PASSWORD` | ContraseÃ±a de PostgreSQL en Docker |
+   | `JWT_SECRET` | Texto aleatorio de **mÃ­nimo 32 caracteres** |
+   | `AI_API_KEY` | API key de Groq (opcional; sin ella funciona el anÃ¡lisis por reglas) |
    | `AI_FALLBACK_API_KEY` | API key de OpenRouter (opcional) |
 
 4. Levantar todos los servicios:
@@ -90,11 +90,11 @@ El compilador C++ de referencia implementa **SELECT** con esquema fijo; la versi
 
    Puertos en el host (por si ya tienes servicios locales): backend `8081`, MySQL `3307`, PostgreSQL `5433`, MongoDB `27018`.
 
-   Más detalle: [`docs/DOCKER_SETUP.md`](docs/DOCKER_SETUP.md)
+   MÃ¡s detalle: [`docs/DOCKER_SETUP.md`](docs/DOCKER_SETUP.md)
 
 ---
 
-## Opción 2 — Correr local (sin Docker)
+## OpciÃ³n 2 â€” Correr local (sin Docker)
 
 ### Backend
 
@@ -104,7 +104,7 @@ El compilador C++ de referencia implementa **SELECT** con esquema fijo; la versi
    cd backend/qwerys-backend
    ```
 
-2. Copiar la plantilla de configuración:
+2. Copiar la plantilla de configuraciÃ³n:
 
    ```bash
    cp src/main/resources/application.properties.example src/main/resources/application.properties
@@ -155,7 +155,7 @@ Desde `backend/qwerys-backend/`:
 
 En Windows: `.\mvnw.cmd test`
 
-La suite incluye tests del lexer/parser SQL, analizadores por motor, optimización, IA (con fallback offline) y carga del contexto Spring.
+La suite incluye tests del lexer/parser SQL, analizadores por motor, optimizaciÃ³n, IA (con fallback offline) y carga del contexto Spring.
 
 ---
 
@@ -163,28 +163,28 @@ La suite incluye tests del lexer/parser SQL, analizadores por motor, optimizació
 
 ```
 qwerys-project/
-??? backend/qwerys-backend/          ? Spring Boot 3.5 / Java 17
+??? backend/qwerys-backend/          â†’ Spring Boot 3.5 / Java 17
 ?   ??? src/main/java/com/qwerys/qwerys_backend/
-?       ??? analyzer/                ? Lexer, Parser, AST, SemanticAnalyzer (migración C++)
-?       ??? optimization/            ? Motor de 18 reglas de optimización
-?       ??? migration/               ? Conversión de código entre lenguajes (feature aparte)
-?       ??? ai/                      ? Integración Groq / OpenRouter
-?       ??? adapter/                 ? Adaptadores JDBC/API para 10 motores de BD
-??? frontend/qwerys-frontend/        ? Angular 17 + Monaco Editor
+?       ??? analyzer/                â†’ Lexer, Parser, AST, SemanticAnalyzer (migraciÃ³n C++)
+?       ??? optimization/            â†’ Motor de 18 reglas de optimizaciÃ³n
+?       ??? migration/               â†’ ConversiÃ³n de cÃ³digo entre lenguajes (feature aparte)
+?       ??? ai/                      â†’ IntegraciÃ³n Groq / OpenRouter
+?       ??? adapter/                 â†’ Adaptadores JDBC/API para 10 motores de BD
+??? frontend/qwerys-frontend/        â†’ Angular 17 + Monaco Editor
 ?   ??? src/app/
-?       ??? features/                ? Módulos principales de la app
-?       ??? core/services/           ? Servicios Angular
-??? docker-compose.yml               ? Levanta MySQL, PostgreSQL, MongoDB, backend y frontend
-??? .env.example                     ? Plantilla de configuración Docker (copiar a .env)
-??? docs/                            ? Guías del proyecto (Docker, getting started, etc.)
+?       ??? features/                â†’ MÃ³dulos principales de la app
+?       ??? core/services/           â†’ Servicios Angular
+??? docker-compose.yml               â†’ Levanta MySQL, PostgreSQL, MongoDB, backend y frontend
+??? .env.example                     â†’ Plantilla de configuraciÃ³n Docker (copiar a .env)
+??? docs/                            â†’ GuÃ­as del proyecto (Docker, getting started, etc.)
 ```
 
 ---
 
 ## Notas de seguridad
 
-- `application.properties` está en `.gitignore` — **nunca** subir al repositorio
-- `.env` está en `.gitignore` — **nunca** subir al repositorio
+- `application.properties` estÃ¡ en `.gitignore` â€” **nunca** subir al repositorio
+- `.env` estÃ¡ en `.gitignore` â€” **nunca** subir al repositorio
 - Las API keys de IA se comparten solo por canal privado
 - Usar `application.properties.example` y `.env.example` como plantillas
 
@@ -194,8 +194,8 @@ qwerys-project/
 
 | Integrante | Rol | Responsabilidad |
 |------------|-----|-----------------|
-| Marjorie Girón (Arquitecto) | Arquitectura | Spring Boot, Angular, Docker |
-| Juanita Raguex (C++ Senior) | Compiladores | Análisis léxico |
-| Mercedes López (C++ Junior) | Compiladores | Análisis sintáctico |
-| Josué Morales (Java Senior) | Compiladores | Análisis semántico, tabla de símbolos |
-| Joshua Garcia (QA) | Calidad | Tests, documentación |
+| Marjorie GirÃ³n (Arquitecto) | Arquitectura | Spring Boot, Angular, Docker |
+| Juanita Raguex (C++ Senior) | Compiladores | AnÃ¡lisis lÃ©xico |
+| Mercedes LÃ³pez (C++ Junior) | Compiladores | AnÃ¡lisis sintÃ¡ctico |
+| JosuÃ© Morales (Java Senior) | Compiladores | AnÃ¡lisis semÃ¡ntico, tabla de sÃ­mbolos |
+| Joshua Garcia (QA) | Calidad | Tests, documentaciÃ³n |
