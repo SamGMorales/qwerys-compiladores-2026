@@ -34,6 +34,8 @@ ai.api-key=PEGAR_API_KEY_DE_GROQ_AQUI
 ai.model=llama-3.3-70b-versatile
 ai.base-url=https://api.groq.com/openai/v1
 
+# NOTA IMPORTANTE!!! API Fallback - no incluir en la estructura final en base a la instrucción proporcionada por el catedrático. Únicamente correr con API principal.
+
 # ─── IA — Fallback opcional (OpenRouter) ───
 # Se activa automáticamente si Groq devuelve 429 (límite diario),
 # timeout, o cualquier error de red. Deja en blanco para desactivar.
