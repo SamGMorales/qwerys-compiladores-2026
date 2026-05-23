@@ -27,7 +27,7 @@ public class Token {
 
     public void print() {
         System.out.print("[" + type + "] ");
-        if (\!value.isEmpty()) System.out.print("'" + value + "' ");
+        if (!value.isEmpty()) System.out.print("'" + value + "' ");
         System.out.print("(L" + line + ":C" + column + ")");
     }
 }

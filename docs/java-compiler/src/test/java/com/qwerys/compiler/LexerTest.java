@@ -27,7 +27,7 @@ public class LexerTest {
     @Test
     @DisplayName("Operadores de comparacion reconocidos")
     void testOperators() {
-        Lexer lexer = new Lexer("> >= < <= = \!=");
+        Lexer lexer = new Lexer("> >= < <= = !=");
         List<Token> tokens = lexer.tokenize();
         assertEquals(TokenType.GREATER,       tokens.get(0).type);
         assertEquals(TokenType.GREATER_EQUAL, tokens.get(1).type);

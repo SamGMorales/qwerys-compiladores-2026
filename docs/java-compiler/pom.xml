@@ -22,7 +22,7 @@
     </properties>
 
     <dependencies>
-        <\!-- JUnit 5 para pruebas -->
+        <!-- JUnit 5 para pruebas -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

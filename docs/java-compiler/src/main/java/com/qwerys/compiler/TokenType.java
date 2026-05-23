@@ -18,7 +18,7 @@ public enum TokenType {
     LESS,           // <
     GREATER_EQUAL,  // >=
     LESS_EQUAL,     // <=
-    NOT_EQUAL,      // \!=
+    NOT_EQUAL,      // !=
 
     // Simbolos especiales
     ASTERISK,       // *

@@ -51,7 +51,7 @@ public class SemanticAnalyzer {
         if (cond == null || table == null) return;
         DataType l = getExprType(cond.left, table);
         DataType r = getExprType(cond.right, table);
-        if (\!typesCompatible(l, r))
+        if (!typesCompatible(l, r))
             errors.add("Tipos incompatibles: " + l + " " + cond.op.toSymbol() + " " + r);
     }
 
@@ -60,16 +60,16 @@ public class SemanticAnalyzer {
         errors.clear(); warnings.clear();
         Table table = validateTable(ast.tableName);
         validateColumns(ast, table);
-        if (ast.whereCondition \!= null) validateCondition(ast.whereCondition, table);
+        if (ast.whereCondition != null) validateCondition(ast.whereCondition, table);
         return errors.isEmpty();
     }
 
     public void printDiagnostics() {
-        if (\!errors.isEmpty()) {
+        if (!errors.isEmpty()) {
             System.out.println("\n❌ ERRORES SEMANTICOS:");
             errors.forEach(e -> System.out.println("  - " + e));
         }
-        if (\!warnings.isEmpty()) {
+        if (!warnings.isEmpty()) {
             System.out.println("\n⚠️  ADVERTENCIAS:");
             warnings.forEach(w -> System.out.println("  - " + w));
         }

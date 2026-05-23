@@ -15,7 +15,7 @@ public enum CompOperator {
             case LESS:          return "<";
             case GREATER_EQUAL: return ">=";
             case LESS_EQUAL:    return "<=";
-            case NOT_EQUAL:     return "\!=";
+            case NOT_EQUAL:     return "!=";
             default:            return "?";
         }
     }

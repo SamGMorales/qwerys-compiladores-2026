@@ -5,6 +5,8 @@ Curso de Compiladores 2026 — Universidad Mariano Gálvez de Guatemala.
 
 Repositorio de referencia (C++ original): [compilador-sql-final](https://github.com/compilations-teams/compilador-sql-final.git)
 
+**Entrega al repo del profesor (cada integrante):** [`docs/GUIA_INTEGRANTES_DEFINITIVA.md`](docs/GUIA_INTEGRANTES_DEFINITIVA.md) — qué subir, cómo y en qué orden para que el repo del curso quede igual de funcional que este.
+
 ---
 
 ## ¿Qué es esto?

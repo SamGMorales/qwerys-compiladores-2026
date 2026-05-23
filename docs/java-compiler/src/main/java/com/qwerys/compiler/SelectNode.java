@@ -21,7 +21,7 @@ public class SelectNode extends ASTNode {
         System.out.print(sp + "  Columns: ");
         System.out.println(selectAll ? "*" : String.join(", ", columns));
         System.out.println(sp + "  FROM: " + tableName);
-        if (whereCondition \!= null) {
+        if (whereCondition != null) {
             System.out.println(sp + "  WHERE:");
             whereCondition.print(indent + 4);
         }

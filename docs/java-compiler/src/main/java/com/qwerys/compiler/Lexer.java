@@ -36,9 +36,9 @@ public class Lexer {
     }
 
     private void skipWhitespace() {
-        while (currentChar \!= '\0' && Character.isWhitespace(currentChar)) advance();
+        while (currentChar != '\0' && Character.isWhitespace(currentChar)) advance();
         if (currentChar == '-' && peek() == '-') {
-            while (currentChar \!= '\0' && currentChar \!= '\n') advance();
+            while (currentChar != '\0' && currentChar != '\n') advance();
             if (currentChar == '\n') advance();
             skipWhitespace();
         }
@@ -56,7 +56,7 @@ public class Lexer {
     private Token readIdentifierOrKeyword() {
         int sl = line, sc = column;
         StringBuilder sb = new StringBuilder();
-        while (currentChar \!= '\0' && (Character.isLetterOrDigit(currentChar) || currentChar == '_')) {
+        while (currentChar != '\0' && (Character.isLetterOrDigit(currentChar) || currentChar == '_')) {
             sb.append(currentChar); advance();
         }
         String val = sb.toString();
@@ -66,7 +66,7 @@ public class Lexer {
     private Token readNumber() {
         int sl = line, sc = column;
         StringBuilder sb = new StringBuilder();
-        while (currentChar \!= '\0' && Character.isDigit(currentChar)) { sb.append(currentChar); advance(); }
+        while (currentChar != '\0' && Character.isDigit(currentChar)) { sb.append(currentChar); advance(); }
         return new Token(TokenType.NUMBER, sb.toString(), sl, sc);
     }
 
@@ -74,7 +74,7 @@ public class Lexer {
         int sl = line, sc = column;
         StringBuilder sb = new StringBuilder();
         advance(); // skip opening quote
-        while (currentChar \!= '\0' && currentChar \!= '\'') { sb.append(currentChar); advance(); }
+        while (currentChar != '\0' && currentChar != '\'') { sb.append(currentChar); advance(); }
         if (currentChar == '\'') advance();
         return new Token(TokenType.STRING, sb.toString(), sl, sc);
     }
@@ -88,7 +88,7 @@ public class Lexer {
         if (currentChar == '\'') return readString();
         if (currentChar == '>') { advance(); if (currentChar == '=') { advance(); return new Token(TokenType.GREATER_EQUAL, ">=", sl, sc); } return new Token(TokenType.GREATER, ">", sl, sc); }
         if (currentChar == '<') { advance(); if (currentChar == '=') { advance(); return new Token(TokenType.LESS_EQUAL, "<=", sl, sc); } return new Token(TokenType.LESS, "<", sl, sc); }
-        if (currentChar == '\!') { advance(); if (currentChar == '=') { advance(); return new Token(TokenType.NOT_EQUAL, "\!=", sl, sc); } return new Token(TokenType.INVALID, "\!", sl, sc); }
+        if (currentChar == '!') { advance(); if (currentChar == '=') { advance(); return new Token(TokenType.NOT_EQUAL, "!=", sl, sc); } return new Token(TokenType.INVALID, "!", sl, sc); }
         char ch = currentChar; advance();
         switch (ch) {
             case '=': return new Token(TokenType.EQUAL, "=", sl, sc);
@@ -102,7 +102,7 @@ public class Lexer {
     public List<Token> tokenize() {
         List<Token> tokens = new ArrayList<>();
         Token t;
-        do { t = getNextToken(); tokens.add(t); } while (t.type \!= TokenType.END_OF_FILE);
+        do { t = getNextToken(); tokens.add(t); } while (t.type != TokenType.END_OF_FILE);
         return tokens;
     }
 }

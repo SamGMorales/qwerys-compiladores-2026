@@ -26,7 +26,7 @@ public class Parser {
     private boolean check(TokenType type) { return currentToken.type == type; }
 
     private void expect(TokenType type) {
-        if (\!check(type)) error("Se esperaba " + type + " pero se encontro " + currentToken.type);
+        if (!check(type)) error("Se esperaba " + type + " pero se encontro " + currentToken.type);
         advance();
     }
 
@@ -55,8 +55,8 @@ public class Parser {
 
     private ConditionNode parseCondition() {
         ExpressionNode left = parseExpression();
-        if (\!check(TokenType.EQUAL) && \!check(TokenType.GREATER) && \!check(TokenType.LESS) &&
-            \!check(TokenType.GREATER_EQUAL) && \!check(TokenType.LESS_EQUAL) && \!check(TokenType.NOT_EQUAL))
+        if (!check(TokenType.EQUAL) && !check(TokenType.GREATER) && !check(TokenType.LESS) &&
+            !check(TokenType.GREATER_EQUAL) && !check(TokenType.LESS_EQUAL) && !check(TokenType.NOT_EQUAL))
             error("Se esperaba operador de comparacion");
         CompOperator op = tokenToOperator(currentToken.type);
         advance();
@@ -65,11 +65,11 @@ public class Parser {
 
     private void parseColumns(SelectNode node) {
         if (check(TokenType.ASTERISK)) { node.selectAll = true; advance(); return; }
-        if (\!check(TokenType.IDENTIFIER)) error("Se esperaba columna o '*'");
+        if (!check(TokenType.IDENTIFIER)) error("Se esperaba columna o '*'");
         node.columns.add(currentToken.value); advance();
         while (check(TokenType.COMMA)) {
             advance();
-            if (\!check(TokenType.IDENTIFIER)) error("Se esperaba nombre de columna");
+            if (!check(TokenType.IDENTIFIER)) error("Se esperaba nombre de columna");
             node.columns.add(currentToken.value); advance();
         }
     }
@@ -79,11 +79,11 @@ public class Parser {
         expect(TokenType.SELECT);
         parseColumns(node);
         expect(TokenType.FROM);
-        if (\!check(TokenType.IDENTIFIER)) error("Se esperaba nombre de tabla");
+        if (!check(TokenType.IDENTIFIER)) error("Se esperaba nombre de tabla");
         node.tableName = currentToken.value; advance();
         if (check(TokenType.WHERE)) { advance(); node.whereCondition = parseCondition(); }
         if (check(TokenType.SEMICOLON)) advance();
-        if (\!check(TokenType.END_OF_FILE)) error("Se esperaba fin de archivo");
+        if (!check(TokenType.END_OF_FILE)) error("Se esperaba fin de archivo");
         return node;
     }
 }
