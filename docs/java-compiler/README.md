@@ -16,16 +16,16 @@ mvn test
 ```
 src/
   main/java/com/qwerys/compiler/
-    TokenType.java, Token.java     ← Miembro 1
-    Lexer.java                     ← Miembro 2
+    TokenType.java, Token.java     
+    Lexer.java                     
     CompOperator.java, ASTNode.java,
     ExpressionNode.java, ConditionNode.java,
-    SelectNode.java, Parser.java   ← Miembro 3
+    SelectNode.java, Parser.java   
     DataType.java, Column.java, Table.java,
-    SymbolTable.java, SemanticAnalyzer.java ← Miembro 4
-    Main.java                      ← Miembro 1
+    SymbolTable.java, SemanticAnalyzer.java 
+    Main.java                      
   test/java/com/qwerys/compiler/
     LexerTest.java, ParserTest.java,
-    SemanticTest.java              ← Miembro 5
-pom.xml                            ← Miembro 1
+    SemanticTest.java              
+pom.xml                            
 ```
