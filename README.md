@@ -5,8 +5,6 @@ Curso de Compiladores 2026 — Universidad Mariano Gálvez de Guatemala.
 
 Repositorio de referencia (C++ original): [compilador-sql-final](https://github.com/compilations-teams/compilador-sql-final.git)
 
-**Entrega al repo del profesor:** [docs/GUIA_ENTREGA_COMPLETA_INTEGRANTES.md](docs/GUIA_ENTREGA_COMPLETA_INTEGRANTES.md) (guía principal) · académico solo: [docs/GUIA_INTEGRANTES_DEFINITIVA.md](docs/GUIA_INTEGRANTES_DEFINITIVA.md)
-
 ---
 
 ## ¿Qué es esto?
@@ -194,8 +192,4 @@ qwerys-project/
 
 | Integrante | Rol | Responsabilidad |
 |------------|-----|-----------------|
-| Marjorie Girón (Arquitecto) | Arquitectura | Spring Boot, Angular, Docker |
-| Juanita Raguex (C++ Senior) | Compiladores | Análisis léxico |
-| Mercedes López (C++ Junior) | Compiladores | Análisis sintáctico |
-| Josué Morales (Java Senior) | Compiladores | Análisis semántico, tabla de símbolos |
-| Joshua Garcia (QA) | Calidad | Tests, documentación |
+| Marjorie Girón (Full Desarrollador, Arquitecto) | Desarrollo completo del proyecto: Arquitectura, Compiladores, Tests | Spring Boot, Angular, Docker, Análisis léxico, Análisis sintáctico, Análisis semántico, tabla de símbolos |
